@@ -33,7 +33,9 @@ export default function MapView() {
 
     // Canvas renderer + circle markers scale to hundreds of thousands of
     // points where one DOM/divIcon per marker would freeze the browser.
-    const renderer = L.canvas({ padding: 0.5 });
+    // tolerance:12 — default 0 forces an exact ~5px center hit, which on a
+    // clustered world map is effectively impossible (the real "unclickable" bug).
+    const renderer = L.canvas({ padding: 0.5, tolerance: 12 });
     const popup = L.popup();
 
     function makeCluster() {
@@ -66,6 +68,12 @@ export default function MapView() {
           : "";
         popup.setLatLng(e.latlng).setContent(`<strong>${name}</strong>${site}`).openOn(map);
       });
+      cl.on("mouseover", (e) => {
+        if (e.layer && e.layer.feature) map.getContainer().style.cursor = "pointer";
+      });
+      cl.on("mouseout", () => {
+        map.getContainer().style.cursor = "";
+      });
       return cl;
     }
 
@@ -73,8 +81,8 @@ export default function MapView() {
       const c = f.geometry.coordinates;
       const m = L.circleMarker([c[1], c[0]], {
         renderer,
-        radius: 5,
-        weight: 1,
+        radius: 6,
+        weight: 2,
         color: "#ffffff",
         fillColor: CLUSTER_COLOR,
         fillOpacity: 0.85,
