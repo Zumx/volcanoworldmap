@@ -6,3 +6,5 @@
 .vercel
 .env*.local
 fetch.log
+
+.vercel

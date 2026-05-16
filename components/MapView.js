@@ -8,6 +8,8 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 const CLUSTER_COLOR = "#d1410c";
+const UNNAMED = "Unnamed volcano";
+const NOUN = "volcanoes";
 
 export default function MapView() {
   const ref = useRef(null);
@@ -32,14 +34,18 @@ export default function MapView() {
     // Canvas renderer + circle markers scale to hundreds of thousands of
     // points where one DOM/divIcon per marker would freeze the browser.
     const renderer = L.canvas({ padding: 0.5 });
-    const UNNAMED = "Unnamed volcano";
-
     const popup = L.popup();
 
     function makeCluster() {
       const cl = L.markerClusterGroup({
         chunkedLoading: true,
         maxClusterRadius: 55,
+        // Stop clustering once zoomed in so individual points render as
+        // discrete, clickable circle markers instead of permanent clusters.
+        disableClusteringAtZoom: 10,
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        removeOutsideVisibleBounds: true,
         iconCreateFunction: (c) => {
           const n = c.getChildCount();
           const size = n < 100 ? 36 : n < 1000 ? 44 : 54;
@@ -72,6 +78,7 @@ export default function MapView() {
         color: "#ffffff",
         fillColor: CLUSTER_COLOR,
         fillOpacity: 0.85,
+        bubblingMouseEvents: false,
       });
       m.feature = f;
       return m;
@@ -79,7 +86,6 @@ export default function MapView() {
 
     const namedCluster = makeCluster();
     const unnamedCluster = makeCluster();
-    const NOUN = "volcanoes";
 
     fetch("data/points.geojson")
       .then((r) => r.json())
