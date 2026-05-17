@@ -47,6 +47,7 @@ export default function MapView() {
         disableClusteringAtZoom: 10,
         spiderfyOnMaxZoom: true,
         showCoverageOnHover: false,
+        zoomToBoundsOnClick: true,
         removeOutsideVisibleBounds: true,
         iconCreateFunction: (c) => {
           const n = c.getChildCount();
