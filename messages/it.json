@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Home",
+    "map": "Mappa",
+    "blog": "Blog",
+    "about": "Informazioni"
+  },
+  "home": {
+    "tagline": "Una mappa del mondo interattiva",
+    "ctaMap": "Esplora l'intera mappa",
+    "ctaBlog": "Leggi il blog",
+    "intro": "Ogni luogo mappato qui sotto proviene in tempo reale da OpenStreetMap. Clicca un punto per vedere dettagli, foto e descrizioni.",
+    "countriesHeading": "Sfoglia per paese"
+  },
+  "map": {
+    "loading": "Caricamento della mappa…",
+    "namedOnly": "Solo con nome",
+    "showAll": "Mostra tutti",
+    "namedCount": "{count, number} {noun} con nome",
+    "allCount": "{count, number} {noun} mappati",
+    "couldNotLoad": "Impossibile caricare i dati"
+  },
+  "card": {
+    "close": "Chiudi",
+    "website": "Sito web",
+    "openingHours": "Orari di apertura",
+    "capacity": "Capacità",
+    "phone": "Telefono",
+    "address": "Indirizzo",
+    "bookExperience": "Prenota un'esperienza",
+    "loading": "Caricamento dei dettagli…",
+    "noDescription": "Nessuna descrizione ancora disponibile.",
+    "googleRating": "{rating} ⭐ ({count, number} recensioni Google)",
+    "photoVia": "Foto via {source}",
+    "reviewsHeading": "Recensioni",
+    "reviewsDisabled": "Le recensioni arriveranno presto.",
+    "viewOnOsm": "Vedi su OpenStreetMap",
+    "wikipedia": "Leggi su Wikipedia"
+  },
+  "country": {
+    "heading": "{noun} in {country}",
+    "count": "{count, number} {noun} mappati",
+    "back": "← Tutti i paesi",
+    "intro": "Esplora ogni luogo mappato in {country}, a partire da OpenStreetMap.",
+    "listHeading": "Tutti i {noun} in {country}",
+    "openOnMap": "Mostra sulla mappa →",
+    "moreNote": "Vengono mostrati i primi {shown, number} di {total, number}. Apri la mappa interattiva per esplorarli tutti."
+  },
+  "blog": {
+    "heading": "Blog",
+    "empty": "Nessun articolo ancora.",
+    "back": "← Torna al blog",
+    "readMore": "Continua a leggere →",
+    "related": "Articoli correlati"
+  },
+  "about": {
+    "heading": "Informazioni",
+    "howHeading": "Come funziona",
+    "freshHeading": "Aggiornamento dei dati",
+    "contributeHeading": "Manca qualcosa?",
+    "contributeBody": "Questa mappa è completa quanto OpenStreetMap stesso. Se conosci un {noun} che non è presente, puoi aggiungerlo direttamente a OpenStreetMap — è gratuito, aperto e apparirà qui al prossimo aggiornamento.",
+    "contributeCta": "Aggiungi un luogo mancante su OpenStreetMap →",
+    "creditsHeading": "Crediti"
+  },
+  "footer": {
+    "data": "Dati © contributori di OpenStreetMap"
+  }
+}

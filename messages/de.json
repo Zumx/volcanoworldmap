@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Start",
+    "map": "Karte",
+    "blog": "Blog",
+    "about": "Über"
+  },
+  "home": {
+    "tagline": "Eine interaktive Weltkarte",
+    "ctaMap": "Die ganze Karte erkunden",
+    "ctaBlog": "Blog lesen",
+    "intro": "Jeder hier kartierte Ort stammt live aus OpenStreetMap. Klicke einen Punkt an, um Details, Fotos und Beschreibungen zu sehen.",
+    "countriesHeading": "Nach Land durchsuchen"
+  },
+  "map": {
+    "loading": "Karte wird geladen …",
+    "namedOnly": "Nur benannte",
+    "showAll": "Alle anzeigen",
+    "namedCount": "{count, number} benannte {noun}",
+    "allCount": "{count, number} {noun} kartiert",
+    "couldNotLoad": "Daten konnten nicht geladen werden"
+  },
+  "card": {
+    "close": "Schließen",
+    "website": "Website",
+    "openingHours": "Öffnungszeiten",
+    "capacity": "Kapazität",
+    "phone": "Telefon",
+    "address": "Adresse",
+    "bookExperience": "Erlebnis buchen",
+    "loading": "Details werden geladen …",
+    "noDescription": "Noch keine Beschreibung verfügbar.",
+    "googleRating": "{rating} ⭐ ({count, number} Google-Bewertungen)",
+    "photoVia": "Foto via {source}",
+    "reviewsHeading": "Bewertungen",
+    "reviewsDisabled": "Bewertungen folgen in Kürze.",
+    "viewOnOsm": "Auf OpenStreetMap ansehen",
+    "wikipedia": "Auf Wikipedia lesen"
+  },
+  "country": {
+    "heading": "{noun} in {country}",
+    "count": "{count, number} kartierte {noun}",
+    "back": "← Alle Länder",
+    "intro": "Erkunde alle kartierten Orte in {country}, basierend auf OpenStreetMap.",
+    "listHeading": "Alle {noun} in {country}",
+    "openOnMap": "Auf der Karte zeigen →",
+    "moreNote": "Es werden die ersten {shown, number} von {total, number} angezeigt. Öffne die interaktive Karte, um sie alle zu erkunden."
+  },
+  "blog": {
+    "heading": "Blog",
+    "empty": "Noch keine Beiträge.",
+    "back": "← Zurück zum Blog",
+    "readMore": "Weiterlesen →",
+    "related": "Verwandte Beiträge"
+  },
+  "about": {
+    "heading": "Über",
+    "howHeading": "So funktioniert es",
+    "freshHeading": "Aktualität der Daten",
+    "contributeHeading": "Fehlt etwas?",
+    "contributeBody": "Diese Karte ist nur so vollständig wie OpenStreetMap selbst. Wenn du ein {noun} kennst, das hier fehlt, kannst du es direkt auf OpenStreetMap hinzufügen — kostenlos, offen und beim nächsten Datenabgleich hier sichtbar.",
+    "contributeCta": "Einen fehlenden Ort auf OpenStreetMap hinzufügen →",
+    "creditsHeading": "Quellen"
+  },
+  "footer": {
+    "data": "Daten © OpenStreetMap-Mitwirkende"
+  }
+}

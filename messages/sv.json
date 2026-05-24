@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Hem",
+    "map": "Karta",
+    "blog": "Blogg",
+    "about": "Om"
+  },
+  "home": {
+    "tagline": "En interaktiv världskarta",
+    "ctaMap": "Utforska hela kartan",
+    "ctaBlog": "Läs bloggen",
+    "intro": "Varje kartlagd plats nedan hämtas direkt från OpenStreetMap. Klicka på en punkt för detaljer, foton och beskrivningar.",
+    "countriesHeading": "Bläddra efter land"
+  },
+  "map": {
+    "loading": "Laddar karta…",
+    "namedOnly": "Endast namngivna",
+    "showAll": "Visa alla",
+    "namedCount": "{count, number} namngivna {noun}",
+    "allCount": "{count, number} {noun} kartlagda",
+    "couldNotLoad": "Kunde inte ladda data"
+  },
+  "card": {
+    "close": "Stäng",
+    "website": "Webbplats",
+    "openingHours": "Öppettider",
+    "capacity": "Kapacitet",
+    "phone": "Telefon",
+    "address": "Adress",
+    "bookExperience": "Boka en upplevelse",
+    "loading": "Laddar detaljer…",
+    "noDescription": "Ingen beskrivning tillgänglig ännu.",
+    "googleRating": "{rating} ⭐ ({count, number} Google-recensioner)",
+    "photoVia": "Foto via {source}",
+    "reviewsHeading": "Recensioner",
+    "reviewsDisabled": "Recensioner kommer snart.",
+    "viewOnOsm": "Visa på OpenStreetMap",
+    "wikipedia": "Läs på Wikipedia"
+  },
+  "country": {
+    "heading": "{noun} i {country}",
+    "count": "{count, number} kartlagda {noun}",
+    "back": "← Alla länder",
+    "intro": "Utforska varje kartlagd plats i {country}, hämtad från OpenStreetMap.",
+    "listHeading": "Alla {noun} i {country}",
+    "openOnMap": "Visa på kartan →",
+    "moreNote": "Visar de första {shown, number} av {total, number}. Öppna den interaktiva kartan för att utforska alla."
+  },
+  "blog": {
+    "heading": "Blogg",
+    "empty": "Inga inlägg ännu.",
+    "back": "← Tillbaka till bloggen",
+    "readMore": "Läs mer →",
+    "related": "Relaterade inlägg"
+  },
+  "about": {
+    "heading": "Om",
+    "howHeading": "Så fungerar det",
+    "freshHeading": "Dataaktualitet",
+    "contributeHeading": "Saknas något?",
+    "contributeBody": "Den här kartan är bara så fullständig som OpenStreetMap självt. Känner du till en {noun} som inte finns med här kan du lägga till den direkt i OpenStreetMap — det är gratis, öppet och syns här vid nästa uppdatering.",
+    "contributeCta": "Lägg till en saknad plats på OpenStreetMap →",
+    "creditsHeading": "Källor"
+  },
+  "footer": {
+    "data": "Data © OpenStreetMap-bidragsgivare"
+  }
+}

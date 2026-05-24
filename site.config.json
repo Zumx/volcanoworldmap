@@ -1,0 +1,56 @@
+{
+  "name": "Volcano World Map",
+  "slug": "volcanoworldmap",
+  "emoji": "🌋",
+  "domain": "volcanoworldmap.com",
+  "colors": {
+    "primary": "#1a1a2e",
+    "accent": "#e94560"
+  },
+  "osm": {
+    "key": "natural",
+    "value": "volcano"
+  },
+  "osmFilters": [
+    {
+      "key": "natural",
+      "value": "volcano"
+    }
+  ],
+  "includeRelations": false,
+  "dedupeMeters": 0,
+  "initialCap": 8000,
+  "mappedNoun": "volcanoes",
+  "unnamedLabel": "Unnamed volcano",
+  "affiliateUrl": "https://www.getyourguide.com/s/?q={q}",
+  "metaFields": [
+    {
+      "key": "elevation",
+      "label": "Elevation",
+      "unit": "m"
+    },
+    {
+      "key": "type",
+      "label": "Type"
+    }
+  ],
+  "aboutText": null,
+  "locales": [
+    "en",
+    "de",
+    "fr",
+    "it",
+    "sv"
+  ],
+  "defaultLocale": "en",
+  "namedOnly": false,
+  "includeFilter": null,
+  "dataSource": {
+    "type": "overpass"
+  },
+  "googlePlaces": {
+    "enabled": true,
+    "cap": 800,
+    "priorityFilter": "has_website"
+  }
+}

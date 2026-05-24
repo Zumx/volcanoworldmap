@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Home",
+    "map": "Map",
+    "blog": "Blog",
+    "about": "About"
+  },
+  "home": {
+    "tagline": "An interactive world map",
+    "ctaMap": "Explore the full map",
+    "ctaBlog": "Read the blog",
+    "intro": "Every mapped place below is sourced live from OpenStreetMap. Click any point to see details, photos and descriptions.",
+    "countriesHeading": "Browse by country"
+  },
+  "map": {
+    "loading": "Loading map…",
+    "namedOnly": "Named only",
+    "showAll": "Show all",
+    "namedCount": "{count, number} named {noun}",
+    "allCount": "{count, number} {noun} mapped",
+    "couldNotLoad": "Could not load data"
+  },
+  "card": {
+    "close": "Close",
+    "website": "Website",
+    "openingHours": "Opening hours",
+    "capacity": "Capacity",
+    "phone": "Phone",
+    "address": "Address",
+    "bookExperience": "Book an experience",
+    "loading": "Loading details…",
+    "noDescription": "No description available yet.",
+    "googleRating": "{rating} ⭐ ({count, number} Google reviews)",
+    "photoVia": "Photo via {source}",
+    "reviewsHeading": "Reviews",
+    "reviewsDisabled": "Reviews are coming soon.",
+    "viewOnOsm": "View on OpenStreetMap",
+    "wikipedia": "Read on Wikipedia"
+  },
+  "country": {
+    "heading": "{noun} in {country}",
+    "count": "{count, number} mapped {noun}",
+    "back": "← All countries",
+    "intro": "Explore every mapped place in {country}, sourced from OpenStreetMap.",
+    "listHeading": "All {noun} in {country}",
+    "openOnMap": "Show on map →",
+    "moreNote": "Showing the first {shown, number} of {total, number}. Open the interactive map to explore them all."
+  },
+  "blog": {
+    "heading": "Blog",
+    "empty": "No posts yet.",
+    "back": "← Back to blog",
+    "readMore": "Read more →",
+    "related": "Related posts"
+  },
+  "about": {
+    "heading": "About",
+    "howHeading": "How it works",
+    "freshHeading": "Data freshness",
+    "contributeHeading": "Spot something missing?",
+    "contributeBody": "This map is only as complete as OpenStreetMap itself. If you know a {noun} that isn't here, you can add it directly to OpenStreetMap — it's free, open and will appear here at the next refresh.",
+    "contributeCta": "Add a missing place on OpenStreetMap →",
+    "creditsHeading": "Credits"
+  },
+  "footer": {
+    "data": "Data © OpenStreetMap contributors"
+  }
+}
