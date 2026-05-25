@@ -3,6 +3,10 @@ import { routing } from "../i18n/routing.js";
 import { listCountries } from "../lib/data.js";
 import { listPosts } from "../lib/blog.js";
 
+// ISR: refresh the sitemap daily so newly drip-published posts get picked
+// up by crawlers without a rebuild.
+export const revalidate = 86400;
+
 export default async function sitemap() {
   const base = `https://${site.domain}`;
   const countries = await listCountries();

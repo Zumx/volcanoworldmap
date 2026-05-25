@@ -3,6 +3,10 @@ import { Link } from "../../../i18n/navigation.js";
 import { routing } from "../../../i18n/routing.js";
 import { listPosts } from "../../../lib/blog.js";
 
+// ISR: regenerate at most once per day so drip-scheduled posts go live
+// automatically when their frontmatter date passes — no rebuild needed.
+export const revalidate = 86400;
+
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations("blog");

@@ -10,6 +10,10 @@ import {
   relatedPosts,
 } from "../../../../lib/blog.js";
 
+// ISR: regenerate at most once per day so drip-scheduled posts go live
+// (and future-dated 404s flip to content) without a rebuild.
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
   // Union of slugs across all locales (incl. legacy root posts). Combinations
   // where the slug doesn't exist in the requested locale resolve to 404.

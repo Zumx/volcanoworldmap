@@ -7,15 +7,23 @@
 //   src/content/blog/fr/<slug>.mdx         French posts
 //   src/content/blog/it/<slug>.mdx         Italian posts
 //
-// listPosts(locale) returns posts in <locale>/, plus any legacy root posts
-// when locale === defaultLocale (so existing English posts stay visible).
-// Slug collisions resolve in favour of the locale-specific file.
-import { readdir, readFile, access } from "node:fs/promises";
+// Drip publishing: posts with a frontmatter `date` later than today are
+// treated as not-yet-published — hidden from listings, sitemap, hreflang,
+// and direct URL access. Posts without a date are always published.
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import matter from "gray-matter";
 import { routing } from "../i18n/routing.js";
 
 const DIR = join(process.cwd(), "src", "content", "blog");
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function isPublished(post) {
+  return !post.date || post.date <= today();
+}
 
 async function readPostsFrom(dir) {
   let files = [];
@@ -48,15 +56,18 @@ export async function listPosts(locale) {
     rootPosts = all.filter((p) => !seen.has(p.slug));
   }
 
-  return [...localePosts, ...rootPosts].sort((a, b) =>
-    String(b.date).localeCompare(String(a.date))
-  );
+  return [...localePosts, ...rootPosts]
+    .filter(isPublished)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 }
 
 export async function getPost(locale, slug) {
+  const t = today();
+
   try {
     const raw = await readFile(join(DIR, locale, `${slug}.mdx`), "utf8");
     const { data, content } = matter(raw);
+    if (data.date && data.date > t) return null;
     return { meta: data, content };
   } catch {}
 
@@ -64,6 +75,7 @@ export async function getPost(locale, slug) {
     try {
       const raw = await readFile(join(DIR, `${slug}.mdx`), "utf8");
       const { data, content } = matter(raw);
+      if (data.date && data.date > t) return null;
       return { meta: data, content };
     } catch {}
   }
@@ -71,22 +83,13 @@ export async function getPost(locale, slug) {
   return null;
 }
 
-// Locales where <slug>.mdx actually exists. Used to emit hreflang alternates
-// only for sibling locales that have the post, never pointing at a 404.
+// Locales where <slug>.mdx is published. Uses listPosts so drip filtering
+// is consistent — hreflang only points at sibling locales that 200 today.
 export async function getPostLocales(slug) {
   const out = [];
   for (const locale of routing.locales) {
-    try {
-      await access(join(DIR, locale, `${slug}.mdx`));
-      out.push(locale);
-      continue;
-    } catch {}
-    if (locale === routing.defaultLocale) {
-      try {
-        await access(join(DIR, `${slug}.mdx`));
-        out.push(locale);
-      } catch {}
-    }
+    const posts = await listPosts(locale);
+    if (posts.some((p) => p.slug === slug)) out.push(locale);
   }
   return out;
 }
