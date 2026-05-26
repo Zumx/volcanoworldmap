@@ -127,6 +127,8 @@ export default function MapView({ embedded = false }) {
     let namedAdded = 0;
     let unnamedAdded = 0;
     let toggleAdded = false;
+    let restLoaded = false;
+    let restLoading = false;
 
     const setCount = () => {
       const el = document.getElementById("point-count");
@@ -176,6 +178,11 @@ export default function MapView({ embedded = false }) {
               b.disabled = true;
               await loadRest();
               b.disabled = false;
+              // If the fetch failed, restLoaded stays false. Don't flip the
+              // toggle — leave the button labeled "show all" so the user can
+              // retry, and avoid the confusing state where the button looks
+              // toggled but no new pins appeared.
+              if (!restLoaded) return;
             }
             showAll = !showAll;
             localStorage.setItem(LS_KEY, showAll ? "1" : "0");
@@ -199,20 +206,17 @@ export default function MapView({ embedded = false }) {
       ensureToggle();
     };
 
-    let restLoaded = false;
-    let restLoading = false;
     const loadRest = async () => {
       if (restLoaded || restLoading) return;
       restLoading = true;
       try {
         const r = await fetch("/data/points.rest.geojson");
-        if (r.ok) {
-          const g = await r.json();
-          ingest(g.features || []);
-        }
+        if (!r.ok) return; // restLoaded stays false → click handler will not flip
+        const g = await r.json();
+        ingest(g.features || []);
         restLoaded = true;
       } catch {
-        // Swallow — toggle stays usable; next click will retry.
+        // Network error: restLoaded stays false; the toggle stays usable.
       } finally {
         restLoading = false;
       }

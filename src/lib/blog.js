@@ -10,8 +10,14 @@
 // Drip publishing: posts with a frontmatter `date` later than today are
 // treated as not-yet-published — hidden from listings, sitemap, hreflang,
 // and direct URL access. Posts without a date are always published.
+//
+// Per-request deduplication: listPosts/getPost/getPostLocales are wrapped
+// in React's `cache()` so multiple consumers (sitemap, generateMetadata,
+// the page component, relatedPosts) hitting the same locale during one
+// render share a single disk read + frontmatter-parse pass.
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { cache } from "react";
 import matter from "gray-matter";
 import { routing } from "../i18n/routing.js";
 
@@ -46,7 +52,7 @@ async function readPostsFrom(dir) {
   );
 }
 
-export async function listPosts(locale) {
+export const listPosts = cache(async (locale) => {
   const localePosts = await readPostsFrom(join(DIR, locale));
   const seen = new Set(localePosts.map((p) => p.slug));
 
@@ -59,9 +65,9 @@ export async function listPosts(locale) {
   return [...localePosts, ...rootPosts]
     .filter(isPublished)
     .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-}
+});
 
-export async function getPost(locale, slug) {
+export const getPost = cache(async (locale, slug) => {
   const t = today();
 
   try {
@@ -81,18 +87,37 @@ export async function getPost(locale, slug) {
   }
 
   return null;
-}
+});
 
-// Locales where <slug>.mdx is published. Uses listPosts so drip filtering
-// is consistent — hreflang only points at sibling locales that 200 today.
-export async function getPostLocales(slug) {
+// Locales where <slug>.mdx is published. Reads only the candidate files
+// directly (O(L) frontmatter parses) instead of scanning each locale's
+// full directory — keeps hreflang generation cheap at build time.
+export const getPostLocales = cache(async (slug) => {
+  const t = today();
   const out = [];
   for (const locale of routing.locales) {
-    const posts = await listPosts(locale);
-    if (posts.some((p) => p.slug === slug)) out.push(locale);
+    try {
+      const raw = await readFile(
+        join(DIR, locale, `${slug}.mdx`),
+        "utf8"
+      );
+      const { data } = matter(raw);
+      if (!data.date || data.date <= t) {
+        out.push(locale);
+        continue;
+      }
+    } catch {}
+    // Legacy root fallback applies to default locale only.
+    if (locale === routing.defaultLocale) {
+      try {
+        const raw = await readFile(join(DIR, `${slug}.mdx`), "utf8");
+        const { data } = matter(raw);
+        if (!data.date || data.date <= t) out.push(locale);
+      } catch {}
+    }
   }
   return out;
-}
+});
 
 // Deterministic "related" pick: posts in the same locale sharing the most
 // kebab-cased slug tokens, then most recent. Stopwords and length-1 tokens
