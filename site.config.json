@@ -52,5 +52,8 @@
     "enabled": true,
     "cap": 800,
     "priorityFilter": "has_website"
+  },
+  "indexNow": {
+    "key": "d6f9328dda414487ac26d8bb0868aedc"
   }
 }

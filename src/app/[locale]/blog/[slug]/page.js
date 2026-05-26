@@ -10,6 +10,7 @@ import {
   relatedPosts,
 } from "../../../../lib/blog.js";
 import { site } from "../../../../lib/site.js";
+import { pingIndexNow, isFreshlyPublished } from "../../../../lib/indexnow.js";
 
 // ISR: regenerate at most once per day so drip-scheduled posts go live
 // (and future-dated 404s flip to content) without a rebuild.
@@ -66,6 +67,13 @@ export default async function BlogPost({ params }) {
   const headline = post.meta.title || slug;
   const description =
     post.meta.description || post.meta.excerpt || undefined;
+
+  // IndexNow ping on ISR regeneration when the post just dripped live.
+  // Fire-and-forget — errors are swallowed inside the helper.
+  if (isFreshlyPublished(post.meta.date)) {
+    pingIndexNow([url]);
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
