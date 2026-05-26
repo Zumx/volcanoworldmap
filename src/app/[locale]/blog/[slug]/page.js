@@ -9,6 +9,7 @@ import {
   getPostLocales,
   relatedPosts,
 } from "../../../../lib/blog.js";
+import { site } from "../../../../lib/site.js";
 
 // ISR: regenerate at most once per day so drip-scheduled posts go live
 // (and future-dated 404s flip to content) without a rebuild.
@@ -61,8 +62,29 @@ export default async function BlogPost({ params }) {
 
   const related = await relatedPosts(locale, slug, 3);
 
+  const url = `https://${site.domain}/${locale}/blog/${slug}`;
+  const headline = post.meta.title || slug;
+  const description =
+    post.meta.description || post.meta.excerpt || undefined;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    datePublished: post.meta.date,
+    dateModified: post.meta.date,
+    author: { "@type": "Organization", name: site.name, url: `https://${site.domain}` },
+    inLanguage: locale,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+
   return (
     <main className="container prose">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link href="/blog">{t("back")}</Link>
       <h1>{post.meta.title || slug}</h1>
       {post.meta.date && <p className="post-meta">{post.meta.date}</p>}
