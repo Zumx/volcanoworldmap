@@ -41,7 +41,7 @@ export default async function sitemap() {
     sectionLanguages["x-default"] = `${base}/${routing.defaultLocale}`;
     urls.push({
       url: `${base}${prefix}`,
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 1,
       alternates: { languages: sectionLanguages },
     });
@@ -53,7 +53,8 @@ export default async function sitemap() {
       langs["x-default"] = `${base}/${routing.defaultLocale}/${section}`;
       urls.push({
         url: `${base}${prefix}/${section}`,
-        changeFrequency: section === "about" ? "yearly" : "monthly",
+        changeFrequency:
+          section === "map" ? "weekly" : section === "about" ? "yearly" : "monthly",
         priority: section === "map" ? 0.9 : section === "blog" ? 0.6 : 0.4,
         alternates: { languages: langs },
       });
@@ -67,7 +68,7 @@ export default async function sitemap() {
       urls.push({
         url: `${base}${prefix}/${c.slug}`,
         changeFrequency: "monthly",
-        priority: 0.7,
+        priority: 0.6,
         alternates: { languages: langs },
       });
     }
@@ -82,8 +83,8 @@ export default async function sitemap() {
       }
       urls.push({
         url: `${base}${prefix}/blog/${p.slug}`,
-        changeFrequency: "yearly",
-        priority: 0.5,
+        changeFrequency: "monthly",
+        priority: 0.7,
         alternates: { languages: langs },
       });
     }

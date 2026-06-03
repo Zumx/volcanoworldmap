@@ -55,6 +55,16 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <html lang={locale}>
       <body>
+        {/* Resource hints — warm the origins the basemap tiles and the
+            location-card enrichment (Wikipedia/Wikimedia) fetch from. The
+            basemap uses OpenStreetMap tiles, not CartoDB. */}
+        <link rel="preconnect" href="https://a.tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href="https://a.tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href="https://b.tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href="https://c.tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href={`https://${locale}.wikipedia.org`} />
+        <link rel="dns-prefetch" href="https://commons.wikimedia.org" />
+        <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
         <style
           dangerouslySetInnerHTML={{ __html: `:root{${styleVars}}` }}
         />

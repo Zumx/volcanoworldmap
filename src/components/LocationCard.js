@@ -176,7 +176,13 @@ export default function LocationCard({
 
         {image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img className="loc-img" src={image} alt={displayName} />
+          <img
+            className="loc-img"
+            src={image}
+            alt={displayName}
+            loading="lazy"
+            decoding="async"
+          />
         ) : loading ? (
           <div className="loc-img loc-img--placeholder">
             <span className="loc-initial" aria-hidden="true">
