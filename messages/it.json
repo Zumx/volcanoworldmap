@@ -10,7 +10,8 @@
     "ctaMap": "Esplora l'intera mappa",
     "ctaBlog": "Leggi il blog",
     "intro": "Ogni luogo mappato qui sotto proviene in tempo reale da OpenStreetMap. Clicca un punto per vedere dettagli, foto e descrizioni.",
-    "countriesHeading": "Sfoglia per paese"
+    "countriesHeading": "Sfoglia per paese",
+    "statsCountries": "paesi"
   },
   "map": {
     "loading": "Caricamento della mappa…",

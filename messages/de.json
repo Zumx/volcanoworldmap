@@ -10,7 +10,8 @@
     "ctaMap": "Die ganze Karte erkunden",
     "ctaBlog": "Blog lesen",
     "intro": "Jeder hier kartierte Ort stammt live aus OpenStreetMap. Klicke einen Punkt an, um Details, Fotos und Beschreibungen zu sehen.",
-    "countriesHeading": "Nach Land durchsuchen"
+    "countriesHeading": "Nach Land durchsuchen",
+    "statsCountries": "Länder"
   },
   "map": {
     "loading": "Karte wird geladen …",

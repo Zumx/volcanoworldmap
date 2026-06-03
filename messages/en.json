@@ -10,7 +10,8 @@
     "ctaMap": "Explore the full map",
     "ctaBlog": "Read the blog",
     "intro": "Every mapped place below is sourced live from OpenStreetMap. Click any point to see details, photos and descriptions.",
-    "countriesHeading": "Browse by country"
+    "countriesHeading": "Browse by country",
+    "statsCountries": "countries"
   },
   "map": {
     "loading": "Loading map…",

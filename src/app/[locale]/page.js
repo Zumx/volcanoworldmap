@@ -44,15 +44,16 @@ export default async function Home({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }}
       />
       <section className="hero">
-        <h1>
-          {site.emoji} {site.name}
-        </h1>
-        <p>{t("intro")}</p>
-        <div className="actions">
-          <Link className="btn btn-primary" href="/map">
+        <div className="hero-brand">
+          <span className="hero-emoji">{site.emoji}</span>
+          <span className="hero-name">{site.name}</span>
+          <span className="hero-tagline">{t("tagline")}</span>
+        </div>
+        <div className="hero-actions">
+          <Link className="btn btn-sm btn-primary" href="/map">
             {t("ctaMap")}
           </Link>
-          <Link className="btn btn-ghost" href="/blog">
+          <Link className="btn btn-sm btn-ghost" href="/blog">
             {t("ctaBlog")}
           </Link>
         </div>
@@ -60,6 +61,14 @@ export default async function Home({ params }) {
 
       <div className="home-map">
         <MapClient embedded />
+        <div className="home-stats" aria-hidden="false">
+          <span className="stat">
+            <strong>{total.toLocaleString()}</strong> {site.mappedNoun}
+          </span>
+          <span className="stat">
+            <strong>{allCountries.length}</strong> {t("statsCountries")}
+          </span>
+        </div>
       </div>
 
       {countries.length > 0 && (

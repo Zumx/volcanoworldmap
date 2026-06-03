@@ -10,7 +10,8 @@
     "ctaMap": "Utforska hela kartan",
     "ctaBlog": "Läs bloggen",
     "intro": "Varje kartlagd plats nedan hämtas direkt från OpenStreetMap. Klicka på en punkt för detaljer, foton och beskrivningar.",
-    "countriesHeading": "Bläddra efter land"
+    "countriesHeading": "Bläddra efter land",
+    "statsCountries": "länder"
   },
   "map": {
     "loading": "Laddar karta…",

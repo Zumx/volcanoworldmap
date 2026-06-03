@@ -10,7 +10,8 @@
     "ctaMap": "Explorer la carte complète",
     "ctaBlog": "Lire le blog",
     "intro": "Chaque lieu cartographié ci-dessous provient en direct d'OpenStreetMap. Cliquez sur un point pour voir les détails, les photos et les descriptions.",
-    "countriesHeading": "Parcourir par pays"
+    "countriesHeading": "Parcourir par pays",
+    "statsCountries": "pays"
   },
   "map": {
     "loading": "Chargement de la carte…",
