@@ -103,11 +103,61 @@ a {
   border-color: var(--primary);
 }
 .site-footer {
-  padding: 20px 24px;
+  padding: 28px 24px;
   border-top: 1px solid var(--border);
   font-size: 13px;
   color: color-mix(in srgb, var(--text) 70%, white);
+}
+.footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.footer-name {
+  font-weight: 600;
+  color: var(--text);
+}
+.footer-tagline {
+  font-size: 12px;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-links a {
+  color: inherit;
+  text-decoration: none;
+}
+.footer-links a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.footer-bottom {
+  max-width: 960px;
+  margin: 16px auto 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
   text-align: center;
+}
+.footer-bottom p {
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
 }
 
 /* ---- Layout containers ---- */
@@ -399,6 +449,163 @@ a {
 .map-toggle:hover {
   background: var(--accent);
   color: #fff;
+}
+
+/* ---- Map search (autocomplete over loaded features) ---- */
+.map-search {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+  width: min(440px, calc(100vw - 24px));
+}
+.map-search-input {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 15px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  outline: none;
+}
+.map-search-input:focus {
+  border-color: var(--primary);
+}
+.map-search-results {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+}
+.map-search-results li {
+  list-style: none;
+}
+.map-search-results button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+}
+.map-search-results button:hover {
+  background: var(--primary-light);
+}
+.map-search-results .r-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--primary-dark);
+}
+.map-search-results .r-country {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 55%, white);
+}
+@media (max-width: 640px) {
+  /* Slim bar flush to the top so it never floats over the map content; the
+     overlay title sits lower (top: 80px) and the dropdown only shows while
+     typing. font-size 16px avoids iOS zoom-on-focus. */
+  .map-search {
+    top: 8px;
+    width: calc(100vw - 16px);
+  }
+  .map-search-input {
+    font-size: 16px;
+  }
+}
+
+/* ---- 404 / not-found ---- */
+.notfound {
+  text-align: center;
+  max-width: 640px;
+}
+.notfound-emoji {
+  font-size: 64px;
+  line-height: 1;
+}
+.notfound-code {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin: 8px 0 0;
+  letter-spacing: 2px;
+}
+.notfound h1 {
+  font-size: 26px;
+  color: var(--primary-dark);
+  margin: 4px 0 10px;
+}
+.notfound-body {
+  color: color-mix(in srgb, var(--text) 75%, white);
+  margin-bottom: 24px;
+}
+.notfound-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-outline {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 1;
+}
+
+/* ---- LocationCard: nearby places ---- */
+.loc-nearby {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.loc-nearby h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.loc-nearby ul {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+.loc-nearby button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font: inherit;
+}
+.loc-nearby button:hover {
+  border-color: var(--accent);
+}
+.loc-nearby .n-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--primary-dark);
+}
+.loc-nearby .n-dist {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 55%, white);
+  white-space: nowrap;
 }
 
 /* ---- LocationCard ---- */

@@ -19,7 +19,8 @@
     "showAll": "Show all",
     "namedCount": "{count, number} named {noun}",
     "allCount": "{count, number} {noun} mapped",
-    "couldNotLoad": "Could not load data"
+    "couldNotLoad": "Could not load data",
+    "searchPlaceholder": "Search by name or country…"
   },
   "card": {
     "close": "Close",
@@ -36,7 +37,8 @@
     "reviewsHeading": "Reviews",
     "reviewsDisabled": "Reviews are coming soon.",
     "viewOnOsm": "View on OpenStreetMap",
-    "wikipedia": "Read on Wikipedia"
+    "wikipedia": "Read on Wikipedia",
+    "nearbyHeading": "Nearby"
   },
   "country": {
     "heading": "{noun} in {country}",
@@ -61,9 +63,21 @@
     "contributeHeading": "Spot something missing?",
     "contributeBody": "This map is only as complete as OpenStreetMap itself. If you know a {noun} that isn't here, you can add it directly to OpenStreetMap — it's free, open and will appear here at the next refresh.",
     "contributeCta": "Add a missing place on OpenStreetMap →",
+    "reportHeading": "Report an error or a wrong location",
+    "reportBody": "Found a {noun} in the wrong spot, with outdated details, or listed twice? The data lives in OpenStreetMap, so the quickest fix is a short note there — a local mapper reviews it and the correction flows back to this map at the next refresh.",
+    "reportCta": "Leave a note on OpenStreetMap →",
+    "contactHeading": "Get in touch",
+    "contactBody": "Questions, feedback, or a partnership idea? We'd love to hear from you — reach us at",
     "creditsHeading": "Credits"
   },
   "footer": {
+    "tagline": "An open world map, powered by OpenStreetMap.",
+    "navLabel": "Footer",
+    "contact": "Contact",
     "data": "Data © OpenStreetMap contributors"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you’re looking for doesn’t exist or has moved."
   }
 }

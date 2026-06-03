@@ -19,7 +19,13 @@ function affiliateHref(name) {
 
 // Lazily mounted (next/dynamic) the first time a pin is clicked — so every
 // network call below happens on click, never on page load.
-export default function LocationCard({ feature, locale, onClose }) {
+export default function LocationCard({
+  feature,
+  locale,
+  features,
+  onSelect,
+  onClose,
+}) {
   const t = useTranslations("card");
   const p = feature.properties || {};
   const [lon, lat] = feature.geometry.coordinates;
@@ -31,6 +37,39 @@ export default function LocationCard({ feature, locale, onClose }) {
     () => (displayName.match(/[A-Za-z0-9]/) || ["•"])[0].toUpperCase(),
     [displayName]
   );
+
+  // Up to 5 named places within 50 km, nearest first — read from the same
+  // in-memory GeoJSON the map already loaded. A coarse bounding-box prefilter
+  // keeps this cheap on dense datasets before the exact haversine pass.
+  const nearby = useMemo(() => {
+    if (!features || !features.length) return [];
+    const toRad = (d) => (d * Math.PI) / 180;
+    const R = 6371;
+    const latRad = toRad(lat);
+    const latWin = 0.55;
+    const lonWin = 0.55 / Math.max(Math.cos(latRad), 0.05);
+    const out = [];
+    for (const f of features) {
+      if (f === feature) continue;
+      const fp = f.properties;
+      if (!fp || !fp.name) continue;
+      const c = f.geometry && f.geometry.coordinates;
+      if (!c) continue;
+      const flon = c[0];
+      const flat = c[1];
+      if (Math.abs(flat - lat) > latWin || Math.abs(flon - lon) > lonWin)
+        continue;
+      const dLat = toRad(flat - lat);
+      const dLon = toRad(flon - lon);
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(latRad) * Math.cos(toRad(flat)) * Math.sin(dLon / 2) ** 2;
+      const dist = 2 * R * Math.asin(Math.sqrt(a));
+      if (dist > 0 && dist <= 50) out.push({ f, dist });
+    }
+    out.sort((a, b) => a.dist - b.dist);
+    return out.slice(0, 5);
+  }, [features, feature, lat, lon]);
 
   useEffect(() => {
     let alive = true;
@@ -180,6 +219,28 @@ export default function LocationCard({ feature, locale, onClose }) {
               </>
             )}
           </div>
+
+          {nearby.length > 0 && (
+            <div className="loc-nearby">
+              <h3>{t("nearbyHeading")}</h3>
+              <ul>
+                {nearby.map(({ f, dist }, i) => {
+                  const np = f.properties || {};
+                  return (
+                    <li key={i}>
+                      <button
+                        type="button"
+                        onClick={() => onSelect && onSelect(f)}
+                      >
+                        <span className="n-name">{np.name}</span>
+                        <span className="n-dist">{Math.round(dist)} km</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
 
           {/* Reviews — intentionally disabled for now. To activate later,
               remove the disabled note below and uncomment this scaffold:

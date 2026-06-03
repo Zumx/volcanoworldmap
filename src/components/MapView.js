@@ -23,7 +23,12 @@ export default function MapView({ embedded = false }) {
   const locale = useLocale();
   const containerRef = useRef(null);
   const mapRef = useRef(null);
+  // Every ingested feature, kept around so the search box and the
+  // LocationCard "nearby" list can read the same in-memory dataset.
+  const featuresRef = useRef([]);
   const [selected, setSelected] = useState(null);
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     if (mapRef.current || !containerRef.current) return;
@@ -197,6 +202,7 @@ export default function MapView({ embedded = false }) {
 
     const ingest = (feats) => {
       for (const f of feats) {
+        featuresRef.current.push(f);
         if (f.properties && f.properties.name) named.push(f);
         else unnamed.push(f);
       }
@@ -249,6 +255,48 @@ export default function MapView({ embedded = false }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Fly to a feature and open its card — shared by the search box, the
+  // nearby list and (indirectly) marker clicks.
+  const selectFeature = (feature) => {
+    const map = mapRef.current;
+    const c = feature && feature.geometry && feature.geometry.coordinates;
+    if (map && c) {
+      map.setView([c[1], c[0]], Math.max(map.getZoom(), 9), { animate: true });
+    }
+    setSelected(feature);
+    setQuery("");
+    setSuggestions([]);
+  };
+
+  // Autocomplete over the loaded features. Matches on name and country and
+  // ranks prefix matches above substring matches; returns the top 5.
+  const onSearchChange = (e) => {
+    const q = e.target.value;
+    setQuery(q);
+    const term = q.trim().toLowerCase();
+    if (term.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+    const feats = featuresRef.current;
+    const scored = [];
+    for (let i = 0; i < feats.length; i++) {
+      const p = feats[i].properties;
+      const name = p && p.name;
+      if (!name) continue;
+      const nl = name.toLowerCase();
+      const cl = (p.country || "").toLowerCase();
+      let score = -1;
+      if (nl.startsWith(term)) score = 0;
+      else if (cl && cl.startsWith(term)) score = 1;
+      else if (nl.includes(term)) score = 2;
+      else if (cl && cl.includes(term)) score = 3;
+      if (score >= 0) scored.push({ f: feats[i], score, len: name.length });
+    }
+    scored.sort((a, b) => a.score - b.score || a.len - b.len);
+    setSuggestions(scored.slice(0, 5).map((s) => s.f));
+  };
+
   return (
     <>
       <div
@@ -266,10 +314,50 @@ export default function MapView({ embedded = false }) {
           </span>
         </div>
       )}
+      {!embedded && (
+        <div className="map-search">
+          <input
+            type="search"
+            className="map-search-input"
+            value={query}
+            onChange={onSearchChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && suggestions[0])
+                selectFeature(suggestions[0]);
+              else if (e.key === "Escape") {
+                setQuery("");
+                setSuggestions([]);
+              }
+            }}
+            onBlur={() => setTimeout(() => setSuggestions([]), 150)}
+            placeholder={t("searchPlaceholder")}
+            aria-label={t("searchPlaceholder")}
+          />
+          {suggestions.length > 0 && (
+            <ul className="map-search-results">
+              {suggestions.map((f, i) => {
+                const p = f.properties || {};
+                return (
+                  <li key={i}>
+                    <button type="button" onClick={() => selectFeature(f)}>
+                      <span className="r-name">{p.name}</span>
+                      {p.country && (
+                        <span className="r-country">{p.country}</span>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      )}
       {selected && (
         <LocationCard
           feature={selected}
           locale={locale}
+          features={featuresRef.current}
+          onSelect={selectFeature}
           onClose={() => setSelected(null)}
         />
       )}

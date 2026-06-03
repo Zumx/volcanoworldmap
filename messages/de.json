@@ -19,7 +19,8 @@
     "showAll": "Alle anzeigen",
     "namedCount": "{count, number} benannte {noun}",
     "allCount": "{count, number} {noun} kartiert",
-    "couldNotLoad": "Daten konnten nicht geladen werden"
+    "couldNotLoad": "Daten konnten nicht geladen werden",
+    "searchPlaceholder": "Nach Name oder Land suchen…"
   },
   "card": {
     "close": "Schließen",
@@ -36,7 +37,8 @@
     "reviewsHeading": "Bewertungen",
     "reviewsDisabled": "Bewertungen folgen in Kürze.",
     "viewOnOsm": "Auf OpenStreetMap ansehen",
-    "wikipedia": "Auf Wikipedia lesen"
+    "wikipedia": "Auf Wikipedia lesen",
+    "nearbyHeading": "In der Nähe"
   },
   "country": {
     "heading": "{noun} in {country}",
@@ -61,9 +63,21 @@
     "contributeHeading": "Fehlt etwas?",
     "contributeBody": "Diese Karte ist nur so vollständig wie OpenStreetMap selbst. Wenn du ein {noun} kennst, das hier fehlt, kannst du es direkt auf OpenStreetMap hinzufügen — kostenlos, offen und beim nächsten Datenabgleich hier sichtbar.",
     "contributeCta": "Einen fehlenden Ort auf OpenStreetMap hinzufügen →",
+    "reportHeading": "Fehler oder falschen Standort melden",
+    "reportBody": "Ein {noun} am falschen Ort, mit veralteten Angaben oder doppelt erfasst? Die Daten stammen aus OpenStreetMap. Am besten hinterlässt du dort einen kurzen Hinweis — ein lokaler Mapper prüft ihn, und die Korrektur erscheint beim nächsten Abgleich hier.",
+    "reportCta": "Hinweis auf OpenStreetMap hinterlassen →",
+    "contactHeading": "Kontakt aufnehmen",
+    "contactBody": "Fragen, Feedback oder eine Kooperationsidee? Wir freuen uns, von dir zu hören — schreib uns an",
     "creditsHeading": "Quellen"
   },
   "footer": {
+    "tagline": "Eine offene Weltkarte, basierend auf OpenStreetMap.",
+    "navLabel": "Fußzeile",
+    "contact": "Kontakt",
     "data": "Daten © OpenStreetMap-Mitwirkende"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "body": "Die gesuchte Seite existiert nicht oder wurde verschoben."
   }
 }

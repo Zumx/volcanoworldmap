@@ -19,7 +19,8 @@
     "showAll": "Tout afficher",
     "namedCount": "{count, number} {noun} nommés",
     "allCount": "{count, number} {noun} cartographiés",
-    "couldNotLoad": "Impossible de charger les données"
+    "couldNotLoad": "Impossible de charger les données",
+    "searchPlaceholder": "Rechercher par nom ou pays…"
   },
   "card": {
     "close": "Fermer",
@@ -36,7 +37,8 @@
     "reviewsHeading": "Avis",
     "reviewsDisabled": "Les avis arrivent bientôt.",
     "viewOnOsm": "Voir sur OpenStreetMap",
-    "wikipedia": "Lire sur Wikipédia"
+    "wikipedia": "Lire sur Wikipédia",
+    "nearbyHeading": "À proximité"
   },
   "country": {
     "heading": "{noun} en {country}",
@@ -61,9 +63,21 @@
     "contributeHeading": "Quelque chose manque ?",
     "contributeBody": "Cette carte n'est aussi complète qu'OpenStreetMap lui-même. Si vous connaissez un {noun} qui n'y figure pas, vous pouvez l'ajouter directement à OpenStreetMap — c'est gratuit, ouvert, et il apparaîtra ici à la prochaine actualisation.",
     "contributeCta": "Ajouter un lieu manquant sur OpenStreetMap →",
+    "reportHeading": "Signaler une erreur ou un emplacement incorrect",
+    "reportBody": "Un {noun} mal placé, avec des informations obsolètes ou en double ? Les données proviennent d’OpenStreetMap : le mieux est d’y laisser une courte note — un contributeur local la vérifie et la correction revient sur cette carte à la prochaine actualisation.",
+    "reportCta": "Laisser une note sur OpenStreetMap →",
+    "contactHeading": "Nous contacter",
+    "contactBody": "Une question, un retour ou une idée de partenariat ? Nous serions ravis d’échanger — écrivez-nous à",
     "creditsHeading": "Crédits"
   },
   "footer": {
+    "tagline": "Une carte du monde ouverte, propulsée par OpenStreetMap.",
+    "navLabel": "Pied de page",
+    "contact": "Contact",
     "data": "Données © contributeurs d'OpenStreetMap"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "body": "La page que vous recherchez n’existe pas ou a été déplacée."
   }
 }

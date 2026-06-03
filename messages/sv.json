@@ -19,7 +19,8 @@
     "showAll": "Visa alla",
     "namedCount": "{count, number} namngivna {noun}",
     "allCount": "{count, number} {noun} kartlagda",
-    "couldNotLoad": "Kunde inte ladda data"
+    "couldNotLoad": "Kunde inte ladda data",
+    "searchPlaceholder": "Sök på namn eller land…"
   },
   "card": {
     "close": "Stäng",
@@ -36,7 +37,8 @@
     "reviewsHeading": "Recensioner",
     "reviewsDisabled": "Recensioner kommer snart.",
     "viewOnOsm": "Visa på OpenStreetMap",
-    "wikipedia": "Läs på Wikipedia"
+    "wikipedia": "Läs på Wikipedia",
+    "nearbyHeading": "I närheten"
   },
   "country": {
     "heading": "{noun} i {country}",
@@ -61,9 +63,21 @@
     "contributeHeading": "Saknas något?",
     "contributeBody": "Den här kartan är bara så fullständig som OpenStreetMap självt. Känner du till en {noun} som inte finns med här kan du lägga till den direkt i OpenStreetMap — det är gratis, öppet och syns här vid nästa uppdatering.",
     "contributeCta": "Lägg till en saknad plats på OpenStreetMap →",
+    "reportHeading": "Rapportera ett fel eller en felaktig plats",
+    "reportBody": "Hittade du ett {noun} på fel plats, med inaktuella uppgifter eller en dubblett? Datan kommer från OpenStreetMap, så snabbaste lösningen är en kort notis där — en lokal kartläggare granskar den och rättelsen syns här vid nästa uppdatering.",
+    "reportCta": "Lämna en notis på OpenStreetMap →",
+    "contactHeading": "Kontakta oss",
+    "contactBody": "Frågor, feedback eller en samarbetsidé? Vi hör gärna från dig — mejla oss på",
     "creditsHeading": "Källor"
   },
   "footer": {
+    "tagline": "En öppen världskarta, byggd på OpenStreetMap.",
+    "navLabel": "Sidfot",
+    "contact": "Kontakt",
     "data": "Data © OpenStreetMap-bidragsgivare"
+  },
+  "notFound": {
+    "title": "Sidan hittades inte",
+    "body": "Sidan du letar efter finns inte eller har flyttats."
   }
 }
