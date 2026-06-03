@@ -4,7 +4,8 @@
     "map": "Carte",
     "blog": "Blog",
     "about": "À propos",
-    "countries": "Pays"
+    "countries": "Pays",
+    "faq": "FAQ"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -67,7 +68,8 @@
     "prev": "← Plus récents",
     "next": "Plus anciens →",
     "page": "Page {page} sur {total}",
-    "exploreCountry": "Découvrir {country} sur la carte →"
+    "exploreCountry": "Découvrir {country} sur la carte →",
+    "alsoLike": "Vous aimerez aussi"
   },
   "about": {
     "heading": "À propos",
@@ -81,7 +83,10 @@
     "reportCta": "Laisser une note sur OpenStreetMap →",
     "contactHeading": "Nous contacter",
     "contactBody": "Une question, un retour ou une idée de partenariat ? Nous serions ravis d’échanger — écrivez-nous à",
-    "creditsHeading": "Crédits"
+    "creditsHeading": "Crédits",
+    "faqHeading": "Foire aux questions",
+    "faqBody": "Des réponses rapides aux questions les plus fréquentes sont sur notre",
+    "faqCta": "page FAQ →"
   },
   "footer": {
     "tagline": "Une carte du monde ouverte, propulsée par OpenStreetMap.",
@@ -105,5 +110,29 @@
     "message": "Nous utilisons des cookies optionnels pour mesurer l’audience de façon anonyme.",
     "accept": "Accepter",
     "reject": "Refuser"
+  },
+  "faq": {
+    "heading": "Foire aux questions",
+    "intro": "Questions fréquentes sur cette carte et les {noun} qu'elle recense.",
+    "q1": "Qu'est-ce que {name} ?",
+    "a1": "{name} est une carte du monde interactive et gratuite de tous les {noun}, entièrement construite à partir des données ouvertes d'OpenStreetMap. Cliquez sur un point pour une photo, une description et les informations essentielles.",
+    "q2": "D'où proviennent les données ?",
+    "a2": "Chaque lieu provient d'OpenStreetMap, la carte du monde libre et maintenue par une communauté. Les photos et descriptions viennent de Wikipédia, Wikimedia Commons et Mapillary.",
+    "q3": "À quelle fréquence la carte est-elle mise à jour ?",
+    "a3": "Les données sont actualisées automatiquement depuis OpenStreetMap environ une fois par mois, si bien que les {noun} ajoutés ou modifiés apparaissent sans intervention manuelle.",
+    "q4": "Est-ce gratuit ?",
+    "a4": "Oui. La carte est entièrement gratuite à consulter, et les données sous-jacentes sont ouvertes sous licence Open Database License (ODbL).",
+    "q5": "Comment trouver un lieu précis ?",
+    "a5": "Ouvrez la carte et utilisez le champ de recherche pour filtrer par nom ou par pays, ou parcourez par pays depuis la page d'accueil.",
+    "q6": "Un {noun} manque — puis-je l'ajouter ?",
+    "a6": "Absolument, et avec plaisir. Ajoutez-le directement à OpenStreetMap — c'est gratuit et ouvert — et il apparaîtra ici à la prochaine actualisation mensuelle.",
+    "q7": "Quelque chose est erroné ou mal placé. Comment le signaler ?",
+    "a7": "Comme les données vivent dans OpenStreetMap, le plus rapide est d'y laisser une courte note. Un contributeur local la vérifie et la correction revient automatiquement sur cette carte.",
+    "q8": "Puis-je utiliser les données pour mon propre projet ?",
+    "a8": "Oui, sous la licence ODbL d'OpenStreetMap — créditez simplement « les contributeurs d'OpenStreetMap ». Les photos et textes conservent leurs licences Wikipédia et Wikimedia d'origine.",
+    "q9": "Pourquoi certains lieux n'ont-ils ni photo ni description ?",
+    "a9": "Nous n'affichons une photo ou une description que lorsqu'elle est disponible sur Wikipédia, Wikimedia Commons ou Mapillary. De nombreux {noun} n'y sont tout simplement pas encore documentés.",
+    "q10": "Comment vous contacter ?",
+    "a10": "Utilisez le lien de contact dans le pied de page ou sur la page À propos — nous sommes toujours ravis de recevoir retours, corrections et idées."
   }
 }

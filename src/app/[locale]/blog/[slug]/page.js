@@ -122,7 +122,7 @@ export default async function BlogPost({ params }) {
       <MDXRemote source={post.content} />
       {related.length > 0 && (
         <aside className="related-posts">
-          <h2>{t("related")}</h2>
+          <h2>{t("alsoLike")}</h2>
           <ul>
             {related.map((p) => (
               <li key={p.slug}>

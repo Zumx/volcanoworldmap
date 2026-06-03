@@ -172,16 +172,20 @@ export async function relatedPostsForCountry(
 
 export async function relatedPosts(locale, slug, limit = 3) {
   const all = await listPosts(locale);
+  const me = all.find((p) => p.slug === slug);
+  const myTags = new Set((me && me.tags) || []);
   const mySet = new Set(tokens(slug));
-  if (mySet.size === 0) {
+  if (mySet.size === 0 && myTags.size === 0) {
     return all.filter((p) => p.slug !== slug).slice(0, limit);
   }
   const scored = all
     .filter((p) => p.slug !== slug)
     .map((p) => {
-      const t = tokens(p.slug);
       let overlap = 0;
-      for (const w of t) if (mySet.has(w)) overlap++;
+      // Shared frontmatter tags are a strong signal; weight them above the
+      // incidental slug-token overlap used as a fallback for untagged posts.
+      for (const tag of p.tags || []) if (myTags.has(tag)) overlap += 3;
+      for (const w of tokens(p.slug)) if (mySet.has(w)) overlap += 1;
       return { ...p, _score: overlap };
     })
     .sort((a, b) => {

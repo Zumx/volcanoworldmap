@@ -124,6 +124,12 @@ export default async function About({ params }) {
         )}
       </p>
 
+      <h2>{t("faqHeading")}</h2>
+      <p>
+        {t("faqBody")}{" "}
+        <a href={`/${locale}/faq`}>{t("faqCta")}</a>
+      </p>
+
       <h2>{t("creditsHeading")}</h2>
       <ul>
         <li>Map data © OpenStreetMap contributors (ODbL)</li>

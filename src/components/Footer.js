@@ -23,6 +23,7 @@ export default function Footer() {
           <Link href="/map">{nav("map")}</Link>
           <Link href="/blog">{nav("blog")}</Link>
           <Link href="/about">{nav("about")}</Link>
+          <Link href="/faq">{nav("faq")}</Link>
           {email && <a href={`mailto:${email}`}>{t("contact")}</a>}
         </nav>
       </div>

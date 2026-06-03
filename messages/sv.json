@@ -4,7 +4,8 @@
     "map": "Karta",
     "blog": "Blogg",
     "about": "Om",
-    "countries": "Länder"
+    "countries": "Länder",
+    "faq": "FAQ"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -67,7 +68,8 @@
     "prev": "← Nyare",
     "next": "Äldre →",
     "page": "Sida {page} av {total}",
-    "exploreCountry": "Utforska {country} på kartan →"
+    "exploreCountry": "Utforska {country} på kartan →",
+    "alsoLike": "Du kanske också gillar"
   },
   "about": {
     "heading": "Om",
@@ -81,7 +83,10 @@
     "reportCta": "Lämna en notis på OpenStreetMap →",
     "contactHeading": "Kontakta oss",
     "contactBody": "Frågor, feedback eller en samarbetsidé? Vi hör gärna från dig — mejla oss på",
-    "creditsHeading": "Källor"
+    "creditsHeading": "Källor",
+    "faqHeading": "Vanliga frågor",
+    "faqBody": "Snabba svar på de vanligaste frågorna finns på vår",
+    "faqCta": "FAQ-sida →"
   },
   "footer": {
     "tagline": "En öppen världskarta, byggd på OpenStreetMap.",
@@ -105,5 +110,29 @@
     "message": "Vi använder valfria cookies för anonym trafikmätning.",
     "accept": "Acceptera",
     "reject": "Neka"
+  },
+  "faq": {
+    "heading": "Vanliga frågor",
+    "intro": "Vanliga frågor om den här kartan och de {noun} den visar.",
+    "q1": "Vad är {name}?",
+    "a1": "{name} är en gratis, interaktiv världskarta över alla {noun}, helt byggd på öppna data från OpenStreetMap. Klicka på en punkt för foto, beskrivning och de viktigaste fakta.",
+    "q2": "Varifrån kommer datan?",
+    "a2": "Varje plats hämtas från OpenStreetMap, den fria världskartan som underhålls av en community. Foton och beskrivningar kommer från Wikipedia, Wikimedia Commons och Mapillary.",
+    "q3": "Hur ofta uppdateras kartan?",
+    "a3": "Datan uppdateras automatiskt från OpenStreetMap ungefär en gång i månaden, så nya eller ändrade {noun} dyker upp utan något manuellt arbete.",
+    "q4": "Är den gratis att använda?",
+    "a4": "Ja. Kartan är helt gratis att utforska, och den underliggande datan är öppen under Open Database License (ODbL).",
+    "q5": "Hur hittar jag en specifik plats?",
+    "a5": "Öppna kartan och använd sökrutan för att filtrera på namn eller land, eller bläddra efter land från startsidan.",
+    "q6": "Ett {noun} saknas — kan jag lägga till det?",
+    "a6": "Absolut, och vi skulle uppskatta det. Lägg till det direkt i OpenStreetMap — det är gratis och öppet — så syns det här vid nästa månatliga uppdatering.",
+    "q7": "Något är fel eller på fel plats. Hur rapporterar jag det?",
+    "a7": "Eftersom datan finns i OpenStreetMap är en kort notis där snabbast. En lokal kartläggare granskar den och rättelsen flödar automatiskt tillbaka till den här kartan.",
+    "q8": "Får jag använda datan för mitt eget projekt?",
+    "a8": "Ja, under OpenStreetMaps ODbL-licens — ange bara ”OpenStreetMap-bidragsgivare”. Foton och text behåller sina ursprungliga licenser från Wikipedia och Wikimedia.",
+    "q9": "Varför saknar vissa platser foto eller beskrivning?",
+    "a9": "Vi visar bara foto eller beskrivning när det finns tillgängligt från Wikipedia, Wikimedia Commons eller Mapillary. Många {noun} har helt enkelt inte dokumenterats där ännu.",
+    "q10": "Hur kan jag komma i kontakt?",
+    "a10": "Använd kontaktlänken i sidfoten eller på Om-sidan — vi tar alltid gärna emot feedback, rättelser och idéer."
   }
 }

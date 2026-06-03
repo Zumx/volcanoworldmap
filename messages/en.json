@@ -4,7 +4,8 @@
     "map": "Map",
     "blog": "Blog",
     "about": "About",
-    "countries": "Countries"
+    "countries": "Countries",
+    "faq": "FAQ"
   },
   "home": {
     "tagline": "An interactive world map",
@@ -67,7 +68,8 @@
     "prev": "← Newer",
     "next": "Older →",
     "page": "Page {page} of {total}",
-    "exploreCountry": "Explore {country} on the map →"
+    "exploreCountry": "Explore {country} on the map →",
+    "alsoLike": "You might also like"
   },
   "about": {
     "heading": "About",
@@ -81,7 +83,10 @@
     "reportCta": "Leave a note on OpenStreetMap →",
     "contactHeading": "Get in touch",
     "contactBody": "Questions, feedback, or a partnership idea? We'd love to hear from you — reach us at",
-    "creditsHeading": "Credits"
+    "creditsHeading": "Credits",
+    "faqHeading": "Frequently asked questions",
+    "faqBody": "Quick answers to the most common questions are on our",
+    "faqCta": "FAQ page →"
   },
   "footer": {
     "tagline": "An open world map, powered by OpenStreetMap.",
@@ -105,5 +110,29 @@
     "message": "We use optional cookies to measure traffic anonymously.",
     "accept": "Accept",
     "reject": "Decline"
+  },
+  "faq": {
+    "heading": "Frequently asked questions",
+    "intro": "Common questions about this map and the {noun} on it.",
+    "q1": "What is {name}?",
+    "a1": "{name} is a free, interactive world map of every {noun}, built entirely from open OpenStreetMap data. Click any point for a photo, a description and the key facts.",
+    "q2": "Where does the data come from?",
+    "a2": "Every location is sourced from OpenStreetMap, the free, community-maintained map of the world. Photos and descriptions come from Wikipedia, Wikimedia Commons and Mapillary.",
+    "q3": "How often is the map updated?",
+    "a3": "The dataset is refreshed automatically from OpenStreetMap about once a month, so newly added or edited {noun} show up without any manual work.",
+    "q4": "Is it free to use?",
+    "a4": "Yes. The map is completely free to browse, and the underlying data is open under the Open Database License (ODbL).",
+    "q5": "How do I find a specific place?",
+    "a5": "Open the map and use the search box to filter by name or country, or browse by country from the home page.",
+    "q6": "A {noun} is missing — can I add it?",
+    "a6": "Absolutely, and we'd love you to. Add it directly to OpenStreetMap — it's free and open — and it will appear here at the next monthly refresh.",
+    "q7": "Something is wrong or in the wrong place. How do I report it?",
+    "a7": "Because the data lives in OpenStreetMap, the quickest fix is a short note there. A local mapper reviews it and the correction flows back to this map automatically.",
+    "q8": "Can I use the data for my own project?",
+    "a8": "Yes, under the OpenStreetMap ODbL license — just credit \"OpenStreetMap contributors\". Photos and text keep their original Wikipedia and Wikimedia licenses.",
+    "q9": "Why don't some places have a photo or description?",
+    "a9": "We only show a photo or description when one is available from Wikipedia, Wikimedia Commons or Mapillary. Many {noun} simply haven't been documented there yet.",
+    "q10": "How can I get in touch?",
+    "a10": "Use the contact link in the footer or on the About page — we're always glad to hear feedback, corrections and ideas."
   }
 }
