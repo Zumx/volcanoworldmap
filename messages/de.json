@@ -134,5 +134,11 @@
     "a9": "Wir zeigen ein Foto oder eine Beschreibung nur, wenn sie bei Wikipedia, Wikimedia Commons oder Mapillary verfügbar sind. Viele {noun} wurden dort schlicht noch nicht dokumentiert.",
     "q10": "Wie kann ich Kontakt aufnehmen?",
     "a10": "Nutze den Kontaktlink in der Fußzeile oder auf der Über-Seite — wir freuen uns immer über Feedback, Korrekturen und Ideen."
+  },
+  "explore": {
+    "title": "Beste {niche} in {country}",
+    "count": "{count, number} {noun} kartiert",
+    "topHeading": "Top 10 {noun} in {country}",
+    "cta": "Alle {count, number} {noun} in {country} auf der Karte entdecken"
   }
 }

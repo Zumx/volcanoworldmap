@@ -499,6 +499,25 @@ a {
   color: color-mix(in srgb, var(--text) 65%, white);
 }
 
+/* ---- Explore landing pages ---- */
+.explore-hero {
+  margin-bottom: 10px;
+}
+.explore-eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 4px;
+}
+.explore-count {
+  font-size: 15px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--text) 70%, white);
+  margin: 0 0 16px;
+}
+
 /* ---- Breadcrumbs ---- */
 .breadcrumbs {
   margin-bottom: 14px;

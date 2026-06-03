@@ -134,5 +134,11 @@
     "a9": "Vi visar bara foto eller beskrivning när det finns tillgängligt från Wikipedia, Wikimedia Commons eller Mapillary. Många {noun} har helt enkelt inte dokumenterats där ännu.",
     "q10": "Hur kan jag komma i kontakt?",
     "a10": "Använd kontaktlänken i sidfoten eller på Om-sidan — vi tar alltid gärna emot feedback, rättelser och idéer."
+  },
+  "explore": {
+    "title": "Bästa {niche} i {country}",
+    "count": "{count, number} {noun} kartlagda",
+    "topHeading": "Topp 10 {noun} i {country}",
+    "cta": "Utforska alla {count, number} {noun} i {country} på kartan"
   }
 }

@@ -134,5 +134,11 @@
     "a9": "We only show a photo or description when one is available from Wikipedia, Wikimedia Commons or Mapillary. Many {noun} simply haven't been documented there yet.",
     "q10": "How can I get in touch?",
     "a10": "Use the contact link in the footer or on the About page — we're always glad to hear feedback, corrections and ideas."
+  },
+  "explore": {
+    "title": "Best {niche} in {country}",
+    "count": "{count, number} {noun} mapped",
+    "topHeading": "Top 10 {noun} in {country}",
+    "cta": "Explore all {count, number} {noun} in {country} on the map"
   }
 }
