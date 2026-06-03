@@ -35,16 +35,18 @@ export default function LocationCard({ feature, locale, onClose }) {
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    enrichLocation({ name: p.name, lat, lon, locale }).then((r) => {
-      if (alive) {
-        setEnriched(r);
-        setLoading(false);
+    enrichLocation({ name: p.name, country: p.country, lat, lon, locale }).then(
+      (r) => {
+        if (alive) {
+          setEnriched(r);
+          setLoading(false);
+        }
       }
-    });
+    );
     return () => {
       alive = false;
     };
-  }, [p.name, lat, lon, locale]);
+  }, [p.name, p.country, lat, lon, locale]);
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
