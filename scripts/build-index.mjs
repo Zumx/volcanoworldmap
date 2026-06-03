@@ -22,7 +22,13 @@
 //
 // Used as an npm "prebuild" step and also called directly by
 // fetch-data.mjs after a fresh fetch.
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  existsSync,
+  statSync,
+} from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -170,6 +176,33 @@ export function writeFeatured(features, dataDir, n = 6) {
   return featured;
 }
 
+// Small meta sidecar for the stats dashboard: dataset totals + a "last
+// updated" date taken from the points.geojson file mtime (set when the
+// monthly fetch rewrote it) and falling back to the build date.
+export function writeMeta(features, dataDir, geojsonPath) {
+  mkdirSync(dataDir, { recursive: true });
+  let updated = null;
+  try {
+    if (geojsonPath && existsSync(geojsonPath))
+      updated = statSync(geojsonPath).mtime.toISOString().slice(0, 10);
+  } catch {
+    /* fall back below */
+  }
+  if (!updated) updated = new Date().toISOString().slice(0, 10);
+  const countrySet = new Set();
+  for (const f of features) {
+    const c = f.properties && f.properties.country;
+    if (c) countrySet.add(c);
+  }
+  const meta = {
+    updated,
+    places: features.length,
+    countries: countrySet.size,
+  };
+  writeFileSync(join(dataDir, "meta.json"), JSON.stringify(meta));
+  return meta;
+}
+
 // CLI: derive the index from an existing points.geojson.
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -180,12 +213,14 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     mkdirSync(dataDir, { recursive: true });
     writeFileSync(join(dataDir, "countries.json"), "[]");
     writeFileSync(join(dataDir, "featured.json"), "[]");
+    writeMeta([], dataDir, geo);
     writeSplit([], dataDir, 0);
     process.exitCode = 0;
   } else {
     const { features = [] } = JSON.parse(readFileSync(geo, "utf8"));
     const list = writeCountryIndex(features, dataDir);
     const featured = writeFeatured(features, dataDir);
+    writeMeta(features, dataDir, geo);
     const cap = readInitialCap(join(__dirname, ".."));
     const { core, rest } = writeSplit(features, dataDir, cap);
     console.log(`Featured destinations: ${featured.length}.`);

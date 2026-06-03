@@ -27,6 +27,19 @@ export async function listCountries() {
   return idx.map(({ name, slug, count }) => ({ name, slug, count }));
 }
 
+// Dataset meta (updated date + totals), written by scripts/build-index.mjs.
+let metaCache = null;
+export async function getDataMeta() {
+  if (metaCache) return metaCache;
+  try {
+    const p = join(process.cwd(), "public", "data", "meta.json");
+    metaCache = JSON.parse(await readFile(p, "utf8"));
+  } catch {
+    metaCache = { updated: null, places: 0, countries: 0 };
+  }
+  return metaCache;
+}
+
 // Handpicked home-page destinations, written by scripts/build-index.mjs.
 // Empty array if the artifact is missing (pre-rebuild deployments).
 let featuredCache = null;

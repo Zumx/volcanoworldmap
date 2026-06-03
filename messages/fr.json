@@ -6,7 +6,8 @@
     "about": "À propos",
     "countries": "Pays",
     "faq": "FAQ",
-    "menu": "Menu"
+    "menu": "Menu",
+    "stats": "Statistiques"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -144,5 +145,15 @@
     "count": "{count, number} {noun} cartographiés",
     "topHeading": "Top 10 des {noun} en {country}",
     "cta": "Explorer les {count, number} {noun} en {country} sur la carte"
+  },
+  "stats": {
+    "heading": "{niche} en chiffres",
+    "intro": "Un aperçu en direct des {noun} que {name} a cartographiés dans le monde, à partir d’OpenStreetMap.",
+    "statPlaces": "{noun} cartographiés",
+    "statCountries": "Pays couverts",
+    "statPosts": "Articles de blog",
+    "statUpdated": "Dernière mise à jour",
+    "topCountries": "Top 10 des pays",
+    "byContinent": "Par continent"
   }
 }

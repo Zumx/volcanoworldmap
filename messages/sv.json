@@ -6,7 +6,8 @@
     "about": "Om",
     "countries": "Länder",
     "faq": "FAQ",
-    "menu": "Meny"
+    "menu": "Meny",
+    "stats": "Statistik"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -144,5 +145,15 @@
     "count": "{count, number} {noun} kartlagda",
     "topHeading": "Topp 10 {noun} i {country}",
     "cta": "Utforska alla {count, number} {noun} i {country} på kartan"
+  },
+  "stats": {
+    "heading": "{niche} i siffror",
+    "intro": "En live-överblick över de {noun} som {name} har kartlagt världen över, från OpenStreetMap.",
+    "statPlaces": "{noun} kartlagda",
+    "statCountries": "Länder som täcks",
+    "statPosts": "Blogginlägg",
+    "statUpdated": "Senast uppdaterad",
+    "topCountries": "Topp 10 länder",
+    "byContinent": "Per kontinent"
   }
 }

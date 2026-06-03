@@ -10,6 +10,7 @@ export default async function Home({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
+  const nav = await getTranslations("nav");
   const allCountries = await listCountries();
   const countries = allCountries.slice(0, 60);
   // listCountries() is ordered by count desc, so the first few are the
@@ -70,6 +71,12 @@ export default async function Home({ params }) {
           </span>
         </div>
       </div>
+
+      <p className="home-statslink">
+        <Link className="btn btn-sm btn-outline" href="/stats">
+          📊 {nav("stats")}
+        </Link>
+      </p>
 
       {featured.length > 0 && (
         <section className="container featured">
