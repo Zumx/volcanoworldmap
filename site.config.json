@@ -3,6 +3,7 @@
   "slug": "volcanoworldmap",
   "emoji": "🌋",
   "domain": "volcanoworldmap.com",
+  "contactEmail": "hello@volcanoworldmap.com",
   "colors": {
     "primary": "#1a1a2e",
     "accent": "#e94560"

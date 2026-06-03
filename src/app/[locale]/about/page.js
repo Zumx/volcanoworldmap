@@ -100,6 +100,30 @@ export default async function About({ params }) {
         . Edits show up here at the next monthly refresh.
       </p>
 
+      <h2>{t("reportHeading")}</h2>
+      <p>{t("reportBody", { noun: site.mappedNoun })}</p>
+      <p>
+        <a
+          className="btn btn-primary"
+          href="https://www.openstreetmap.org/note/new"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t("reportCta")}
+        </a>
+      </p>
+
+      <h2>{t("contactHeading")}</h2>
+      <p>
+        {t("contactBody")}
+        {site.contactEmail && (
+          <>
+            {" "}
+            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+          </>
+        )}
+      </p>
+
       <h2>{t("creditsHeading")}</h2>
       <ul>
         <li>Map data © OpenStreetMap contributors (ODbL)</li>
