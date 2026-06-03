@@ -43,19 +43,13 @@ export default async function Home({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }}
       />
+      {/* Compact hero: brand + tagline on a single ≤80px strip. The CTAs
+          moved to the navbar and the map now dominates the viewport. */}
       <section className="hero">
         <div className="hero-brand">
           <span className="hero-emoji">{site.emoji}</span>
           <span className="hero-name">{site.name}</span>
           <span className="hero-tagline">{t("tagline")}</span>
-        </div>
-        <div className="hero-actions">
-          <Link className="btn btn-sm btn-primary" href="/map">
-            {t("ctaMap")}
-          </Link>
-          <Link className="btn btn-sm btn-ghost" href="/blog">
-            {t("ctaBlog")}
-          </Link>
         </div>
       </section>
 

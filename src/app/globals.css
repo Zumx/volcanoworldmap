@@ -54,9 +54,14 @@ a {
 }
 .site-header nav {
   display: flex;
-  gap: 18px;
+  gap: 14px;
   align-items: center;
   flex-wrap: wrap;
+}
+.site-header .nav-links {
+  display: flex;
+  gap: 18px;
+  align-items: center;
 }
 .site-header nav a {
   text-decoration: none;
@@ -64,8 +69,22 @@ a {
   font-size: 14px;
   color: var(--text);
 }
-.site-header nav a:hover {
+.site-header .nav-links a:hover {
   color: var(--accent);
+}
+/* CTA buttons living in the navbar. btn-ghost is authored for the dark hero
+   (white text/border); re-skin it for the white header so it stays legible. */
+.site-header nav .btn {
+  padding: 6px 14px;
+}
+.site-header nav .btn-ghost {
+  border-color: var(--border);
+  color: var(--primary-dark);
+}
+.site-header nav .btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 1;
 }
 .language-switcher {
   display: flex;
@@ -114,22 +133,23 @@ a {
   margin: 12px 0 12px 22px;
 }
 
-/* ---- Hero (compact strip: brand + tagline + CTAs on one row) ---- */
+/* ---- Hero (compact strip: brand + tagline on one row, ≤80px) ---- */
 .hero {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 20px;
+  flex-wrap: nowrap;
+  gap: 0 14px;
   background: linear-gradient(
     135deg,
     var(--primary) 0%,
     var(--primary-dark) 100%
   );
   color: #fff;
-  padding: 10px 24px;
+  padding: 0 24px;
+  height: 64px;
   min-height: 56px;
   max-height: 80px;
+  overflow: hidden;
 }
 .hero-brand {
   display: flex;
@@ -152,11 +172,6 @@ a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.hero-actions {
-  display: flex;
-  gap: 10px;
-  flex-shrink: 0;
 }
 .btn {
   display: inline-block;
@@ -185,7 +200,7 @@ a {
 
 /* ---- Home map (dominates the viewport on load) ---- */
 .home-map {
-  height: 72vh;
+  height: 73vh;
   min-height: 360px;
   width: 100%;
   position: relative;
@@ -219,18 +234,26 @@ a {
   color: var(--primary-dark);
 }
 
-/* ---- Compact hero on small screens ---- */
+/* ---- Mobile: keep the hero a slim brand strip, declutter the navbar ---- */
 @media (max-width: 640px) {
   .hero {
-    max-height: none;
-    padding: 10px 16px;
+    height: 56px;
+    padding: 0 16px;
   }
   .hero-tagline {
     display: none;
   }
-  .hero-actions {
-    flex: 1 1 auto;
-    justify-content: flex-end;
+  /* Secondary text links collapse; the Map/Blog CTA buttons + language
+     switcher remain in the navbar. */
+  .site-header .nav-links {
+    display: none;
+  }
+  .site-header {
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  .site-header nav {
+    gap: 10px;
   }
   .home-map {
     height: 70vh;

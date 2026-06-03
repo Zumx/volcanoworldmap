@@ -15,10 +15,18 @@ export default function Header() {
         <span>{site.name}</span>
       </Link>
       <nav>
-        <Link href="/">{t("home")}</Link>
-        <Link href="/map">{t("map")}</Link>
-        <Link href="/blog">{t("blog")}</Link>
-        <Link href="/about">{t("about")}</Link>
+        <div className="nav-links">
+          <Link href="/">{t("home")}</Link>
+          <Link href="/about">{t("about")}</Link>
+        </div>
+        {/* Primary CTAs live in the navbar now (moved out of the hero so the
+            hero can stay a compact brand+tagline strip). */}
+        <Link className="btn btn-sm btn-ghost" href="/blog">
+          {t("blog")}
+        </Link>
+        <Link className="btn btn-sm btn-primary" href="/map">
+          {t("map")}
+        </Link>
         <LanguageSwitcher />
       </nav>
     </header>
