@@ -39,7 +39,9 @@
     "reviewsDisabled": "Les avis arrivent bientôt.",
     "viewOnOsm": "Voir sur OpenStreetMap",
     "wikipedia": "Lire sur Wikipédia",
-    "nearbyHeading": "À proximité"
+    "nearbyHeading": "À proximité",
+    "share": "Partager",
+    "copied": "Lien copié !"
   },
   "country": {
     "heading": "{noun} en {country}",
@@ -88,5 +90,10 @@
     "emailPlaceholder": "Votre e-mail",
     "button": "S’abonner",
     "thanks": "Merci ! Votre messagerie va s’ouvrir pour confirmer."
+  },
+  "cookie": {
+    "message": "Nous utilisons des cookies optionnels pour mesurer l’audience de façon anonyme.",
+    "accept": "Accepter",
+    "reject": "Refuser"
   }
 }

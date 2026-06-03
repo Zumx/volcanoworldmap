@@ -39,7 +39,9 @@
     "reviewsDisabled": "Recensioner kommer snart.",
     "viewOnOsm": "Visa på OpenStreetMap",
     "wikipedia": "Läs på Wikipedia",
-    "nearbyHeading": "I närheten"
+    "nearbyHeading": "I närheten",
+    "share": "Dela",
+    "copied": "Länk kopierad!"
   },
   "country": {
     "heading": "{noun} i {country}",
@@ -88,5 +90,10 @@
     "emailPlaceholder": "Din e-post",
     "button": "Prenumerera",
     "thanks": "Tack! Din e-postapp öppnas för att bekräfta."
+  },
+  "cookie": {
+    "message": "Vi använder valfria cookies för anonym trafikmätning.",
+    "accept": "Acceptera",
+    "reject": "Neka"
   }
 }

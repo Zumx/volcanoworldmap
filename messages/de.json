@@ -39,7 +39,9 @@
     "reviewsDisabled": "Bewertungen folgen in Kürze.",
     "viewOnOsm": "Auf OpenStreetMap ansehen",
     "wikipedia": "Auf Wikipedia lesen",
-    "nearbyHeading": "In der Nähe"
+    "nearbyHeading": "In der Nähe",
+    "share": "Teilen",
+    "copied": "Link kopiert!"
   },
   "country": {
     "heading": "{noun} in {country}",
@@ -88,5 +90,10 @@
     "emailPlaceholder": "Deine E-Mail",
     "button": "Abonnieren",
     "thanks": "Danke! Deine E-Mail-App öffnet sich zur Bestätigung."
+  },
+  "cookie": {
+    "message": "Wir verwenden optionale Cookies zur anonymen Reichweitenmessung.",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen"
   }
 }

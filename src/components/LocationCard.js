@@ -31,6 +31,7 @@ export default function LocationCard({
   const [lon, lat] = feature.geometry.coordinates;
   const [enriched, setEnriched] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   const displayName = p.name || p.unnamed || site.unnamedLabel || "—";
   const initial = useMemo(
@@ -121,6 +122,32 @@ export default function LocationCard({
   const image = enriched && enriched.image;
   const bookUrl = affiliateHref(p.name);
 
+  // Share a deep link back to this place (/map?name=…&country=…). Uses the
+  // native share sheet on mobile and falls back to copying the URL.
+  const onShare = async () => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams();
+    params.set("name", p.name || displayName);
+    if (p.country) params.set("country", p.country);
+    const url = `${window.location.origin}/${locale}/map?${params.toString()}`;
+    const title = p.country ? `${displayName} — ${p.country}` : displayName;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {
+        /* user dismissed the share sheet */
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      } catch {
+        /* clipboard blocked */
+      }
+    }
+  };
+
   return (
     <div className="loc-backdrop" onClick={onClose}>
       <div
@@ -133,6 +160,19 @@ export default function LocationCard({
         <button className="loc-close" onClick={onClose} aria-label={t("close")}>
           ×
         </button>
+        <button className="loc-share" onClick={onShare} aria-label={t("share")}>
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"
+            />
+          </svg>
+        </button>
+        {copied && <span className="loc-copied">{t("copied")}</span>}
 
         {image ? (
           /* eslint-disable-next-line @next/next/no-img-element */

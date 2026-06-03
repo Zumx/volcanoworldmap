@@ -7,6 +7,7 @@ import { routing } from "../../i18n/routing.js";
 import { site, cssVars } from "../../lib/site.js";
 import Header from "../../components/Header.js";
 import Footer from "../../components/Footer.js";
+import CookieConsent from "../../components/CookieConsent.js";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -63,8 +64,9 @@ export default async function LocaleLayout({ children, params }) {
           <Footer />
         </NextIntlClientProvider>
         {/* GA4 — only when a measurement ID is set in site.config.json.
-            Cookieless + IP anonymised so no consent banner is required:
-            client_storage:'none' stops gtag writing the _ga cookie. */}
+            Consent Mode v2: analytics_storage defaults to denied (cookieless,
+            IP anonymised) until the visitor accepts in the cookie banner,
+            which calls gtag('consent','update', …). */}
         {site.googleAnalyticsId && (
           <>
             <Script
@@ -74,9 +76,11 @@ export default async function LocaleLayout({ children, params }) {
             <Script id="ga4-init" strategy="afterInteractive">
               {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', { analytics_storage: 'denied' });
 gtag('js', new Date());
-gtag('config', '${site.googleAnalyticsId}', { anonymize_ip: true, client_storage: 'none' });`}
+gtag('config', '${site.googleAnalyticsId}', { anonymize_ip: true });`}
             </Script>
+            <CookieConsent />
           </>
         )}
       </body>

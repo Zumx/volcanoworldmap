@@ -29,6 +29,9 @@ export default function MapView({ embedded = false }) {
   const [selected, setSelected] = useState(null);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  // Flips true once the core dataset is in: hides the skeleton loader and
+  // fades the map in.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (mapRef.current || !containerRef.current) return;
@@ -242,11 +245,46 @@ export default function MapView({ embedded = false }) {
         // toggle should behave as a pure visibility toggle (no extra fetch
         // needed). Mark rest as already-loaded.
         if (res && res.__full) restLoaded = true;
+        setReady(true);
+        // Deep link: /map?name=…&country=… opens the matching place so a
+        // shared LocationCard link lands the visitor right on it.
+        if (!embedded) openFromQuery();
       })
       .catch(() => {
         const el = document.getElementById("point-count");
         if (el) el.textContent = t("couldNotLoad");
+        // Drop the skeleton even on failure so the error count is visible.
+        setReady(true);
       });
+
+    // Match a ?name=/&country= query against the loaded features and open it.
+    function openFromQuery() {
+      let params;
+      try {
+        params = new URLSearchParams(window.location.search);
+      } catch {
+        return;
+      }
+      const name = params.get("name");
+      if (!name) return;
+      const nl = name.toLowerCase();
+      const country = (params.get("country") || "").toLowerCase();
+      let best = null;
+      for (const f of featuresRef.current) {
+        const p = f.properties;
+        if (!p || !p.name || p.name.toLowerCase() !== nl) continue;
+        if (country && (p.country || "").toLowerCase() !== country) continue;
+        best = f;
+        break;
+      }
+      if (best) {
+        const c = best.geometry.coordinates;
+        map.setView([c[1], c[0]], Math.max(map.getZoom(), 9), {
+          animate: false,
+        });
+        setSelected(best);
+      }
+    }
 
     return () => {
       map.remove();
@@ -301,9 +339,17 @@ export default function MapView({ embedded = false }) {
     <>
       <div
         ref={containerRef}
-        className={embedded ? "" : "leaflet-fill"}
+        className={`map-fade${ready ? " map-fade--in" : ""}${
+          embedded ? "" : " leaflet-fill"
+        }`}
         style={{ width: "100%", height: "100%" }}
       />
+      {/* Skeleton + spinner shown until the core dataset is parsed; fades out
+          (kept mounted, pointer-events disabled) so the map shows through. */}
+      <div className={`map-loading${ready ? " map-loading--hide" : ""}`}>
+        <div className="map-spinner" aria-hidden="true" />
+        <span className="map-loading-text">{t("loading")}</span>
+      </div>
       {!embedded && (
         <div className="map-overlay">
           <h1>

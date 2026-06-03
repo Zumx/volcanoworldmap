@@ -660,6 +660,106 @@ a {
   opacity: 1;
 }
 
+/* ---- Map loading (skeleton + spinner, fade-in when ready) ---- */
+.map-fade {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.map-fade--in {
+  opacity: 1;
+}
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(
+    100deg,
+    var(--primary-light) 30%,
+    color-mix(in srgb, var(--primary) 14%, white) 50%,
+    var(--primary-light) 70%
+  );
+  background-size: 200% 100%;
+  animation: mapShimmer 1.3s ease-in-out infinite;
+  transition: opacity 0.45s ease;
+}
+.map-loading--hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.map-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid color-mix(in srgb, var(--primary) 25%, white);
+  border-top-color: var(--primary);
+  animation: mapSpin 0.8s linear infinite;
+}
+.map-loading-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+@keyframes mapSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mapShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-loading {
+    animation: none;
+  }
+  .map-spinner {
+    animation-duration: 1.6s;
+  }
+  .map-fade {
+    transition: none;
+  }
+}
+
+/* ---- Cookie banner (discreet, bottom of viewport) ---- */
+.cookie-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 2500;
+  width: min(560px, calc(100vw - 24px));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+}
+.cookie-text {
+  flex: 1 1 240px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+.cookie-actions {
+  display: flex;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
 /* ---- LocationCard: nearby places ---- */
 .loc-nearby {
   margin-top: 18px;
@@ -766,6 +866,37 @@ a {
   border-radius: 50%;
   font-size: 18px;
   cursor: pointer;
+}
+.loc-card .loc-share {
+  position: absolute;
+  top: 14px;
+  right: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.loc-card .loc-share:hover {
+  background: var(--accent);
+}
+.loc-card .loc-copied {
+  position: absolute;
+  top: 52px;
+  right: 14px;
+  z-index: 1;
+  background: var(--primary-dark);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 .loc-card h2 {
   font-size: 22px;
