@@ -26,7 +26,15 @@
     "namedCount": "{count, number} benannte {noun}",
     "allCount": "{count, number} {noun} kartiert",
     "couldNotLoad": "Daten konnten nicht geladen werden",
-    "searchPlaceholder": "Nach Name oder Land suchen…"
+    "searchPlaceholder": "Nach Name oder Land suchen…",
+    "filters": "Filter",
+    "filterTitle": "Orte filtern",
+    "country": "Land",
+    "allCountries": "Alle Länder",
+    "type": "Typ",
+    "allTypes": "Alle Typen",
+    "visibility": "Anzeige",
+    "clearFilters": "Zurücksetzen"
   },
   "card": {
     "close": "Schließen",
@@ -46,7 +54,8 @@
     "wikipedia": "Auf Wikipedia lesen",
     "nearbyHeading": "In der Nähe",
     "share": "Teilen",
-    "copied": "Link kopiert!"
+    "copied": "Link kopiert!",
+    "inTheBlog": "Im Blog"
   },
   "country": {
     "heading": "{noun} in {country}",

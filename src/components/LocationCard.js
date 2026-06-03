@@ -5,6 +5,39 @@ import { useTranslations } from "next-intl";
 import { enrichLocation } from "../lib/enrich.js";
 import { site, metaFieldsFor } from "../lib/site.js";
 
+// The blog search index (public/data/blog-index.json, written by
+// scripts/build-index.mjs) is fetched at most once per page and shared across
+// every card via this module-level promise.
+let blogIndexPromise = null;
+function loadBlogIndex() {
+  if (!blogIndexPromise) {
+    blogIndexPromise = fetch("/data/blog-index.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .catch(() => ({}));
+  }
+  return blogIndexPromise;
+}
+
+// Up to `limit` blog posts that mention this place, searched against the
+// prebuilt per-locale index (title + excerpt + headings + slug). Title hits
+// rank above body hits; shorter titles win ties.
+function findPosts(index, locale, name, limit = 2) {
+  const term = String(name || "").toLowerCase().trim();
+  if (term.length < 3) return [];
+  const list = (index && index[locale]) || [];
+  const hits = [];
+  for (const post of list) {
+    const title = (post.t || "").toLowerCase();
+    let score = -1;
+    if (title.includes(term)) score = 0;
+    else if ((post.h || "").includes(term)) score = 1;
+    if (score >= 0)
+      hits.push({ slug: post.s, title: post.t, score, len: (post.t || "").length });
+  }
+  hits.sort((a, b) => a.score - b.score || a.len - b.len);
+  return hits.slice(0, limit);
+}
+
 // Build the affiliate "Book an experience" URL. site.affiliateUrl may contain
 // a {q} placeholder which is replaced with the place name (so a generic
 // search/affiliate link still lands on something relevant); otherwise the
@@ -35,6 +68,7 @@ export default function LocationCard({
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(false); // drives the slide-in / slide-out
   const [dragY, setDragY] = useState(0); // live offset while swiping the sheet
+  const [blogPosts, setBlogPosts] = useState([]); // posts that mention this place
   const dragStart = useRef(null);
 
   const displayName = p.name || p.unnamed || site.unnamedLabel || "—";
@@ -87,6 +121,22 @@ export default function LocationCard({
       alive = false;
     };
   }, [p.name, p.country, lat, lon, locale]);
+
+  // Find blog posts that mention this place (max 2). Only runs for named
+  // places; the index fetch is shared and cached across cards.
+  useEffect(() => {
+    let alive = true;
+    if (!p.name) {
+      setBlogPosts([]);
+      return;
+    }
+    loadBlogIndex().then((index) => {
+      if (alive) setBlogPosts(findPosts(index, locale, p.name, 2));
+    });
+    return () => {
+      alive = false;
+    };
+  }, [p.name, locale]);
 
   // Trigger the slide-in on the first paint after mount.
   useEffect(() => {
@@ -341,6 +391,24 @@ export default function LocationCard({
                     {t("viewOnOsm")}
                   </a>
                 )}
+              </div>
+            )}
+
+            {blogPosts.length > 0 && (
+              <div className="loc-blog">
+                <h3>{t("inTheBlog")}</h3>
+                <ul>
+                  {blogPosts.map((post) => (
+                    <li key={post.slug}>
+                      <a href={`/${locale}/blog/${post.slug}`}>
+                        <span className="loc-blog-icon" aria-hidden="true">
+                          ✎
+                        </span>
+                        <span className="loc-blog-title">{post.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 

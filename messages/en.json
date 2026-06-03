@@ -26,7 +26,15 @@
     "namedCount": "{count, number} named {noun}",
     "allCount": "{count, number} {noun} mapped",
     "couldNotLoad": "Could not load data",
-    "searchPlaceholder": "Search by name or country…"
+    "searchPlaceholder": "Search by name or country…",
+    "filters": "Filters",
+    "filterTitle": "Filter places",
+    "country": "Country",
+    "allCountries": "All countries",
+    "type": "Type",
+    "allTypes": "All types",
+    "visibility": "Visibility",
+    "clearFilters": "Clear all"
   },
   "card": {
     "close": "Close",
@@ -46,7 +54,8 @@
     "wikipedia": "Read on Wikipedia",
     "nearbyHeading": "Nearby",
     "share": "Share",
-    "copied": "Link copied!"
+    "copied": "Link copied!",
+    "inTheBlog": "In the blog"
   },
   "country": {
     "heading": "{noun} in {country}",

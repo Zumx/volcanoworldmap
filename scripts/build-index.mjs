@@ -28,6 +28,7 @@ import {
   mkdirSync,
   existsSync,
   statSync,
+  readdirSync,
 } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -203,10 +204,107 @@ export function writeMeta(features, dataDir, geojsonPath) {
   return meta;
 }
 
+// Blog search index — powers the "In the blog" links on the map's
+// LocationCard. For each locale it stores a compact, lowercased searchable
+// string (title + excerpt + ## headings + slug words) per published post so
+// the client can substring-match a place name against the blog without
+// shipping the full post bodies. Future-dated (drip) posts are excluded —
+// they'd 404 if linked — so this is regenerated on every build/refresh.
+//
+// Output: public/data/blog-index.json
+//   { "<locale>": [ { s: slug, t: title, h: haystack }, ... ], ... }
+//
+// Tiny hand-rolled frontmatter read (no gray-matter dependency at build
+// time): only the few fields we index are pulled out.
+function readFrontmatter(raw) {
+  if (!raw.startsWith("---")) return { data: {}, body: raw };
+  const end = raw.indexOf("\n---", 3);
+  if (end === -1) return { data: {}, body: raw };
+  const fm = raw.slice(3, end);
+  const body = raw.slice(end + 4);
+  const data = {};
+  for (const line of fm.split("\n")) {
+    const m = line.match(/^(\w+):\s*(.*)$/);
+    if (!m) continue;
+    let v = m[2].trim();
+    if (
+      (v.startsWith('"') && v.endsWith('"')) ||
+      (v.startsWith("'") && v.endsWith("'"))
+    )
+      v = v.slice(1, -1);
+    data[m[1]] = v;
+  }
+  return { data, body };
+}
+
+export function buildBlogIndex(blogDir, today) {
+  const out = {};
+  let locales = [];
+  try {
+    locales = readdirSync(blogDir, { withFileTypes: true })
+      .filter((d) => d.isDirectory() && /^[a-z]{2}$/.test(d.name))
+      .map((d) => d.name);
+  } catch {
+    return out;
+  }
+  for (const locale of locales) {
+    const dir = join(blogDir, locale);
+    let files = [];
+    try {
+      files = readdirSync(dir).filter((f) => f.endsWith(".mdx"));
+    } catch {
+      continue;
+    }
+    const posts = [];
+    for (const file of files) {
+      const slug = file.replace(/\.mdx$/, "");
+      let raw;
+      try {
+        raw = readFileSync(join(dir, file), "utf8");
+      } catch {
+        continue;
+      }
+      const { data, body } = readFrontmatter(raw);
+      // Skip drip posts not yet published (a link would 404).
+      if (data.date && String(data.date).slice(0, 10) > today) continue;
+      const title = data.title || slug;
+      const excerpt = data.excerpt || data.description || "";
+      const headings = (body.match(/^##\s+(.+)$/gm) || [])
+        .map((h) => h.replace(/^##\s+/, ""))
+        .join(" ");
+      const slugWords = slug.replace(/-/g, " ");
+      let hay = `${title} ${excerpt} ${headings} ${slugWords}`
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+      // Cap to keep the shipped index small even on long posts, but high
+      // enough to retain the full title + excerpt + every ## heading (the
+      // fields most likely to carry a place name).
+      if (hay.length > 700) hay = hay.slice(0, 700);
+      posts.push({ s: slug, t: title, h: hay });
+    }
+    posts.sort((a, b) => a.s.localeCompare(b.s));
+    out[locale] = posts;
+  }
+  return out;
+}
+
+export function writeBlogIndex(root, dataDir) {
+  mkdirSync(dataDir, { recursive: true });
+  const blogDir = join(root, "src", "content", "blog");
+  const today = new Date().toISOString().slice(0, 10);
+  const index = buildBlogIndex(blogDir, today);
+  writeFileSync(join(dataDir, "blog-index.json"), JSON.stringify(index));
+  let total = 0;
+  for (const k of Object.keys(index)) total += index[k].length;
+  return { locales: Object.keys(index).length, posts: total };
+}
+
 // CLI: derive the index from an existing points.geojson.
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const dataDir = join(__dirname, "..", "public", "data");
+  const root = join(__dirname, "..");
+  const dataDir = join(root, "public", "data");
   const geo = join(dataDir, "points.geojson");
   if (!existsSync(geo)) {
     console.log("No points.geojson — writing empty country index + split.");
@@ -215,20 +313,28 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     writeFileSync(join(dataDir, "featured.json"), "[]");
     writeMeta([], dataDir, geo);
     writeSplit([], dataDir, 0);
+    const blog = writeBlogIndex(root, dataDir);
+    console.log(
+      `Blog index: ${blog.posts} posts across ${blog.locales} locales.`
+    );
     process.exitCode = 0;
   } else {
     const { features = [] } = JSON.parse(readFileSync(geo, "utf8"));
     const list = writeCountryIndex(features, dataDir);
     const featured = writeFeatured(features, dataDir);
     writeMeta(features, dataDir, geo);
-    const cap = readInitialCap(join(__dirname, ".."));
+    const cap = readInitialCap(root);
     const { core, rest } = writeSplit(features, dataDir, cap);
+    const blog = writeBlogIndex(root, dataDir);
     console.log(`Featured destinations: ${featured.length}.`);
     console.log(
       `Country index: ${list.length} countries from ${features.length} features.`
     );
     console.log(
       `Map split (cap ${cap}): core ${core} + rest ${rest} features.`
+    );
+    console.log(
+      `Blog index: ${blog.posts} posts across ${blog.locales} locales.`
     );
     process.exitCode = 0;
   }

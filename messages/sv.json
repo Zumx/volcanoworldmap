@@ -26,7 +26,15 @@
     "namedCount": "{count, number} namngivna {noun}",
     "allCount": "{count, number} {noun} kartlagda",
     "couldNotLoad": "Kunde inte ladda data",
-    "searchPlaceholder": "Sök på namn eller land…"
+    "searchPlaceholder": "Sök på namn eller land…",
+    "filters": "Filter",
+    "filterTitle": "Filtrera platser",
+    "country": "Land",
+    "allCountries": "Alla länder",
+    "type": "Typ",
+    "allTypes": "Alla typer",
+    "visibility": "Visning",
+    "clearFilters": "Rensa allt"
   },
   "card": {
     "close": "Stäng",
@@ -46,7 +54,8 @@
     "wikipedia": "Läs på Wikipedia",
     "nearbyHeading": "I närheten",
     "share": "Dela",
-    "copied": "Länk kopierad!"
+    "copied": "Länk kopierad!",
+    "inTheBlog": "I bloggen"
   },
   "country": {
     "heading": "{noun} i {country}",

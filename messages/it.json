@@ -26,7 +26,15 @@
     "namedCount": "{count, number} {noun} con nome",
     "allCount": "{count, number} {noun} mappati",
     "couldNotLoad": "Impossibile caricare i dati",
-    "searchPlaceholder": "Cerca per nome o paese…"
+    "searchPlaceholder": "Cerca per nome o paese…",
+    "filters": "Filtri",
+    "filterTitle": "Filtra luoghi",
+    "country": "Paese",
+    "allCountries": "Tutti i paesi",
+    "type": "Tipo",
+    "allTypes": "Tutti i tipi",
+    "visibility": "Visualizzazione",
+    "clearFilters": "Cancella tutto"
   },
   "card": {
     "close": "Chiudi",
@@ -46,7 +54,8 @@
     "wikipedia": "Leggi su Wikipedia",
     "nearbyHeading": "Nelle vicinanze",
     "share": "Condividi",
-    "copied": "Link copiato!"
+    "copied": "Link copiato!",
+    "inTheBlog": "Nel blog"
   },
   "country": {
     "heading": "{noun} in {country}",

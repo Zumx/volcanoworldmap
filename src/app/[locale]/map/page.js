@@ -60,19 +60,19 @@ export default async function MapPage({ params }) {
     ],
   };
 
+  // Country list (names only) for the map's filter dropdown — already loaded
+  // above for the schema, so reuse it.
+  const countryNames = countries
+    .map((c) => c.name)
+    .sort((a, b) => a.localeCompare(b));
+
   return (
-    <main
-      style={{
-        position: "relative",
-        height: "calc(100vh - 57px)",
-        width: "100%",
-      }}
-    >
+    <main className="map-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(mapLd) }}
       />
-      <MapClient />
+      <MapClient countries={countryNames} />
     </main>
   );
 }
