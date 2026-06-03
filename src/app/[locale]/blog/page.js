@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { Link } from "../../../i18n/navigation.js";
 import { routing } from "../../../i18n/routing.js";
 import { listPosts } from "../../../lib/blog.js";
+import BlogList from "../../../components/BlogList.js";
 
 // ISR: regenerate at most once per day so drip-scheduled posts go live
 // automatically when their frontmatter date passes — no rebuild needed.
@@ -34,18 +34,7 @@ export default async function BlogIndex({ params }) {
       {posts.length === 0 ? (
         <p>{t("empty")}</p>
       ) : (
-        <ul className="post-list">
-          {posts.map((post) => (
-            <li key={post.slug}>
-              <h2>
-                <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-              </h2>
-              {post.date && <div className="post-meta">{post.date}</div>}
-              {post.excerpt && <p>{post.excerpt}</p>}
-              <Link href={`/blog/${post.slug}`}>{t("readMore")}</Link>
-            </li>
-          ))}
-        </ul>
+        <BlogList posts={posts} />
       )}
     </main>
   );

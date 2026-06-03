@@ -12,7 +12,8 @@
     "ctaBlog": "Blog lesen",
     "intro": "Jeder hier kartierte Ort stammt live aus OpenStreetMap. Klicke einen Punkt an, um Details, Fotos und Beschreibungen zu sehen.",
     "countriesHeading": "Nach Land durchsuchen",
-    "statsCountries": "Länder"
+    "statsCountries": "Länder",
+    "popularCountries": "Beliebte Länder"
   },
   "map": {
     "loading": "Karte wird geladen …",
@@ -50,14 +51,23 @@
     "intro": "Erkunde alle kartierten Orte in {country}, basierend auf OpenStreetMap.",
     "listHeading": "Alle {noun} in {country}",
     "openOnMap": "Auf der Karte zeigen →",
-    "moreNote": "Es werden die ersten {shown, number} von {total, number} angezeigt. Öffne die interaktive Karte, um sie alle zu erkunden."
+    "moreNote": "Es werden die ersten {shown, number} von {total, number} angezeigt. Öffne die interaktive Karte, um sie alle zu erkunden.",
+    "topHeading": "Beliebteste {noun}",
+    "relatedReading": "Weiterlesen"
   },
   "blog": {
     "heading": "Blog",
     "empty": "Noch keine Beiträge.",
     "back": "← Zurück zum Blog",
     "readMore": "Weiterlesen →",
-    "related": "Verwandte Beiträge"
+    "related": "Verwandte Beiträge",
+    "readTime": "{min} Min. Lesezeit",
+    "featured": "Empfohlen",
+    "all": "Alle",
+    "prev": "← Neuer",
+    "next": "Älter →",
+    "page": "Seite {page} von {total}",
+    "exploreCountry": "{country} auf der Karte entdecken →"
   },
   "about": {
     "heading": "Über",

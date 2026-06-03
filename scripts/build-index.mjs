@@ -52,12 +52,25 @@ export function buildCountryIndex(features) {
     if (nm && g && e.places.length < 500) {
       const lon = Number(g[0]);
       const lat = Number(g[1]);
-      if (Number.isFinite(lat) && Number.isFinite(lon))
-        e.places.push({
+      if (Number.isFinite(lat) && Number.isFinite(lon)) {
+        const pr = f.properties;
+        // Popularity proxy for the "most popular" section: Google review
+        // volume dominates, with rating and having a website as weaker
+        // signals. Datasets without Google data score 0 → the section
+        // gracefully falls back to the alphabetical order.
+        const pop =
+          (Number(pr.googleReviews) || 0) +
+          (pr.googleRating != null ? Number(pr.googleRating) * 20 : 0) +
+          (pr.website ? 10 : 0);
+        const place = {
           name: nm,
           lat: Math.round(lat * 1e5) / 1e5,
           lon: Math.round(lon * 1e5) / 1e5,
-        });
+        };
+        if (pr.type) place.type = String(pr.type);
+        if (pop > 0) place.pop = Math.round(pop);
+        e.places.push(place);
+      }
     }
   }
   const list = [...map.values()].sort((a, b) => b.count - a.count);

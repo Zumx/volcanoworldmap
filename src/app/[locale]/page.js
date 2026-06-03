@@ -11,6 +11,9 @@ export default async function Home({ params }) {
   const t = await getTranslations("home");
   const allCountries = await listCountries();
   const countries = allCountries.slice(0, 60);
+  // listCountries() is ordered by count desc, so the first few are the
+  // best-covered countries for this niche.
+  const topCountries = allCountries.slice(0, 5);
   const total = allCountries.reduce((s, c) => s + c.count, 0);
   const base = `https://${site.domain}`;
 
@@ -65,6 +68,22 @@ export default async function Home({ params }) {
           </span>
         </div>
       </div>
+
+      {topCountries.length > 0 && (
+        <section className="container top-countries">
+          <h2 className="prose">{t("popularCountries")}</h2>
+          <div className="top-countries-row">
+            {topCountries.map((c) => (
+              <Link key={c.slug} href={`/${c.slug}`} className="top-country">
+                <span className="tc-name">{c.name}</span>
+                <span className="tc-count">
+                  {c.count.toLocaleString()} {site.mappedNoun}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <EmailSignup />
 

@@ -41,12 +41,24 @@ async function readPostsFrom(dir) {
   return Promise.all(
     files.map(async (file) => {
       const raw = await readFile(join(dir, file), "utf8");
-      const { data } = matter(raw);
+      const { data, content } = matter(raw);
+      const words = (content || "").trim().split(/\s+/).filter(Boolean).length;
       return {
         slug: file.replace(/\.mdx$/, ""),
         title: data.title || file,
         date: data.date || "",
         excerpt: data.excerpt || data.description || "",
+        // Optional frontmatter, all backward-compatible:
+        //   tags: ["a","b"]   featured/pinned: true   country: "<slug>"
+        tags: Array.isArray(data.tags)
+          ? data.tags
+          : data.tags
+          ? [data.tags]
+          : [],
+        featured: !!(data.featured || data.pinned),
+        country: data.country || "",
+        // ~200 wpm reading estimate, floored at 1 minute.
+        readTime: Math.max(1, Math.round(words / 200)),
       };
     })
   );
@@ -131,6 +143,31 @@ function tokens(slug) {
   return slug
     .split("-")
     .filter((t) => t.length > 1 && !STOP.has(t.toLowerCase()));
+}
+
+// Posts tied to a country, for the cross-links on a country landing page.
+// Primary match: frontmatter `country` equals the slug or the country name.
+// Fallback: the country-name token appears in the post slug (so a post like
+// "best-castles-in-france" links from /france even without frontmatter).
+export async function relatedPostsForCountry(
+  locale,
+  countrySlug,
+  countryName,
+  limit = 4
+) {
+  const all = await listPosts(locale);
+  const cs = String(countrySlug || "").toLowerCase();
+  const cn = String(countryName || "").toLowerCase();
+  const token = cn.replace(/\s+/g, "-");
+  const out = [];
+  for (const p of all) {
+    const pc = String(p.country || "").toLowerCase();
+    const byMeta = pc && (pc === cs || pc === cn);
+    const bySlug = token.length > 2 && p.slug.toLowerCase().includes(token);
+    if (byMeta || bySlug) out.push(p);
+    if (out.length >= limit) break;
+  }
+  return out;
 }
 
 export async function relatedPosts(locale, slug, limit = 3) {

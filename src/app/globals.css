@@ -357,6 +357,148 @@ a {
   font-style: italic;
 }
 
+/* ---- Country: mini preview map ---- */
+.country-map {
+  height: 320px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 18px 0 8px;
+  overflow: hidden;
+  z-index: 0;
+}
+.country-map--loading {
+  background: var(--primary-light);
+}
+.country-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+}
+@media (max-width: 640px) {
+  .country-map {
+    height: 240px;
+  }
+}
+
+/* ---- Country: top places + type badges ---- */
+.top-places {
+  padding-left: 22px;
+  margin: 8px 0 4px;
+}
+.top-places li {
+  margin: 6px 0;
+}
+.ptype {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  border-radius: 999px;
+  padding: 1px 8px;
+  vertical-align: middle;
+}
+.post-country a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ---- Home: popular countries strip ---- */
+.top-countries-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.top-country {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--primary-light);
+}
+.top-country:hover {
+  border-color: var(--accent);
+}
+.top-country .tc-name {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+.top-country .tc-count {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 60%, white);
+}
+
+/* ---- Blog: featured, tag filter, read time, pagination ---- */
+.featured-posts {
+  margin-bottom: 22px;
+}
+.featured-posts > h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+}
+.tag-chip {
+  font: 600 13px ui-sans-serif, system-ui, sans-serif;
+  color: var(--primary-dark);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 13px;
+  cursor: pointer;
+}
+.tag-chip:hover {
+  border-color: var(--accent);
+}
+.tag-chip.is-active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0;
+}
+.post-tag {
+  font-size: 11px;
+  color: color-mix(in srgb, var(--text) 65%, white);
+  background: var(--primary-light);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+}
+.pagination .btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.page-info {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--text) 65%, white);
+}
+
 /* ---- Breadcrumbs ---- */
 .breadcrumbs {
   margin-bottom: 14px;

@@ -2,9 +2,18 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "../../../i18n/navigation.js";
 import Breadcrumbs from "../../../components/Breadcrumbs.js";
+import CountryMiniMap from "../../../components/CountryMiniMap.js";
 import { routing } from "../../../i18n/routing.js";
 import { site } from "../../../lib/site.js";
 import { listCountries, countryBySlug } from "../../../lib/data.js";
+import { relatedPostsForCountry } from "../../../lib/blog.js";
+
+// Place deep-link into the full map (reuses the LocationCard share format).
+function mapHref(name, country) {
+  const q = new URLSearchParams({ name });
+  if (country) q.set("country", country);
+  return `/map?${q.toString()}`;
+}
 
 export async function generateStaticParams() {
   const countries = await listCountries();
@@ -20,7 +29,16 @@ export async function generateMetadata({ params }) {
   const niche = cap(site.mappedNoun);
   const x = data.count.toLocaleString();
   const title = `${niche} in ${data.name} — ${x} locations on the map`;
-  const description = `Explore ${x} ${site.mappedNoun} in ${data.name}. Interactive map with photos and information.`;
+  // Per-country + per-niche description, with a few real place names so each
+  // country page has a distinct, specific meta description.
+  const sample = (data.places || [])
+    .slice(0, 3)
+    .map((p) => p.name)
+    .filter(Boolean)
+    .join(", ");
+  const description = sample
+    ? `Explore ${x} ${site.mappedNoun} in ${data.name} on an interactive map — including ${sample}. Photos, ratings and details for every location.`
+    : `Explore ${x} ${site.mappedNoun} in ${data.name} on an interactive map. Photos, ratings and details for every location.`;
   const languages = Object.fromEntries(
     routing.locales.map((l) => [l, `/${l}/${country}`])
   );
@@ -42,6 +60,19 @@ export default async function CountryPage({ params }) {
   if (!data) notFound();
 
   const places = data.places || [];
+  // "Most popular" — sort a copy by the popularity score baked into the index
+  // (Google reviews/rating/website). Falls back to alphabetical when no place
+  // carries a score. Only worth a separate section when the list is long.
+  const top =
+    places.length > 12
+      ? [...places].sort((a, b) => (b.pop || 0) - (a.pop || 0)).slice(0, 10)
+      : [];
+  const relatedReading = await relatedPostsForCountry(
+    locale,
+    country,
+    data.name,
+    4
+  );
 
   // Place / ItemList structured data (capped to keep the HTML lean).
   const jsonLd = {
@@ -94,6 +125,24 @@ export default async function CountryPage({ params }) {
       </p>
 
       {places.length > 0 && (
+        <CountryMiniMap points={places} country={data.name} locale={locale} />
+      )}
+
+      {top.length > 0 && (
+        <>
+          <h2>{t("topHeading", { noun: cap(site.mappedNoun) })}</h2>
+          <ol className="top-places">
+            {top.map((p, i) => (
+              <li key={i}>
+                <Link href={mapHref(p.name, data.name)}>{p.name}</Link>
+                {p.type && <span className="ptype">{p.type}</span>}
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+
+      {places.length > 0 && (
         <>
           <h2>
             {t("listHeading", {
@@ -104,10 +153,14 @@ export default async function CountryPage({ params }) {
           <ul className="country-places">
             {places.map((p, i) => (
               <li key={i}>
-                <Link href="/map">{p.name}</Link>{" "}
-                <span className="coords">
-                  ({p.lat.toFixed(4)}, {p.lon.toFixed(4)})
-                </span>
+                <Link href={mapHref(p.name, data.name)}>{p.name}</Link>{" "}
+                {p.type ? (
+                  <span className="ptype">{p.type}</span>
+                ) : (
+                  <span className="coords">
+                    ({p.lat.toFixed(4)}, {p.lon.toFixed(4)})
+                  </span>
+                )}
               </li>
             ))}
           </ul>
@@ -117,6 +170,20 @@ export default async function CountryPage({ params }) {
             </p>
           )}
         </>
+      )}
+
+      {relatedReading.length > 0 && (
+        <aside className="related-posts">
+          <h2>{t("relatedReading")}</h2>
+          <ul>
+            {relatedReading.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                {p.date && <span className="post-meta"> · {p.date}</span>}
+              </li>
+            ))}
+          </ul>
+        </aside>
       )}
     </main>
   );

@@ -12,7 +12,8 @@
     "ctaBlog": "Lire le blog",
     "intro": "Chaque lieu cartographié ci-dessous provient en direct d'OpenStreetMap. Cliquez sur un point pour voir les détails, les photos et les descriptions.",
     "countriesHeading": "Parcourir par pays",
-    "statsCountries": "pays"
+    "statsCountries": "pays",
+    "popularCountries": "Pays populaires"
   },
   "map": {
     "loading": "Chargement de la carte…",
@@ -50,14 +51,23 @@
     "intro": "Explorez tous les lieux cartographiés en {country}, à partir d'OpenStreetMap.",
     "listHeading": "Tous les {noun} en {country}",
     "openOnMap": "Afficher sur la carte →",
-    "moreNote": "Affichage des {shown, number} premiers sur {total, number}. Ouvrez la carte interactive pour tout explorer."
+    "moreNote": "Affichage des {shown, number} premiers sur {total, number}. Ouvrez la carte interactive pour tout explorer.",
+    "topHeading": "{noun} les plus populaires",
+    "relatedReading": "À lire aussi"
   },
   "blog": {
     "heading": "Blog",
     "empty": "Aucun article pour le moment.",
     "back": "← Retour au blog",
     "readMore": "Lire la suite →",
-    "related": "Articles liés"
+    "related": "Articles liés",
+    "readTime": "{min} min de lecture",
+    "featured": "À la une",
+    "all": "Tous",
+    "prev": "← Plus récents",
+    "next": "Plus anciens →",
+    "page": "Page {page} sur {total}",
+    "exploreCountry": "Découvrir {country} sur la carte →"
   },
   "about": {
     "heading": "À propos",

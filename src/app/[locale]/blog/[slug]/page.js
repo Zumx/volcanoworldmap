@@ -10,6 +10,7 @@ import {
   getPostLocales,
   relatedPosts,
 } from "../../../../lib/blog.js";
+import { countryBySlug } from "../../../../lib/data.js";
 import { site } from "../../../../lib/site.js";
 import { pingIndexNow, isFreshlyPublished } from "../../../../lib/indexnow.js";
 
@@ -64,6 +65,11 @@ export default async function BlogPost({ params }) {
   if (!post) notFound();
 
   const related = await relatedPosts(locale, slug, 3);
+  // Cross-link to the country landing page when the post declares a country
+  // in its frontmatter (slug form, e.g. country: "france").
+  const postCountry = post.meta.country
+    ? await countryBySlug(post.meta.country)
+    : null;
 
   const url = `https://${site.domain}/${locale}/blog/${slug}`;
   const headline = post.meta.title || slug;
@@ -106,6 +112,13 @@ export default async function BlogPost({ params }) {
       <Link href="/blog">{t("back")}</Link>
       <h1>{post.meta.title || slug}</h1>
       {post.meta.date && <p className="post-meta">{post.meta.date}</p>}
+      {postCountry && (
+        <p className="post-country">
+          <Link href={`/${postCountry.slug}`}>
+            {site.emoji} {t("exploreCountry", { country: postCountry.name })}
+          </Link>
+        </p>
+      )}
       <MDXRemote source={post.content} />
       {related.length > 0 && (
         <aside className="related-posts">
