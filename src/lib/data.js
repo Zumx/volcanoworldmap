@@ -27,6 +27,20 @@ export async function listCountries() {
   return idx.map(({ name, slug, count }) => ({ name, slug, count }));
 }
 
+// Handpicked home-page destinations, written by scripts/build-index.mjs.
+// Empty array if the artifact is missing (pre-rebuild deployments).
+let featuredCache = null;
+export async function listFeatured() {
+  if (featuredCache) return featuredCache;
+  try {
+    const p = join(process.cwd(), "public", "data", "featured.json");
+    featuredCache = JSON.parse(await readFile(p, "utf8"));
+  } catch {
+    featuredCache = [];
+  }
+  return featuredCache;
+}
+
 export async function countryBySlug(slug) {
   const idx = await loadIndex();
   const e = idx.find((c) => c.slug === slug);

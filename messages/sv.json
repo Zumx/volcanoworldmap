@@ -5,7 +5,8 @@
     "blog": "Blogg",
     "about": "Om",
     "countries": "Länder",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "menu": "Meny"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -14,7 +15,8 @@
     "intro": "Varje kartlagd plats nedan hämtas direkt från OpenStreetMap. Klicka på en punkt för detaljer, foton och beskrivningar.",
     "countriesHeading": "Bläddra efter land",
     "statsCountries": "länder",
-    "popularCountries": "Populära länder"
+    "popularCountries": "Populära länder",
+    "featuredHeading": "Utvalda resmål"
   },
   "map": {
     "loading": "Laddar karta…",
@@ -104,7 +106,9 @@
     "namePlaceholder": "Ditt namn",
     "emailPlaceholder": "Din e-post",
     "button": "Prenumerera",
-    "thanks": "Tack! Din e-postapp öppnas för att bekräfta."
+    "thanks": "Tack! Din e-postapp öppnas för att bekräfta.",
+    "social": "Gå med {count, number}+ resenärer",
+    "invalid": "Ange en giltig e-postadress."
   },
   "cookie": {
     "message": "Vi använder valfria cookies för anonym trafikmätning.",

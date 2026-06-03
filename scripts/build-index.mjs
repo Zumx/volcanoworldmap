@@ -135,6 +135,41 @@ export function writeSplit(features, dataDir, cap) {
   return { core: core.length, rest: rest.length };
 }
 
+// Six diverse "featured destinations" for the home page — one per country,
+// preferring places that carry a website (a decent proxy for a notable,
+// well-documented place likely to have a Wikipedia/Wikimedia photo). Only
+// name/country/coords are stored; the home page enriches the image
+// client-side via the same path the LocationCard uses.
+export function buildFeatured(features, n = 6) {
+  const round = (v) => Math.round(v * 1e5) / 1e5;
+  const out = [];
+  const used = new Set();
+  const take = (requireWebsite) => {
+    for (const f of features) {
+      if (out.length >= n) break;
+      const p = f.properties || {};
+      const g = f.geometry && f.geometry.coordinates;
+      if (!p.name || !p.country || !g || used.has(p.country)) continue;
+      if (requireWebsite && !p.website) continue;
+      const lat = Number(g[1]);
+      const lon = Number(g[0]);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+      out.push({ name: p.name, country: p.country, lat: round(lat), lon: round(lon) });
+      used.add(p.country);
+    }
+  };
+  take(true); // pass 1: website-bearing, one per country
+  take(false); // pass 2: fill from any named place in a fresh country
+  return out;
+}
+
+export function writeFeatured(features, dataDir, n = 6) {
+  mkdirSync(dataDir, { recursive: true });
+  const featured = buildFeatured(features, n);
+  writeFileSync(join(dataDir, "featured.json"), JSON.stringify(featured));
+  return featured;
+}
+
 // CLI: derive the index from an existing points.geojson.
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -144,13 +179,16 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     console.log("No points.geojson — writing empty country index + split.");
     mkdirSync(dataDir, { recursive: true });
     writeFileSync(join(dataDir, "countries.json"), "[]");
+    writeFileSync(join(dataDir, "featured.json"), "[]");
     writeSplit([], dataDir, 0);
     process.exitCode = 0;
   } else {
     const { features = [] } = JSON.parse(readFileSync(geo, "utf8"));
     const list = writeCountryIndex(features, dataDir);
+    const featured = writeFeatured(features, dataDir);
     const cap = readInitialCap(join(__dirname, ".."));
     const { core, rest } = writeSplit(features, dataDir, cap);
+    console.log(`Featured destinations: ${featured.length}.`);
     console.log(
       `Country index: ${list.length} countries from ${features.length} features.`
     );

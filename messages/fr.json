@@ -5,7 +5,8 @@
     "blog": "Blog",
     "about": "À propos",
     "countries": "Pays",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "menu": "Menu"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -14,7 +15,8 @@
     "intro": "Chaque lieu cartographié ci-dessous provient en direct d'OpenStreetMap. Cliquez sur un point pour voir les détails, les photos et les descriptions.",
     "countriesHeading": "Parcourir par pays",
     "statsCountries": "pays",
-    "popularCountries": "Pays populaires"
+    "popularCountries": "Pays populaires",
+    "featuredHeading": "Destinations à la une"
   },
   "map": {
     "loading": "Chargement de la carte…",
@@ -104,7 +106,9 @@
     "namePlaceholder": "Votre nom",
     "emailPlaceholder": "Votre e-mail",
     "button": "S’abonner",
-    "thanks": "Merci ! Votre messagerie va s’ouvrir pour confirmer."
+    "thanks": "Merci ! Votre messagerie va s’ouvrir pour confirmer.",
+    "social": "Rejoignez plus de {count, number} voyageurs",
+    "invalid": "Veuillez saisir une adresse e-mail valide."
   },
   "cookie": {
     "message": "Nous utilisons des cookies optionnels pour mesurer l’audience de façon anonyme.",

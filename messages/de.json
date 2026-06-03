@@ -5,7 +5,8 @@
     "blog": "Blog",
     "about": "Über",
     "countries": "Länder",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "menu": "Menü"
   },
   "home": {
     "tagline": "Eine interaktive Weltkarte",
@@ -14,7 +15,8 @@
     "intro": "Jeder hier kartierte Ort stammt live aus OpenStreetMap. Klicke einen Punkt an, um Details, Fotos und Beschreibungen zu sehen.",
     "countriesHeading": "Nach Land durchsuchen",
     "statsCountries": "Länder",
-    "popularCountries": "Beliebte Länder"
+    "popularCountries": "Beliebte Länder",
+    "featuredHeading": "Ausgewählte Reiseziele"
   },
   "map": {
     "loading": "Karte wird geladen …",
@@ -104,7 +106,9 @@
     "namePlaceholder": "Dein Name",
     "emailPlaceholder": "Deine E-Mail",
     "button": "Abonnieren",
-    "thanks": "Danke! Deine E-Mail-App öffnet sich zur Bestätigung."
+    "thanks": "Danke! Deine E-Mail-App öffnet sich zur Bestätigung.",
+    "social": "Schließe dich {count, number}+ Reisenden an",
+    "invalid": "Bitte gib eine gültige E-Mail-Adresse ein."
   },
   "cookie": {
     "message": "Wir verwenden optionale Cookies zur anonymen Reichweitenmessung.",

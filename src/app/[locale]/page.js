@@ -1,9 +1,10 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "../../i18n/navigation.js";
 import { site } from "../../lib/site.js";
-import { listCountries } from "../../lib/data.js";
+import { listCountries, listFeatured } from "../../lib/data.js";
 import MapClient from "../../components/MapClient.js";
 import EmailSignup from "../../components/EmailSignup.js";
+import FeaturedDestinations from "../../components/FeaturedDestinations.js";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -13,7 +14,8 @@ export default async function Home({ params }) {
   const countries = allCountries.slice(0, 60);
   // listCountries() is ordered by count desc, so the first few are the
   // best-covered countries for this niche.
-  const topCountries = allCountries.slice(0, 5);
+  const topCountries = allCountries.slice(0, 8);
+  const featured = await listFeatured();
   const total = allCountries.reduce((s, c) => s + c.count, 0);
   const base = `https://${site.domain}`;
 
@@ -69,12 +71,23 @@ export default async function Home({ params }) {
         </div>
       </div>
 
+      {featured.length > 0 && (
+        <section className="container featured">
+          <h2 className="prose">{t("featuredHeading")}</h2>
+          <FeaturedDestinations items={featured} locale={locale} />
+        </section>
+      )}
+
       {topCountries.length > 0 && (
         <section className="container top-countries">
           <h2 className="prose">{t("popularCountries")}</h2>
           <div className="top-countries-row">
             {topCountries.map((c) => (
-              <Link key={c.slug} href={`/${c.slug}`} className="top-country">
+              <Link
+                key={c.slug}
+                href={`/explore/${c.slug}`}
+                className="top-country"
+              >
                 <span className="tc-name">{c.name}</span>
                 <span className="tc-count">
                   {c.count.toLocaleString()} {site.mappedNoun}

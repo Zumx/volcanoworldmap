@@ -11,6 +11,7 @@ const LABEL = {
   de: "Deutsch",
   fr: "Français",
   it: "Italiano",
+  sv: "Svenska",
 };
 
 export default function LanguageSwitcher() {

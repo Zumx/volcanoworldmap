@@ -5,7 +5,8 @@
     "blog": "Blog",
     "about": "Informazioni",
     "countries": "Paesi",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "menu": "Menu"
   },
   "home": {
     "tagline": "Una mappa del mondo interattiva",
@@ -14,7 +15,8 @@
     "intro": "Ogni luogo mappato qui sotto proviene in tempo reale da OpenStreetMap. Clicca un punto per vedere dettagli, foto e descrizioni.",
     "countriesHeading": "Sfoglia per paese",
     "statsCountries": "paesi",
-    "popularCountries": "Paesi popolari"
+    "popularCountries": "Paesi popolari",
+    "featuredHeading": "Destinazioni in evidenza"
   },
   "map": {
     "loading": "Caricamento della mappa…",
@@ -104,7 +106,9 @@
     "namePlaceholder": "Il tuo nome",
     "emailPlaceholder": "La tua email",
     "button": "Iscriviti",
-    "thanks": "Grazie! Si aprirà la tua app email per confermare."
+    "thanks": "Grazie! Si aprirà la tua app email per confermare.",
+    "social": "Unisciti a oltre {count, number} viaggiatori",
+    "invalid": "Inserisci un indirizzo email valido."
   },
   "cookie": {
     "message": "Utilizziamo cookie facoltativi per misurare il traffico in modo anonimo.",

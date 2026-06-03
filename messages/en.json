@@ -5,7 +5,8 @@
     "blog": "Blog",
     "about": "About",
     "countries": "Countries",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "menu": "Menu"
   },
   "home": {
     "tagline": "An interactive world map",
@@ -14,7 +15,8 @@
     "intro": "Every mapped place below is sourced live from OpenStreetMap. Click any point to see details, photos and descriptions.",
     "countriesHeading": "Browse by country",
     "statsCountries": "countries",
-    "popularCountries": "Popular countries"
+    "popularCountries": "Popular countries",
+    "featuredHeading": "Featured destinations"
   },
   "map": {
     "loading": "Loading map…",
@@ -104,7 +106,9 @@
     "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email",
     "button": "Subscribe",
-    "thanks": "Thanks! Your email app will open to confirm."
+    "thanks": "Thanks! Your email app will open to confirm.",
+    "social": "Join {count, number}+ travelers",
+    "invalid": "Please enter a valid email address."
   },
   "cookie": {
     "message": "We use optional cookies to measure traffic anonymously.",
