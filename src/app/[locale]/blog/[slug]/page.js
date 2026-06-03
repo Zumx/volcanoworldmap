@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Link } from "../../../../i18n/navigation.js";
+import Breadcrumbs from "../../../../components/Breadcrumbs.js";
 import { routing } from "../../../../i18n/routing.js";
 import {
   listPosts,
@@ -58,6 +59,7 @@ export default async function BlogPost({ params }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("blog");
+  const nav = await getTranslations("nav");
   const post = await getPost(locale, slug);
   if (!post) notFound();
 
@@ -92,6 +94,14 @@ export default async function BlogPost({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Breadcrumbs
+        locale={locale}
+        items={[
+          { name: nav("home"), href: "/" },
+          { name: nav("blog"), href: "/blog" },
+          { name: post.meta.title || slug },
+        ]}
       />
       <Link href="/blog">{t("back")}</Link>
       <h1>{post.meta.title || slug}</h1>

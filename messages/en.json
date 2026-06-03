@@ -3,7 +3,8 @@
     "home": "Home",
     "map": "Map",
     "blog": "Blog",
-    "about": "About"
+    "about": "About",
+    "countries": "Countries"
   },
   "home": {
     "tagline": "An interactive world map",
@@ -79,5 +80,13 @@
   "notFound": {
     "title": "Page not found",
     "body": "The page you’re looking for doesn’t exist or has moved."
+  },
+  "signup": {
+    "heading": "Get monthly travel inspiration",
+    "sub": "New places, photos and stories — once a month, no spam.",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "button": "Subscribe",
+    "thanks": "Thanks! Your email app will open to confirm."
   }
 }

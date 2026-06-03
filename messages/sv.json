@@ -3,7 +3,8 @@
     "home": "Hem",
     "map": "Karta",
     "blog": "Blogg",
-    "about": "Om"
+    "about": "Om",
+    "countries": "Länder"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -79,5 +80,13 @@
   "notFound": {
     "title": "Sidan hittades inte",
     "body": "Sidan du letar efter finns inte eller har flyttats."
+  },
+  "signup": {
+    "heading": "Få månatlig reseinspiration",
+    "sub": "Nya platser, foton och berättelser — en gång i månaden, ingen spam.",
+    "namePlaceholder": "Ditt namn",
+    "emailPlaceholder": "Din e-post",
+    "button": "Prenumerera",
+    "thanks": "Tack! Din e-postapp öppnas för att bekräfta."
   }
 }

@@ -3,7 +3,8 @@
     "home": "Home",
     "map": "Mappa",
     "blog": "Blog",
-    "about": "Informazioni"
+    "about": "Informazioni",
+    "countries": "Paesi"
   },
   "home": {
     "tagline": "Una mappa del mondo interattiva",
@@ -79,5 +80,13 @@
   "notFound": {
     "title": "Pagina non trovata",
     "body": "La pagina che cerchi non esiste o è stata spostata."
+  },
+  "signup": {
+    "heading": "Ricevi ispirazione di viaggio ogni mese",
+    "sub": "Nuovi luoghi, foto e storie — una volta al mese, niente spam.",
+    "namePlaceholder": "Il tuo nome",
+    "emailPlaceholder": "La tua email",
+    "button": "Iscriviti",
+    "thanks": "Grazie! Si aprirà la tua app email per confermare."
   }
 }

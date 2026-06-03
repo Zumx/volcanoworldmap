@@ -1,4 +1,5 @@
 import "../globals.css";
+import Script from "next/script";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -61,6 +62,23 @@ export default async function LocaleLayout({ children, params }) {
           {children}
           <Footer />
         </NextIntlClientProvider>
+        {/* GA4 — only when a measurement ID is set in site.config.json.
+            Cookieless + IP anonymised so no consent banner is required:
+            client_storage:'none' stops gtag writing the _ga cookie. */}
+        {site.googleAnalyticsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${site.googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${site.googleAnalyticsId}', { anonymize_ip: true, client_storage: 'none' });`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

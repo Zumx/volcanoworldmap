@@ -3,7 +3,8 @@
     "home": "Accueil",
     "map": "Carte",
     "blog": "Blog",
-    "about": "À propos"
+    "about": "À propos",
+    "countries": "Pays"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -79,5 +80,13 @@
   "notFound": {
     "title": "Page introuvable",
     "body": "La page que vous recherchez n’existe pas ou a été déplacée."
+  },
+  "signup": {
+    "heading": "Recevez l’inspiration voyage chaque mois",
+    "sub": "De nouveaux lieux, des photos et des récits — une fois par mois, sans spam.",
+    "namePlaceholder": "Votre nom",
+    "emailPlaceholder": "Votre e-mail",
+    "button": "S’abonner",
+    "thanks": "Merci ! Votre messagerie va s’ouvrir pour confirmer."
   }
 }

@@ -3,6 +3,7 @@ import { Link } from "../../i18n/navigation.js";
 import { site } from "../../lib/site.js";
 import { listCountries } from "../../lib/data.js";
 import MapClient from "../../components/MapClient.js";
+import EmailSignup from "../../components/EmailSignup.js";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -65,8 +66,10 @@ export default async function Home({ params }) {
         </div>
       </div>
 
+      <EmailSignup />
+
       {countries.length > 0 && (
-        <section className="container">
+        <section className="container" id="countries">
           <h2 className="prose">{t("countriesHeading")}</h2>
           <div className="country-grid">
             {countries.map((c) => (

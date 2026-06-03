@@ -357,6 +357,101 @@ a {
   font-style: italic;
 }
 
+/* ---- Breadcrumbs ---- */
+.breadcrumbs {
+  margin-bottom: 14px;
+}
+.breadcrumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+}
+.breadcrumbs li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.breadcrumbs li + li::before {
+  content: "›";
+  color: color-mix(in srgb, var(--text) 45%, white);
+}
+.breadcrumbs a {
+  color: color-mix(in srgb, var(--text) 65%, white);
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+.breadcrumbs [aria-current="page"] {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+/* ---- Email signup (discreet strip under the home map) ---- */
+.signup {
+  max-width: 720px;
+  margin: 28px auto 8px;
+  padding: 0 24px;
+}
+.signup-inner {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  background: var(--primary-light);
+  text-align: center;
+}
+.signup-inner h2 {
+  font-size: 18px;
+  color: var(--primary-dark);
+  margin: 0 0 4px;
+}
+.signup-sub {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--text) 65%, white);
+  margin: 0 0 14px;
+}
+.signup-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.signup-form input {
+  flex: 1 1 180px;
+  max-width: 240px;
+  padding: 9px 14px;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  outline: none;
+}
+.signup-form input:focus {
+  border-color: var(--primary);
+}
+.signup-form .btn {
+  flex: 0 0 auto;
+}
+.signup-thanks {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+@media (max-width: 480px) {
+  .signup-form input {
+    max-width: none;
+    flex-basis: 100%;
+  }
+  .signup-form .btn {
+    width: 100%;
+  }
+}
+
 /* ---- Blog ---- */
 .post-list {
   list-style: none;

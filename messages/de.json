@@ -3,7 +3,8 @@
     "home": "Start",
     "map": "Karte",
     "blog": "Blog",
-    "about": "Über"
+    "about": "Über",
+    "countries": "Länder"
   },
   "home": {
     "tagline": "Eine interaktive Weltkarte",
@@ -79,5 +80,13 @@
   "notFound": {
     "title": "Seite nicht gefunden",
     "body": "Die gesuchte Seite existiert nicht oder wurde verschoben."
+  },
+  "signup": {
+    "heading": "Monatliche Reiseinspiration erhalten",
+    "sub": "Neue Orte, Fotos und Geschichten — einmal im Monat, kein Spam.",
+    "namePlaceholder": "Dein Name",
+    "emailPlaceholder": "Deine E-Mail",
+    "button": "Abonnieren",
+    "thanks": "Danke! Deine E-Mail-App öffnet sich zur Bestätigung."
   }
 }

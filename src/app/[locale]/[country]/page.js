@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "../../../i18n/navigation.js";
+import Breadcrumbs from "../../../components/Breadcrumbs.js";
 import { routing } from "../../../i18n/routing.js";
 import { site } from "../../../lib/site.js";
 import { listCountries, countryBySlug } from "../../../lib/data.js";
@@ -36,6 +37,7 @@ export default async function CountryPage({ params }) {
   const { locale, country } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("country");
+  const nav = await getTranslations("nav");
   const data = await countryBySlug(country);
   if (!data) notFound();
 
@@ -68,6 +70,14 @@ export default async function CountryPage({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Breadcrumbs
+        locale={locale}
+        items={[
+          { name: nav("home"), href: "/" },
+          { name: nav("countries"), href: "/#countries" },
+          { name: data.name },
+        ]}
       />
       <Link href="/">{t("back")}</Link>
       <h1>{t("heading", { noun: cap(site.mappedNoun), country: data.name })}</h1>
