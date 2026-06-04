@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { site } from "../../../lib/site.js";
 import { routing } from "../../../i18n/routing.js";
+import Breadcrumbs from "../../../components/Breadcrumbs.js";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -24,6 +25,7 @@ export default async function About({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("about");
+  const nav = await getTranslations("nav");
 
   // Per-site override: site.config.json may set "aboutText" (string or
   // array of paragraphs) to replace the generic intro. Falls back to a
@@ -37,6 +39,10 @@ export default async function About({ params }) {
 
   return (
     <main className="container prose">
+      <Breadcrumbs
+        locale={locale}
+        items={[{ name: nav("home"), href: "/" }, { name: nav("about") }]}
+      />
       <h1>
         {t("heading")} {site.name} {site.emoji}
       </h1>

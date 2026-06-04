@@ -57,7 +57,8 @@
     "allTypes": "Alle Typen",
     "visibility": "Anzeige",
     "clearFilters": "Zurücksetzen",
-    "mapLabel": "Interaktive Karte von {name}"
+    "mapLabel": "Interaktive Karte von {name}",
+    "exploreCountry": "{country} entdecken →"
   },
   "card": {
     "close": "Schließen",
@@ -123,7 +124,8 @@
     "copied": "Kopiert!",
     "print": "Drucken",
     "writtenBy": "Geschrieben vom Team von {team}",
-    "authorBio": "Wir kartieren die bemerkenswertesten Orte der Welt – Pin für Pin."
+    "authorBio": "Wir kartieren die bemerkenswertesten Orte der Welt – Pin für Pin.",
+    "exploreHeading": "Entdecke die Länder in diesem Beitrag"
   },
   "about": {
     "heading": "Über",

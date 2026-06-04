@@ -57,7 +57,8 @@
     "allTypes": "All types",
     "visibility": "Visibility",
     "clearFilters": "Clear all",
-    "mapLabel": "{name} interactive map"
+    "mapLabel": "{name} interactive map",
+    "exploreCountry": "Explore {country} →"
   },
   "card": {
     "close": "Close",
@@ -123,7 +124,8 @@
     "copied": "Copied!",
     "print": "Print",
     "writtenBy": "Written by the {team} team",
-    "authorBio": "Mapping the world's most remarkable places, one pin at a time."
+    "authorBio": "Mapping the world's most remarkable places, one pin at a time.",
+    "exploreHeading": "Explore the countries in this guide"
   },
   "about": {
     "heading": "About",

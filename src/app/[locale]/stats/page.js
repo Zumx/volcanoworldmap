@@ -5,6 +5,7 @@ import { listCountries, getDataMeta } from "../../../lib/data.js";
 import { listPosts } from "../../../lib/blog.js";
 import { continentOf, CONTINENTS } from "../../../lib/geo.js";
 import AnimatedNumber from "../../../components/AnimatedNumber.js";
+import Breadcrumbs from "../../../components/Breadcrumbs.js";
 
 // Static, build-time stats. Refreshes daily so the "last updated" line and
 // blog count track drip-published posts without a manual rebuild.
@@ -43,6 +44,7 @@ export default async function Stats({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("stats");
+  const nav = await getTranslations("nav");
   const noun = site.mappedNoun;
   const niche = cap(noun);
 
@@ -119,6 +121,10 @@ export default async function Stats({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }}
+      />
+      <Breadcrumbs
+        locale={locale}
+        items={[{ name: nav("home"), href: "/" }, { name: nav("stats") }]}
       />
 
       <h1>{t("heading", { niche })}</h1>

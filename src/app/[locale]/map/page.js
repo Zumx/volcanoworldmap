@@ -20,6 +20,7 @@ export async function generateMetadata({ params }) {
 export default async function MapPage({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const nav = await getTranslations("nav");
 
   // Dataset size for the schema: total mapped places and how many countries
   // they span (read from the prebuilt country index, same source as the home
@@ -66,13 +67,41 @@ export default async function MapPage({ params }) {
     .map((c) => c.name)
     .sort((a, b) => a.localeCompare(b));
 
+  // Name → slug for the top-20 best-covered countries (the ones with an
+  // /explore landing page). The map links to the guide when one of these is
+  // selected in the filter. countries is count-desc, so the first 20 are it.
+  const exploreCountries = Object.fromEntries(
+    countries.slice(0, 20).map((c) => [c.name, c.slug])
+  );
+
+  // BreadcrumbList JSON-LD only — the map is a full-bleed app, so a visible
+  // breadcrumb trail would overlay the canvas. The structured data still gives
+  // crawlers the Home › Map hierarchy.
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: nav("home"),
+        item: `${base}/${locale}`,
+      },
+      { "@type": "ListItem", position: 2, name: nav("map") },
+    ],
+  };
+
   return (
     <main className="map-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(mapLd) }}
       />
-      <MapClient countries={countryNames} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <MapClient countries={countryNames} exploreCountries={exploreCountries} />
     </main>
   );
 }

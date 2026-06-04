@@ -6,9 +6,12 @@ export default function robots() {
   return {
     rules: {
       userAgent: "*",
-      // Allow the root and every locale prefix; block internal API routes.
+      // Allow the root and every locale prefix; block internal API routes and
+      // Next's build-asset folder. crawlDelay throttles aggressive bots so the
+      // origin stays responsive (Googlebot ignores it; Bing/Yandex honour it).
       allow: ["/", ...routing.locales.map((l) => `/${l}/`)],
-      disallow: "/api/",
+      disallow: ["/api/", "/_next/"],
+      crawlDelay: 10,
     },
     sitemap: `${base}/sitemap.xml`,
   };

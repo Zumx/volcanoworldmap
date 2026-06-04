@@ -62,11 +62,58 @@ export default async function Home({ params }) {
     },
   };
 
+  // Organization — the publisher behind the site, with logo + contact point so
+  // Google can build a knowledge-panel entity for the brand.
+  const organizationLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: site.name,
+    url: base,
+    logo: `${base}/brandmark.svg`,
+    ...(site.contactEmail
+      ? {
+          contactPoint: {
+            "@type": "ContactPoint",
+            email: site.contactEmail,
+            contactType: "customer support",
+            availableLanguage: site.locales || ["en"],
+          },
+        }
+      : {}),
+  };
+
+  // WebSite + SearchAction — makes the home page eligible for Google's
+  // sitelinks searchbox, wired to the map's place search (?name=…).
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name,
+    url: `${base}/${locale}`,
+    inLanguage: locale,
+    publisher: { "@type": "Organization", name: site.name, url: base },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${base}/${locale}/map?name={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <main className="page-fade-in">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
       />
       {/* Compact hero: brand + tagline on a single ≤80px strip. The CTAs
           moved to the navbar and the map now dominates the viewport. */}

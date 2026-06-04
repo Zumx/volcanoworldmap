@@ -9,6 +9,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import dynamic from "next/dynamic";
 import { site } from "../lib/site.js";
+import { Link } from "../i18n/navigation.js";
 
 // LocationCard is only pulled in the first time a pin is clicked.
 const LocationCard = dynamic(() => import("./LocationCard.js"), {
@@ -18,7 +19,11 @@ const LocationCard = dynamic(() => import("./LocationCard.js"), {
 const LS_KEY = `${site.slug}:showAll`;
 const CLUSTER_COLOR = site.colors.primary;
 
-export default function MapView({ embedded = false, countries = [] }) {
+export default function MapView({
+  embedded = false,
+  countries = [],
+  exploreCountries = {},
+}) {
   const t = useTranslations("map");
   const tCard = useTranslations("card");
   const locale = useLocale();
@@ -551,6 +556,15 @@ export default function MapView({ embedded = false, countries = [] }) {
                 ))}
               </select>
             </label>
+
+            {country && exploreCountries[country] && (
+              <Link
+                className="map-filter-explore"
+                href={`/explore/${exploreCountries[country]}`}
+              >
+                {site.emoji} {t("exploreCountry", { country })}
+              </Link>
+            )}
 
             {types.length > 1 && (
               <label className="map-filter-field">

@@ -11,8 +11,9 @@ import {
   getPost,
   getPostLocales,
   relatedPosts,
+  countriesInText,
 } from "../../../../lib/blog.js";
-import { countryBySlug } from "../../../../lib/data.js";
+import { listCountries } from "../../../../lib/data.js";
 import { site } from "../../../../lib/site.js";
 import { pingIndexNow, isFreshlyPublished } from "../../../../lib/indexnow.js";
 
@@ -67,11 +68,17 @@ export default async function BlogPost({ params }) {
   if (!post) notFound();
 
   const related = await relatedPosts(locale, slug, 3);
-  // Cross-link to the country landing page when the post declares a country
-  // in its frontmatter (slug form, e.g. country: "france").
-  const postCountry = post.meta.country
-    ? await countryBySlug(post.meta.country)
-    : null;
+  // Internal links to the country guides for any country named in the post
+  // (frontmatter `country` plus countries mentioned in the title/body). The
+  // top-20 best-covered countries have a richer /explore landing page; the
+  // rest fall back to their /[country] page. Both are strong topical links.
+  const allCountries = await listCountries();
+  const exploreSlugs = new Set(allCountries.slice(0, 20).map((c) => c.slug));
+  const postCountries = countriesInText(
+    { title: post.meta.title, content: post.content, country: post.meta.country },
+    allCountries,
+    4
+  );
 
   const url = `https://${site.domain}/${locale}/blog/${slug}`;
   const headline = post.meta.title || slug;
@@ -124,12 +131,18 @@ export default async function BlogPost({ params }) {
         </p>
       )}
       <ShareBar url={url} title={headline} />
-      {postCountry && (
-        <p className="post-country">
-          <Link href={`/${postCountry.slug}`}>
-            {site.emoji} {t("exploreCountry", { country: postCountry.name })}
-          </Link>
-        </p>
+      {postCountries.length > 0 && (
+        <nav className="post-countries" aria-label={t("exploreHeading")}>
+          {postCountries.map((c) => (
+            <Link
+              key={c.slug}
+              className="post-country-link"
+              href={exploreSlugs.has(c.slug) ? `/explore/${c.slug}` : `/${c.slug}`}
+            >
+              {site.emoji} {t("exploreCountry", { country: c.name })}
+            </Link>
+          ))}
+        </nav>
       )}
       <MDXRemote source={post.content} />
       <aside className="author-box">

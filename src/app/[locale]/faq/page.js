@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { site } from "../../../lib/site.js";
 import { routing } from "../../../i18n/routing.js";
+import Breadcrumbs from "../../../components/Breadcrumbs.js";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -31,6 +32,7 @@ export default async function FAQ({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("faq");
+  const nav = await getTranslations("nav");
   const noun = site.mappedNoun;
   const items = buildItems(t, site.name, noun);
 
@@ -50,6 +52,10 @@ export default async function FAQ({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Breadcrumbs
+        locale={locale}
+        items={[{ name: nav("home"), href: "/" }, { name: nav("faq") }]}
       />
       <h1>{t("heading")}</h1>
       <p>{t("intro", { noun, name: site.name })}</p>

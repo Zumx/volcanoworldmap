@@ -57,7 +57,8 @@
     "allTypes": "Alla typer",
     "visibility": "Visning",
     "clearFilters": "Rensa allt",
-    "mapLabel": "Interaktiv karta över {name}"
+    "mapLabel": "Interaktiv karta över {name}",
+    "exploreCountry": "Utforska {country} →"
   },
   "card": {
     "close": "Stäng",
@@ -123,7 +124,8 @@
     "copied": "Kopierat!",
     "print": "Skriv ut",
     "writtenBy": "Skrivet av teamet bakom {team}",
-    "authorBio": "Vi kartlägger världens mest anmärkningsvärda platser, en nål i taget."
+    "authorBio": "Vi kartlägger världens mest anmärkningsvärda platser, en nål i taget.",
+    "exploreHeading": "Utforska länderna i den här guiden"
   },
   "about": {
     "heading": "Om",

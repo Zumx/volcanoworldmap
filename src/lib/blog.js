@@ -179,6 +179,41 @@ export async function relatedPostsForCountry(
   return out;
 }
 
+// Countries explicitly named in a post, for the in-article internal links to
+// /explore/[country]. Scans the title + body text against the known country
+// names (word-boundary, case-insensitive) and always includes the frontmatter
+// `country` if set. Names shorter than 4 chars (e.g. "Mali", "Chad") are still
+// matched but only on a strict word boundary so they don't fire on substrings.
+// Returns the matched countries in the order they rank in `countries` (which
+// is count-desc), deduplicated and capped at `limit`.
+const RE_ESCAPE = /[.*+?^${}()|[\]\\]/g;
+
+export function countriesInText({ title, content, country }, countries, limit = 4) {
+  if (!Array.isArray(countries) || countries.length === 0) return [];
+  const haystack = `${title || ""}\n${content || ""}`;
+  const fmCountry = String(country || "").toLowerCase();
+  const out = [];
+  const seen = new Set();
+  for (const c of countries) {
+    const name = c.name || "";
+    if (!name) continue;
+    if (seen.has(c.slug)) continue;
+    const byFrontmatter =
+      fmCountry && (fmCountry === c.slug || fmCountry === name.toLowerCase());
+    let mentioned = byFrontmatter;
+    if (!mentioned && name.length >= 3) {
+      const re = new RegExp(`\\b${name.replace(RE_ESCAPE, "\\$&")}\\b`, "i");
+      mentioned = re.test(haystack);
+    }
+    if (mentioned) {
+      out.push(c);
+      seen.add(c.slug);
+      if (out.length >= limit) break;
+    }
+  }
+  return out;
+}
+
 export async function relatedPosts(locale, slug, limit = 3) {
   const all = await listPosts(locale);
   const me = all.find((p) => p.slug === slug);

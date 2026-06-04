@@ -57,7 +57,8 @@
     "allTypes": "Tous les types",
     "visibility": "Affichage",
     "clearFilters": "Tout effacer",
-    "mapLabel": "Carte interactive de {name}"
+    "mapLabel": "Carte interactive de {name}",
+    "exploreCountry": "Explorer {country} →"
   },
   "card": {
     "close": "Fermer",
@@ -123,7 +124,8 @@
     "copied": "Copié !",
     "print": "Imprimer",
     "writtenBy": "Écrit par l'équipe de {team}",
-    "authorBio": "Nous cartographions les lieux les plus remarquables du monde, une épingle à la fois."
+    "authorBio": "Nous cartographions les lieux les plus remarquables du monde, une épingle à la fois.",
+    "exploreHeading": "Explorez les pays de ce guide"
   },
   "about": {
     "heading": "À propos",

@@ -2524,3 +2524,51 @@ a {
     transition: none;
   }
 }
+
+/* ---- Blog post: country guide links (internal linking to /explore) ---- */
+.post-countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 20px;
+}
+.post-country-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 13px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.post-country-link:hover {
+  border-color: var(--accent);
+  background: #fff;
+}
+
+/* ---- Map filter: link through to the country's /explore guide ---- */
+.map-filter-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: -4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.map-filter-explore:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}

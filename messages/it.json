@@ -57,7 +57,8 @@
     "allTypes": "Tutti i tipi",
     "visibility": "Visualizzazione",
     "clearFilters": "Cancella tutto",
-    "mapLabel": "Mappa interattiva di {name}"
+    "mapLabel": "Mappa interattiva di {name}",
+    "exploreCountry": "Esplora {country} →"
   },
   "card": {
     "close": "Chiudi",
@@ -123,7 +124,8 @@
     "copied": "Copiato!",
     "print": "Stampa",
     "writtenBy": "Scritto dal team di {team}",
-    "authorBio": "Mappiamo i luoghi più straordinari del mondo, un segnaposto alla volta."
+    "authorBio": "Mappiamo i luoghi più straordinari del mondo, un segnaposto alla volta.",
+    "exploreHeading": "Esplora i paesi di questa guida"
   },
   "about": {
     "heading": "Informazioni",
