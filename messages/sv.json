@@ -62,7 +62,9 @@
     "mapLabel": "Interaktiv karta över {name}",
     "exploreCountry": "Utforska {country} →",
     "unavailable": "Kartan är inte tillgänglig",
-    "retry": "Försök igen"
+    "retry": "Försök igen",
+    "locateMe": "Visa min plats",
+    "fullscreen": "Helskärm"
   },
   "card": {
     "close": "Stäng",
@@ -86,7 +88,11 @@
     "inTheBlog": "I bloggen",
     "prevImage": "Föregående foto",
     "nextImage": "Nästa foto",
-    "scanForMap": "Skanna för livekartan"
+    "scanForMap": "Skanna för livekartan",
+    "elevation": "Höjd över havet",
+    "openGoogleMaps": "Öppna i Google Maps",
+    "openOsm": "Öppna i OpenStreetMap",
+    "categoriesHeading": "Kategorier"
   },
   "country": {
     "heading": "{noun} i {country}",

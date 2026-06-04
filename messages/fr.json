@@ -62,7 +62,9 @@
     "mapLabel": "Carte interactive de {name}",
     "exploreCountry": "Explorer {country} →",
     "unavailable": "Carte indisponible",
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "locateMe": "Me localiser",
+    "fullscreen": "Plein écran"
   },
   "card": {
     "close": "Fermer",
@@ -86,7 +88,11 @@
     "inTheBlog": "Sur le blog",
     "prevImage": "Photo précédente",
     "nextImage": "Photo suivante",
-    "scanForMap": "Scannez pour la carte en ligne"
+    "scanForMap": "Scannez pour la carte en ligne",
+    "elevation": "Altitude",
+    "openGoogleMaps": "Ouvrir dans Google Maps",
+    "openOsm": "Ouvrir dans OpenStreetMap",
+    "categoriesHeading": "Catégories"
   },
   "country": {
     "heading": "{noun} en {country}",

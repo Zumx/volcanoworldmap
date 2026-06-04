@@ -95,6 +95,31 @@ async function pageCategories(lang, title) {
   }
 }
 
+// Maintenance / housekeeping categories that aren't useful as reader-facing
+// tags. The geographic filter has already run; this is purely cosmetic.
+const CATEGORY_NOISE =
+  /\b(article|articles|pages?|wikipedia|wikidata|commons|cs1|webarchive|coordinates|short description|dates|stubs?|infobox|unsourced|use \w+|engvarb|maint|template|disambiguation)\b/i;
+
+// Turn raw "Category:Foo bar" titles (the prefix is localized per wiki) into
+// reader-facing { name, url } tags, dropping maintenance categories. Capped so
+// the card stays compact.
+function cleanCategories(cats, lang, limit = 6) {
+  const out = [];
+  for (const full of cats || []) {
+    if (!full) continue;
+    const name = full.replace(/^[^:]+:/, "").trim(); // strip localized prefix
+    if (!name || CATEGORY_NOISE.test(name)) continue;
+    out.push({
+      name,
+      url: `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(
+        full.replace(/ /g, "_")
+      )}`,
+    });
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
 // Validate one Wikipedia summary against the pin: it must be a real geographic
 // article (has coordinates), sit within MAX_GEO_DISTANCE_KM of the pin, not be
 // a known non-geographic subject, and carry a usable intro. Returns the shaped
@@ -132,6 +157,7 @@ async function verifySummary(j, lang, lat, lon) {
         j.content_urls.desktop &&
         j.content_urls.desktop.page) ||
       null,
+    categories: cleanCategories(cats, lang),
   };
 }
 
@@ -265,6 +291,7 @@ export async function enrichLocation({ name, country, lat, lon, locale }) {
     images: [],
     source: null,
     wikiUrl: null,
+    categories: [],
   };
   try {
     // Description: only a geo-verified Wikipedia article for this place. If
@@ -275,6 +302,7 @@ export async function enrichLocation({ name, country, lat, lon, locale }) {
       if (wiki) {
         result.extract = wiki.extract;
         result.wikiUrl = wiki.url;
+        result.categories = wiki.categories || [];
         if (wiki.image) {
           result.image = wiki.image;
           result.source = "Wikipedia";

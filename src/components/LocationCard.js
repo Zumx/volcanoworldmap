@@ -240,6 +240,18 @@ export default function LocationCard({
   // (ski: elevation/activities, wine: grape/region, …) — rendered
   // automatically without touching this component.
   for (const f of metaFieldsFor(p)) rows.push([f.label, f.value]);
+  // Elevation from the raw OSM `ele` tag — unless this site already surfaces it
+  // through a metaField (e.g. ski/alpine sites), to avoid showing it twice.
+  const hasEleMeta = (site.metaFields || []).some(
+    (f) => f.key === "elevation" || f.key === "height"
+  );
+  if (p.ele != null && p.ele !== "" && !hasEleMeta) {
+    const eleNum = parseFloat(String(p.ele).replace(",", "."));
+    rows.push([
+      t("elevation"),
+      Number.isFinite(eleNum) ? `${Math.round(eleNum)} m` : String(p.ele),
+    ]);
+  }
 
   const image = enriched && enriched.image;
   // Gallery: the enriched image list (primary + nearby Commons photos), or a
@@ -512,22 +524,53 @@ export default function LocationCard({
               </div>
             </div>
 
-            {((enriched && enriched.wikiUrl) || (p.osmType && p.osmId)) && (
-              <div className="loc-links">
-                {enriched && enriched.wikiUrl && (
-                  <a href={enriched.wikiUrl} target="_blank" rel="noreferrer">
-                    {t("wikipedia")}
-                  </a>
-                )}
-                {p.osmType && p.osmId && (
-                  <a
-                    href={`https://www.openstreetmap.org/${p.osmType}/${p.osmId}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {t("viewOnOsm")}
-                  </a>
-                )}
+            <div className="loc-links">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${lat},${lon}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t("openGoogleMaps")}
+              </a>
+              <a
+                href={`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t("openOsm")}
+              </a>
+              {enriched && enriched.wikiUrl && (
+                <a href={enriched.wikiUrl} target="_blank" rel="noreferrer">
+                  {t("wikipedia")}
+                </a>
+              )}
+              {p.osmType && p.osmId && (
+                <a
+                  href={`https://www.openstreetmap.org/${p.osmType}/${p.osmId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t("viewOnOsm")}
+                </a>
+              )}
+            </div>
+
+            {enriched && enriched.categories && enriched.categories.length > 0 && (
+              <div className="loc-categories">
+                <h3 className="loc-cat-heading">{t("categoriesHeading")}</h3>
+                <div className="loc-cat-tags">
+                  {enriched.categories.map((c) => (
+                    <a
+                      key={c.url}
+                      className="loc-cat"
+                      href={c.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {c.name}
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
 

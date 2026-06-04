@@ -430,6 +430,10 @@ async function main() {
           capacity: t.capacity || null,
           phone: t.phone || t["contact:phone"] || null,
           address: osmAddress(t),
+          // Elevation (metres above sea level) straight from the OSM `ele` tag,
+          // when present — shown in the LocationCard. resolveMeta() may also map
+          // it into a site-specific field; the card de-duplicates.
+          ele: t.ele || null,
           osmType: el.type,
           osmId: el.id,
           ...resolveMeta(t),

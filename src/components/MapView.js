@@ -24,6 +24,12 @@ const prefersDark = () =>
   typeof window.matchMedia === "function" &&
   window.matchMedia("(prefers-color-scheme: dark)").matches;
 
+// Inline icons for the custom Leaflet controls (locate-me + fullscreen).
+const ICON_LOCATE =
+  '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>';
+const ICON_FULLSCREEN =
+  '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>';
+
 // LocationCard is only pulled in the first time a pin is clicked.
 const LocationCard = dynamic(() => import("./LocationCard.js"), {
   ssr: false,
@@ -86,6 +92,41 @@ export default function MapView({
     mapRef.current = map;
     if (typeof window !== "undefined") window.__wmMap = map;
 
+    // Restore the last-viewed position (full map only). A ?name= deep link
+    // loaded after the dataset still wins and re-centres on the shared place.
+    const POS_KEY = `${site.slug}:mapPos`;
+    if (!embedded) {
+      try {
+        const saved = JSON.parse(localStorage.getItem(POS_KEY) || "null");
+        if (
+          saved &&
+          Number.isFinite(saved.lat) &&
+          Number.isFinite(saved.lng) &&
+          Number.isFinite(saved.z)
+        ) {
+          map.setView([saved.lat, saved.lng], saved.z, { animate: false });
+        }
+      } catch {
+        /* corrupt value — ignore */
+      }
+      const savePos = () => {
+        try {
+          const c = map.getCenter();
+          localStorage.setItem(
+            POS_KEY,
+            JSON.stringify({
+              lat: +c.lat.toFixed(5),
+              lng: +c.lng.toFixed(5),
+              z: map.getZoom(),
+            })
+          );
+        } catch {
+          /* storage blocked */
+        }
+      };
+      map.on("moveend zoomend", savePos);
+    }
+
     const makeTiles = () =>
       L.tileLayer(prefersDark() ? DARK_TILES : LIGHT_TILES, {
         maxZoom: 19,
@@ -107,6 +148,79 @@ export default function MapView({
     } catch {
       /* matchMedia unavailable — stay on the initial basemap */
     }
+
+    // Scale bar (metric + imperial), bottom-left.
+    L.control
+      .scale({ position: "bottomleft", imperial: true, metric: true })
+      .addTo(map);
+
+    // ---- Locate-me + fullscreen, stacked under the zoom control ----
+    let userMarker = null;
+    const doLocate = (btn) => {
+      if (typeof navigator === "undefined" || !navigator.geolocation) return;
+      if (btn) btn.classList.add("is-busy");
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          if (btn) btn.classList.remove("is-busy");
+          if (!mapRef.current) return;
+          const { latitude, longitude } = pos.coords;
+          map.setView([latitude, longitude], Math.max(map.getZoom(), 12), {
+            animate: true,
+          });
+          if (userMarker) map.removeLayer(userMarker);
+          userMarker = L.circleMarker([latitude, longitude], {
+            radius: 8,
+            weight: 3,
+            color: "#fff",
+            fillColor: site.colors.accent,
+            fillOpacity: 1,
+          }).addTo(map);
+        },
+        () => {
+          if (btn) btn.classList.remove("is-busy");
+        },
+        // 5s timeout matches the rest of the app's external-call budget.
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 60000 }
+      );
+    };
+    const toggleFullscreen = () => {
+      const el = containerRef.current && containerRef.current.parentElement;
+      if (!el) return;
+      if (document.fullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen();
+      } else if (el.requestFullscreen) {
+        el.requestFullscreen().catch(() => {});
+      }
+    };
+    const onFsChange = () =>
+      setTimeout(() => mapRef.current && mapRef.current.invalidateSize(), 200);
+    document.addEventListener("fullscreenchange", onFsChange);
+
+    const ExtraControls = L.Control.extend({
+      options: { position: "topleft" },
+      onAdd() {
+        const div = L.DomUtil.create("div", "leaflet-bar map-extra-ctrl");
+        const mk = (label, svg, handler) => {
+          const a = L.DomUtil.create("a", "", div);
+          a.href = "#";
+          a.setAttribute("role", "button");
+          a.title = label;
+          a.setAttribute("aria-label", label);
+          a.innerHTML = svg;
+          L.DomEvent.on(a, "click", (e) => {
+            L.DomEvent.preventDefault(e);
+            L.DomEvent.stop(e);
+            handler(a);
+          });
+          return a;
+        };
+        mk(t("locateMe"), ICON_LOCATE, doLocate);
+        mk(t("fullscreen"), ICON_FULLSCREEN, toggleFullscreen);
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+      },
+    });
+    map.addControl(new ExtraControls());
 
     // tolerance expands the clickable area around each canvas circle so
     // small 5–6px markers are actually hittable (default 0 = must click the
@@ -349,6 +463,7 @@ export default function MapView({
       } catch {
         /* ignore */
       }
+      document.removeEventListener("fullscreenchange", onFsChange);
       map.remove();
       mapRef.current = null;
       apiRef.current = null;
@@ -503,7 +618,7 @@ export default function MapView({
           <h1>
             {site.emoji} {site.name}
           </h1>
-          <span className="count" id="point-count">
+          <span className="count" id="point-count" aria-live="polite">
             {t("loading")}
           </span>
         </div>
