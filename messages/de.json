@@ -104,7 +104,20 @@
     "next": "Älter →",
     "page": "Seite {page} von {total}",
     "exploreCountry": "{country} auf der Karte entdecken →",
-    "alsoLike": "Das könnte dir auch gefallen"
+    "alsoLike": "Das könnte dir auch gefallen",
+    "heroTagline": "Reiseführer & Inspiration",
+    "searchPlaceholder": "Beiträge durchsuchen…",
+    "searchLabel": "Beiträge durchsuchen",
+    "latest": "Neueste Beiträge",
+    "categories": "Kategorien",
+    "results": "{count} Ergebnisse",
+    "noResults": "Keine Beiträge gefunden.",
+    "share": "Teilen",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert!",
+    "print": "Drucken",
+    "writtenBy": "Geschrieben vom Team von {team}",
+    "authorBio": "Wir kartieren die bemerkenswertesten Orte der Welt – Pin für Pin."
   },
   "about": {
     "heading": "Über",

@@ -3,6 +3,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Link } from "../../../../i18n/navigation.js";
 import Breadcrumbs from "../../../../components/Breadcrumbs.js";
+import ReadingProgress from "../../../../components/ReadingProgress.js";
+import ShareBar from "../../../../components/ShareBar.js";
 import { routing } from "../../../../i18n/routing.js";
 import {
   listPosts,
@@ -97,6 +99,7 @@ export default async function BlogPost({ params }) {
 
   return (
     <main className="container prose">
+      <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -109,9 +112,18 @@ export default async function BlogPost({ params }) {
           { name: post.meta.title || slug },
         ]}
       />
-      <Link href="/blog">{t("back")}</Link>
+      <Link className="back-to-blog no-print" href="/blog">
+        {t("back")}
+      </Link>
       <h1>{post.meta.title || slug}</h1>
-      {post.meta.date && <p className="post-meta">{post.meta.date}</p>}
+      {(post.meta.date || post.readTime) && (
+        <p className="post-meta">
+          {post.meta.date && <span>{post.meta.date}</span>}
+          {post.meta.date && post.readTime ? <span> · </span> : null}
+          {post.readTime ? <span>{t("readTime", { min: post.readTime })}</span> : null}
+        </p>
+      )}
+      <ShareBar url={url} title={headline} />
       {postCountry && (
         <p className="post-country">
           <Link href={`/${postCountry.slug}`}>
@@ -120,6 +132,15 @@ export default async function BlogPost({ params }) {
         </p>
       )}
       <MDXRemote source={post.content} />
+      <aside className="author-box">
+        <div className="author-avatar" aria-hidden="true">
+          {site.emoji}
+        </div>
+        <div className="author-meta">
+          <p className="author-name">{t("writtenBy", { team: site.name })}</p>
+          <p className="author-bio">{t("authorBio")}</p>
+        </div>
+      </aside>
       {related.length > 0 && (
         <aside className="related-posts">
           <h2>{t("alsoLike")}</h2>

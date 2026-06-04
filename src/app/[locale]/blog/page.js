@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "../../../i18n/routing.js";
 import { listPosts } from "../../../lib/blog.js";
+import { site } from "../../../lib/site.js";
 import BlogList from "../../../components/BlogList.js";
 
 // ISR: regenerate at most once per day so drip-scheduled posts go live
@@ -27,14 +28,14 @@ export default async function BlogIndex({ params }) {
   const posts = await listPosts(locale);
 
   return (
-    <main className="container">
-      <div className="prose">
-        <h1>{t("heading")}</h1>
-      </div>
+    <main className="container blog-index">
       {posts.length === 0 ? (
-        <p>{t("empty")}</p>
+        <div className="prose">
+          <h1>{site.name}</h1>
+          <p>{t("empty")}</p>
+        </div>
       ) : (
-        <BlogList posts={posts} />
+        <BlogList posts={posts} locale={locale} title={site.name} />
       )}
     </main>
   );

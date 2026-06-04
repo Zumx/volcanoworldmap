@@ -104,7 +104,20 @@
     "next": "Äldre →",
     "page": "Sida {page} av {total}",
     "exploreCountry": "Utforska {country} på kartan →",
-    "alsoLike": "Du kanske också gillar"
+    "alsoLike": "Du kanske också gillar",
+    "heroTagline": "Reseguider & inspiration",
+    "searchPlaceholder": "Sök inlägg…",
+    "searchLabel": "Sök inlägg",
+    "latest": "Senaste inläggen",
+    "categories": "Kategorier",
+    "results": "{count} träffar",
+    "noResults": "Inga inlägg matchar din sökning.",
+    "share": "Dela",
+    "copyLink": "Kopiera länk",
+    "copied": "Kopierat!",
+    "print": "Skriv ut",
+    "writtenBy": "Skrivet av teamet bakom {team}",
+    "authorBio": "Vi kartlägger världens mest anmärkningsvärda platser, en nål i taget."
   },
   "about": {
     "heading": "Om",

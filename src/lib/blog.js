@@ -31,6 +31,13 @@ function isPublished(post) {
   return !post.date || post.date <= today();
 }
 
+// ~200 wpm reading estimate, floored at 1 minute. Shared by listPosts and
+// getPost so the index and the article header agree on the number.
+function readTimeOf(content) {
+  const words = (content || "").trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
 async function readPostsFrom(dir) {
   let files = [];
   try {
@@ -42,7 +49,6 @@ async function readPostsFrom(dir) {
     files.map(async (file) => {
       const raw = await readFile(join(dir, file), "utf8");
       const { data, content } = matter(raw);
-      const words = (content || "").trim().split(/\s+/).filter(Boolean).length;
       return {
         slug: file.replace(/\.mdx$/, ""),
         title: data.title || file,
@@ -57,8 +63,11 @@ async function readPostsFrom(dir) {
           : [],
         featured: !!(data.featured || data.pinned),
         country: data.country || "",
-        // ~200 wpm reading estimate, floored at 1 minute.
-        readTime: Math.max(1, Math.round(words / 200)),
+        // Optional hero image: an explicit URL wins; otherwise the featured
+        // cards search Wikimedia client-side using `wikiQuery` (or the title).
+        image: data.image || "",
+        wikiQuery: data.wikiQuery || data.wiki || "",
+        readTime: readTimeOf(content),
       };
     })
   );
@@ -86,7 +95,7 @@ export const getPost = cache(async (locale, slug) => {
     const raw = await readFile(join(DIR, locale, `${slug}.mdx`), "utf8");
     const { data, content } = matter(raw);
     if (data.date && data.date > t) return null;
-    return { meta: data, content };
+    return { meta: data, content, readTime: readTimeOf(content) };
   } catch {}
 
   if (locale === routing.defaultLocale) {
@@ -94,7 +103,7 @@ export const getPost = cache(async (locale, slug) => {
       const raw = await readFile(join(DIR, `${slug}.mdx`), "utf8");
       const { data, content } = matter(raw);
       if (data.date && data.date > t) return null;
-      return { meta: data, content };
+      return { meta: data, content, readTime: readTimeOf(content) };
     } catch {}
   }
 

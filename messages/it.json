@@ -104,7 +104,20 @@
     "next": "Meno recenti →",
     "page": "Pagina {page} di {total}",
     "exploreCountry": "Esplora {country} sulla mappa →",
-    "alsoLike": "Potrebbe piacerti anche"
+    "alsoLike": "Potrebbe piacerti anche",
+    "heroTagline": "Guide di viaggio e ispirazione",
+    "searchPlaceholder": "Cerca articoli…",
+    "searchLabel": "Cerca articoli",
+    "latest": "Ultimi articoli",
+    "categories": "Categorie",
+    "results": "{count} risultati",
+    "noResults": "Nessun articolo corrisponde alla ricerca.",
+    "share": "Condividi",
+    "copyLink": "Copia link",
+    "copied": "Copiato!",
+    "print": "Stampa",
+    "writtenBy": "Scritto dal team di {team}",
+    "authorBio": "Mappiamo i luoghi più straordinari del mondo, un segnaposto alla volta."
   },
   "about": {
     "heading": "Informazioni",

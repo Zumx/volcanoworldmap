@@ -1,24 +1,51 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "../i18n/navigation.js";
+import BlogImage from "./BlogImage.js";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 12;
+const FEATURED_COUNT = 3;
 
+function PostMeta({ post, t }) {
+  if (!post.date && !post.readTime) return null;
+  return (
+    <div className="post-meta">
+      {post.date && <span>{post.date}</span>}
+      {post.date && post.readTime ? <span> · </span> : null}
+      {post.readTime ? <span>{t("readTime", { min: post.readTime })}</span> : null}
+    </div>
+  );
+}
+
+// Large hero card with a Wikimedia image — used for the latest posts.
+function FeatureCard({ post, t }) {
+  return (
+    <Link className="blog-feature-card" href={`/blog/${post.slug}`}>
+      <div className="blog-feature-img">
+        <BlogImage post={post} eager />
+      </div>
+      <div className="blog-feature-body">
+        {post.tags && post.tags.length > 0 && (
+          <span className="post-tag">{post.tags[0]}</span>
+        )}
+        <h3>{post.title}</h3>
+        <PostMeta post={post} t={t} />
+        {post.excerpt && <p>{post.excerpt}</p>}
+      </div>
+    </Link>
+  );
+}
+
+// Compact row in the paginated list below the hero.
 function PostCard({ post, t }) {
   return (
     <li>
       <h2>
         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
       </h2>
-      <div className="post-meta">
-        {post.date && <span>{post.date}</span>}
-        {post.date && post.readTime ? <span> · </span> : null}
-        {post.readTime ? (
-          <span>{t("readTime", { min: post.readTime })}</span>
-        ) : null}
-      </div>
+      <PostMeta post={post} t={t} />
       {post.tags && post.tags.length > 0 && (
         <div className="post-tags">
           {post.tags.map((tg) => (
@@ -34,77 +61,129 @@ function PostCard({ post, t }) {
   );
 }
 
-export default function BlogList({ posts }) {
+export default function BlogList({ posts, locale, title }) {
   const t = useTranslations("blog");
+  const [query, setQuery] = useState("");
   const [tag, setTag] = useState(null);
   const [page, setPage] = useState(0);
 
-  const featured = useMemo(() => posts.filter((p) => p.featured), [posts]);
-  const rest = useMemo(() => posts.filter((p) => !p.featured), [posts]);
+  // Attach the locale to each post so the featured cards know which Wikipedia
+  // edition to query for their hero image.
+  const withLocale = useMemo(
+    () => posts.map((p) => ({ ...p, locale })),
+    [posts, locale]
+  );
 
-  const tags = useMemo(() => {
+  // Latest three power the hero; the rest feed the filterable list.
+  const featured = useMemo(
+    () => withLocale.slice(0, FEATURED_COUNT),
+    [withLocale]
+  );
+  const rest = useMemo(() => withLocale.slice(FEATURED_COUNT), [withLocale]);
+
+  const categories = useMemo(() => {
     const s = new Set();
     for (const p of posts) for (const tg of p.tags || []) s.add(tg);
     return [...s].sort((a, b) => a.localeCompare(b));
   }, [posts]);
 
-  const filtered = useMemo(
-    () => (tag ? rest.filter((p) => (p.tags || []).includes(tag)) : rest),
-    [rest, tag]
-  );
+  // Defer the search term so typing stays smooth even with many posts.
+  const deferredQuery = useDeferredValue(query);
+  const q = deferredQuery.trim().toLowerCase();
+  const searching = q.length > 0;
 
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  // Search spans every post (title, excerpt, tags); category browsing applies
+  // only to the non-featured remainder so the hero stays stable.
+  const list = useMemo(() => {
+    if (searching) {
+      return withLocale.filter((p) => {
+        const hay = `${p.title} ${p.excerpt} ${(p.tags || []).join(" ")}`.toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    return tag ? rest.filter((p) => (p.tags || []).includes(tag)) : rest;
+  }, [searching, q, withLocale, rest, tag]);
+
+  const pageCount = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
   const current = Math.min(page, pageCount - 1);
-  const pageItems = filtered.slice(
-    current * PAGE_SIZE,
-    current * PAGE_SIZE + PAGE_SIZE
-  );
+  const pageItems = list.slice(current * PAGE_SIZE, current * PAGE_SIZE + PAGE_SIZE);
 
-  const choose = (next) => {
+  const showHero = !searching && tag === null && current === 0;
+
+  const onSearch = (e) => {
+    setQuery(e.target.value);
+    setPage(0);
+  };
+  const chooseTag = (next) => {
     setTag(next);
     setPage(0);
   };
 
   return (
     <>
-      {featured.length > 0 && (
-        <section className="featured-posts">
-          <h2>{t("featured")}</h2>
-          <ul className="post-list">
+      <section className="blog-hero">
+        <h1>{title}</h1>
+        <p className="blog-hero-tagline">{t("heroTagline")}</p>
+        <div className="blog-search">
+          <input
+            type="search"
+            value={query}
+            onChange={onSearch}
+            placeholder={t("searchPlaceholder")}
+            aria-label={t("searchLabel")}
+            className="blog-search-input"
+          />
+        </div>
+      </section>
+
+      {showHero && featured.length > 0 && (
+        <section className="blog-featured">
+          <h2 className="blog-section-title">{t("latest")}</h2>
+          <div className="blog-featured-grid">
             {featured.map((p) => (
-              <PostCard key={p.slug} post={p} t={t} />
+              <FeatureCard key={p.slug} post={p} t={t} />
             ))}
-          </ul>
+          </div>
         </section>
       )}
 
-      {tags.length > 0 && (
-        <div className="tag-filter" role="group" aria-label={t("featured")}>
+      {!searching && categories.length > 0 && (
+        <nav className="tag-filter" aria-label={t("categories")}>
           <button
             type="button"
             className={`tag-chip${tag === null ? " is-active" : ""}`}
-            onClick={() => choose(null)}
+            onClick={() => chooseTag(null)}
           >
             {t("all")}
           </button>
-          {tags.map((tg) => (
+          {categories.map((tg) => (
             <button
               key={tg}
               type="button"
               className={`tag-chip${tag === tg ? " is-active" : ""}`}
-              onClick={() => choose(tg)}
+              onClick={() => chooseTag(tg)}
             >
               {tg}
             </button>
           ))}
-        </div>
+        </nav>
       )}
 
-      <ul className="post-list">
-        {pageItems.map((p) => (
-          <PostCard key={p.slug} post={p} t={t} />
-        ))}
-      </ul>
+      {searching && (
+        <p className="blog-results-count">
+          {t("results", { count: list.length })}
+        </p>
+      )}
+
+      {pageItems.length === 0 ? (
+        <p className="blog-no-results">{t("noResults")}</p>
+      ) : (
+        <ul className="post-list">
+          {pageItems.map((p) => (
+            <PostCard key={p.slug} post={p} t={t} />
+          ))}
+        </ul>
+      )}
 
       {pageCount > 1 && (
         <nav className="pagination" aria-label="Pagination">

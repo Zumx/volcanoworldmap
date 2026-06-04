@@ -196,6 +196,38 @@ async function mapillaryImage(lat, lon) {
   return img ? img.thumb_1024_url : null;
 }
 
+// Topic image for a blog post (no coordinates available). Searches Wikipedia
+// for the query and returns the lead thumbnail of the best-ranked result that
+// has one. Unlike the geo-anchored place lookup this is name-based on purpose —
+// a blog topic ("Alhambra", "medieval siege warfare") is exactly what we want
+// the encyclopedia to illustrate. Single API round-trip via a search generator
+// feeding pageimages. Best-effort: returns null on any miss so the caller can
+// fall back to a styled placeholder.
+export async function wikiTopicImage(query, locale) {
+  const q = (query || "").trim();
+  if (!q) return null;
+  const lang = (locale || "en").split("-")[0];
+  const url =
+    `https://${lang}.wikipedia.org/w/api.php?origin=*&format=json` +
+    "&action=query&generator=search&gsrnamespace=0&gsrlimit=4" +
+    `&gsrsearch=${encodeURIComponent(q)}` +
+    "&prop=pageimages&piprop=thumbnail&pithumbsize=800";
+  try {
+    const res = await fetch(url, { headers: { Accept: "application/json" } });
+    if (!res.ok) return null;
+    const j = await res.json();
+    const pages = j.query && j.query.pages;
+    if (!pages) return null;
+    // Pick the highest-ranked search hit (lowest `index`) that has a thumbnail.
+    const withImg = Object.values(pages)
+      .filter((p) => p.thumbnail && p.thumbnail.source)
+      .sort((a, b) => (a.index || 0) - (b.index || 0));
+    return withImg.length ? withImg[0].thumbnail.source : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function enrichLocation({ name, country, lat, lon, locale }) {
   const result = { extract: null, image: null, source: null, wikiUrl: null };
   try {

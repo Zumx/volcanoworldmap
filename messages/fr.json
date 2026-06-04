@@ -104,7 +104,20 @@
     "next": "Plus anciens →",
     "page": "Page {page} sur {total}",
     "exploreCountry": "Découvrir {country} sur la carte →",
-    "alsoLike": "Vous aimerez aussi"
+    "alsoLike": "Vous aimerez aussi",
+    "heroTagline": "Guides de voyage & inspiration",
+    "searchPlaceholder": "Rechercher des articles…",
+    "searchLabel": "Rechercher des articles",
+    "latest": "Derniers articles",
+    "categories": "Catégories",
+    "results": "{count} résultats",
+    "noResults": "Aucun article ne correspond à votre recherche.",
+    "share": "Partager",
+    "copyLink": "Copier le lien",
+    "copied": "Copié !",
+    "print": "Imprimer",
+    "writtenBy": "Écrit par l'équipe de {team}",
+    "authorBio": "Nous cartographions les lieux les plus remarquables du monde, une épingle à la fois."
   },
   "about": {
     "heading": "À propos",

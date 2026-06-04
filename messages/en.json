@@ -104,7 +104,20 @@
     "next": "Older →",
     "page": "Page {page} of {total}",
     "exploreCountry": "Explore {country} on the map →",
-    "alsoLike": "You might also like"
+    "alsoLike": "You might also like",
+    "heroTagline": "Travel guides & inspiration",
+    "searchPlaceholder": "Search posts…",
+    "searchLabel": "Search posts",
+    "latest": "Latest posts",
+    "categories": "Categories",
+    "results": "{count} results",
+    "noResults": "No posts match your search.",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "print": "Print",
+    "writtenBy": "Written by the {team} team",
+    "authorBio": "Mapping the world's most remarkable places, one pin at a time."
   },
   "about": {
     "heading": "About",
