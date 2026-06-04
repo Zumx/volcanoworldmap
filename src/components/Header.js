@@ -31,13 +31,18 @@ export default function Header() {
 
   return (
     <header className="site-header" ref={headerRef}>
-      <Link href="/" className="brand" onClick={close}>
-        <span>{site.emoji}</span>
+      <Link
+        href="/"
+        className="brand"
+        onClick={close}
+        aria-label={`${site.name} — ${t("home")}`}
+      >
+        <span aria-hidden="true">{site.emoji}</span>
         <span>{site.name}</span>
       </Link>
 
       {/* Desktop nav */}
-      <nav className="nav-desktop">
+      <nav className="nav-desktop" aria-label={t("menu")}>
         <div className="nav-links">
           <Link href="/">{t("home")}</Link>
           <Link href="/about">{t("about")}</Link>
@@ -68,7 +73,11 @@ export default function Header() {
       </button>
 
       {/* Mobile drawer — all links + the language switcher */}
-      <div id="mobile-nav" className={`nav-mobile${open ? " is-open" : ""}`}>
+      <nav
+        id="mobile-nav"
+        className={`nav-mobile${open ? " is-open" : ""}`}
+        aria-label={t("menu")}
+      >
         <Link href="/" onClick={close}>
           {t("home")}
         </Link>
@@ -87,7 +96,7 @@ export default function Header() {
         <div className="nav-mobile-lang">
           <LanguageSwitcher />
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

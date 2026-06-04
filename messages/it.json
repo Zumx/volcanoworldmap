@@ -7,7 +7,8 @@
     "countries": "Paesi",
     "faq": "FAQ",
     "menu": "Menu",
-    "stats": "Statistiche"
+    "stats": "Statistiche",
+    "skipToContent": "Vai al contenuto"
   },
   "home": {
     "tagline": "Una mappa del mondo interattiva",
@@ -17,7 +18,28 @@
     "countriesHeading": "Sfoglia per paese",
     "statsCountries": "paesi",
     "popularCountries": "Paesi popolari",
-    "featuredHeading": "Destinazioni in evidenza"
+    "featuredHeading": "Destinazioni in evidenza",
+    "howHeading": "Come funziona",
+    "howSub": "Tre passi, dallo scorrere distratto al tuo prossimo viaggio.",
+    "step1Title": "Esplora",
+    "step1Body": "Sposta e ingrandisci la mappa dal vivo, oppure cerca per nome e paese per trovare {noun} in tutto il mondo.",
+    "step2Title": "Scopri",
+    "step2Body": "Clicca un punto per foto, descrizioni, orari e cosa c'è nelle vicinanze — tutto in un posto.",
+    "step3Title": "Prenota",
+    "step3Body": "Trovato un posto che ami? Vai dritto a tour, biglietti ed esperienze.",
+    "testimonialsHeading": "Amato dai viaggiatori curiosi",
+    "t1Quote": "Ho organizzato un intero weekend attorno a tre luoghi che non avrei mai trovato. Su questa mappa si perde un'ora senza accorgersene.",
+    "t1Name": "Sofia M.",
+    "t1Role": "Esploratrice del weekend",
+    "t2Quote": "Finalmente una mappa davvero completa. Ho controllato la mia regione e c'erano anche i posti più nascosti.",
+    "t2Name": "Daniel R.",
+    "t2Role": "Guida locale",
+    "t3Quote": "Le foto e l'elenco 'nelle vicinanze' rendono tutto rapidissimo. È la mia prima tappa prima di ogni viaggio in auto.",
+    "t3Name": "Aiko T.",
+    "t3Role": "Appassionato di viaggi on the road",
+    "latestHeading": "Ultimi dal blog",
+    "readMore": "Leggi di più →",
+    "viewAllPosts": "Vedi tutti gli articoli →"
   },
   "map": {
     "loading": "Caricamento della mappa…",
@@ -34,7 +56,8 @@
     "type": "Tipo",
     "allTypes": "Tutti i tipi",
     "visibility": "Visualizzazione",
-    "clearFilters": "Cancella tutto"
+    "clearFilters": "Cancella tutto",
+    "mapLabel": "Mappa interattiva di {name}"
   },
   "card": {
     "close": "Chiudi",

@@ -7,7 +7,8 @@
     "countries": "Countries",
     "faq": "FAQ",
     "menu": "Menu",
-    "stats": "Statistics"
+    "stats": "Statistics",
+    "skipToContent": "Skip to content"
   },
   "home": {
     "tagline": "An interactive world map",
@@ -17,7 +18,28 @@
     "countriesHeading": "Browse by country",
     "statsCountries": "countries",
     "popularCountries": "Popular countries",
-    "featuredHeading": "Featured destinations"
+    "featuredHeading": "Featured destinations",
+    "howHeading": "How it works",
+    "howSub": "Three steps from idle scrolling to your next trip.",
+    "step1Title": "Explore",
+    "step1Body": "Pan and zoom the live map, or search by name and country to find {noun} anywhere in the world.",
+    "step2Title": "Discover",
+    "step2Body": "Click any point for photos, descriptions, opening hours and what's nearby — all in one place.",
+    "step3Title": "Book",
+    "step3Body": "Found somewhere you love? Jump straight to tours, tickets and experiences for it.",
+    "testimonialsHeading": "Loved by curious travelers",
+    "t1Quote": "I planned an entire weekend around three places I'd never have found otherwise. The map is ridiculously easy to lose an hour in.",
+    "t1Name": "Sofia M.",
+    "t1Role": "Weekend explorer",
+    "t2Quote": "Finally a map that's actually complete. I checked my home region and even the obscure spots were on it.",
+    "t2Name": "Daniel R.",
+    "t2Role": "Local guide",
+    "t3Quote": "The photos and the 'nearby' list make trip planning so quick. It's now my first stop before any road trip.",
+    "t3Name": "Aiko T.",
+    "t3Role": "Road-trip enthusiast",
+    "latestHeading": "Latest from the blog",
+    "readMore": "Read more →",
+    "viewAllPosts": "View all posts →"
   },
   "map": {
     "loading": "Loading map…",
@@ -34,7 +56,8 @@
     "type": "Type",
     "allTypes": "All types",
     "visibility": "Visibility",
-    "clearFilters": "Clear all"
+    "clearFilters": "Clear all",
+    "mapLabel": "{name} interactive map"
   },
   "card": {
     "close": "Close",

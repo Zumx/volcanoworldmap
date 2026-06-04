@@ -7,7 +7,8 @@
     "countries": "Länder",
     "faq": "FAQ",
     "menu": "Meny",
-    "stats": "Statistik"
+    "stats": "Statistik",
+    "skipToContent": "Hoppa till innehåll"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -17,7 +18,28 @@
     "countriesHeading": "Bläddra efter land",
     "statsCountries": "länder",
     "popularCountries": "Populära länder",
-    "featuredHeading": "Utvalda resmål"
+    "featuredHeading": "Utvalda resmål",
+    "howHeading": "Så funkar det",
+    "howSub": "Tre steg – från planlöst scrollande till nästa resa.",
+    "step1Title": "Utforska",
+    "step1Body": "Panorera och zooma i kartan i realtid, eller sök på namn och land för att hitta {noun} var som helst i världen.",
+    "step2Title": "Upptäck",
+    "step2Body": "Klicka på en punkt för foton, beskrivningar, öppettider och vad som finns i närheten – allt på ett ställe.",
+    "step3Title": "Boka",
+    "step3Body": "Hittat ett ställe du gillar? Gå direkt till turer, biljetter och upplevelser.",
+    "testimonialsHeading": "Älskad av nyfikna resenärer",
+    "t1Quote": "Jag planerade en hel helg kring tre platser jag annars aldrig hade hittat. Man tappar lätt en timme i den här kartan.",
+    "t1Name": "Sofia M.",
+    "t1Role": "Helgäventyrare",
+    "t2Quote": "Äntligen en karta som faktiskt är komplett. Jag kollade min hemtrakt och till och med de undanskymda platserna fanns med.",
+    "t2Name": "Daniel R.",
+    "t2Role": "Lokal guide",
+    "t3Quote": "Bilderna och 'i närheten'-listan gör planeringen så snabb. Numera mitt första stopp inför varje bilresa.",
+    "t3Name": "Aiko T.",
+    "t3Role": "Bilreseentusiast",
+    "latestHeading": "Senaste från bloggen",
+    "readMore": "Läs mer →",
+    "viewAllPosts": "Visa alla inlägg →"
   },
   "map": {
     "loading": "Laddar karta…",
@@ -34,7 +56,8 @@
     "type": "Typ",
     "allTypes": "Alla typer",
     "visibility": "Visning",
-    "clearFilters": "Rensa allt"
+    "clearFilters": "Rensa allt",
+    "mapLabel": "Interaktiv karta över {name}"
   },
   "card": {
     "close": "Stäng",

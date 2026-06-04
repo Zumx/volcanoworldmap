@@ -70,6 +70,8 @@ export default function LocationCard({
   const [dragY, setDragY] = useState(0); // live offset while swiping the sheet
   const [blogPosts, setBlogPosts] = useState([]); // posts that mention this place
   const dragStart = useRef(null);
+  const panelRef = useRef(null); // dialog root, for focus management
+  const restoreFocusRef = useRef(null); // element to return focus to on close
 
   const displayName = p.name || p.unnamed || site.unnamedLabel || "—";
 
@@ -138,11 +140,46 @@ export default function LocationCard({
     };
   }, [p.name, locale]);
 
-  // Trigger the slide-in on the first paint after mount.
+  // Trigger the slide-in on the first paint after mount, and move keyboard
+  // focus into the dialog. On unmount, return focus to whatever was focused
+  // when the card opened (usually the map) so keyboard users aren't dropped at
+  // the top of the document.
   useEffect(() => {
-    const id = requestAnimationFrame(() => setOpen(true));
-    return () => cancelAnimationFrame(id);
+    restoreFocusRef.current =
+      typeof document !== "undefined" ? document.activeElement : null;
+    const id = requestAnimationFrame(() => {
+      setOpen(true);
+      if (panelRef.current) panelRef.current.focus();
+    });
+    return () => {
+      cancelAnimationFrame(id);
+      const el = restoreFocusRef.current;
+      if (el && typeof el.focus === "function") el.focus();
+    };
   }, []);
+
+  // Trap Tab focus inside the dialog while it is open.
+  const onPanelKeyDown = (e) => {
+    if (e.key !== "Tab") return;
+    const root = panelRef.current;
+    if (!root) return;
+    const focusable = Array.from(
+      root.querySelectorAll(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement;
+    if (e.shiftKey && (active === first || active === root)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
 
   // Animated close: slide out, then unmount via onClose after the transition.
   const onCloseRef = useRef(onClose);
@@ -245,9 +282,12 @@ export default function LocationCard({
       onClick={close}
     >
       <aside
+        ref={panelRef}
         className={`loc-panel${open ? " is-open" : ""}`}
         style={panelStyle}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={onPanelKeyDown}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-label={displayName}

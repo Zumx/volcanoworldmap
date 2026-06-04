@@ -1,16 +1,26 @@
 import "../globals.css";
 import Script from "next/script";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing.js";
 import { site, cssVars } from "../../lib/site.js";
 import Header from "../../components/Header.js";
 import Footer from "../../components/Footer.js";
 import CookieConsent from "../../components/CookieConsent.js";
+import ServiceWorker from "../../components/ServiceWorker.js";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+// theme-color drives the mobile browser chrome + the installed PWA splash.
+export function generateViewport() {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    themeColor: site.colors?.primary || "#1a1a2e",
+  };
 }
 
 export async function generateMetadata({ params }) {
@@ -40,6 +50,23 @@ export async function generateMetadata({ params }) {
       locale,
       alternateLocale: routing.locales.filter((l) => l !== locale),
     },
+    // PWA: per-site SVG brandmark as favicon + apple-touch-icon, and the
+    // installable-app meta tags. The manifest itself is auto-linked by Next
+    // from app/manifest.js.
+    icons: {
+      icon: [{ url: "/brandmark.svg", type: "image/svg+xml" }],
+      apple: [{ url: "/brandmark.svg" }],
+    },
+    appleWebApp: {
+      capable: true,
+      title: site.name,
+      statusBarStyle: "default",
+    },
+    other: {
+      "mobile-web-app-capable": "yes",
+      // Legacy iOS standalone flag — Next no longer emits this one itself.
+      "apple-mobile-web-app-capable": "yes",
+    },
   };
 }
 
@@ -47,6 +74,7 @@ export default async function LocaleLayout({ children, params }) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const nav = await getTranslations("nav");
 
   const styleVars = Object.entries(cssVars)
     .map(([k, v]) => `${k}:${v}`)
@@ -69,9 +97,17 @@ export default async function LocaleLayout({ children, params }) {
           dangerouslySetInnerHTML={{ __html: `:root{${styleVars}}` }}
         />
         <NextIntlClientProvider>
+          {/* Keyboard/screen-reader users can jump straight past the header
+              and map to the page body. */}
+          <a className="skip-link" href="#main-content">
+            {nav("skipToContent")}
+          </a>
           <Header />
-          {children}
+          <div id="main-content" tabIndex={-1}>
+            {children}
+          </div>
           <Footer />
+          <ServiceWorker />
         </NextIntlClientProvider>
         {/* GA4 — only when a measurement ID is set in site.config.json.
             Consent Mode v2: analytics_storage defaults to denied (cookieless,

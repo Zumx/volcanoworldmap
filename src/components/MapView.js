@@ -30,6 +30,8 @@ export default function MapView({ embedded = false, countries = [] }) {
   const [selected, setSelected] = useState(null);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  // Index of the keyboard-highlighted suggestion (-1 = none highlighted).
+  const [activeIdx, setActiveIdx] = useState(-1);
   // Flips true once the core dataset is in: hides the skeleton loader and
   // fades the map in.
   const [ready, setReady] = useState(false);
@@ -57,6 +59,8 @@ export default function MapView({ embedded = false, countries = [] }) {
       zoom: embedded ? 2 : 3,
       worldCopyJump: true,
       preferCanvas: true,
+      // Arrow-key panning + +/- zoom once the map has keyboard focus.
+      keyboard: true,
     });
     mapRef.current = map;
     if (typeof window !== "undefined") window.__wmMap = map;
@@ -337,6 +341,28 @@ export default function MapView({ embedded = false, countries = [] }) {
     setSelected(feature);
     setQuery("");
     setSuggestions([]);
+    setActiveIdx(-1);
+  };
+
+  // Keyboard support for the autocomplete: ↑/↓ move the highlight, Enter opens
+  // the highlighted (or first) result, Escape clears.
+  const onSearchKeyDown = (e) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (suggestions.length)
+        setActiveIdx((i) => (i + 1) % suggestions.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (suggestions.length)
+        setActiveIdx((i) => (i <= 0 ? suggestions.length - 1 : i - 1));
+    } else if (e.key === "Enter") {
+      const pick = suggestions[activeIdx] || suggestions[0];
+      if (pick) selectFeature(pick);
+    } else if (e.key === "Escape") {
+      setQuery("");
+      setSuggestions([]);
+      setActiveIdx(-1);
+    }
   };
 
   // Autocomplete over the loaded features. Matches on name and country and
@@ -345,6 +371,7 @@ export default function MapView({ embedded = false, countries = [] }) {
     const q = e.target.value;
     setQuery(q);
     const term = q.trim().toLowerCase();
+    setActiveIdx(-1);
     if (term.length < 2) {
       setSuggestions([]);
       return;
@@ -384,6 +411,8 @@ export default function MapView({ embedded = false, countries = [] }) {
           embedded ? "" : " leaflet-fill"
         }`}
         style={{ width: "100%", height: "100%" }}
+        role="application"
+        aria-label={t("mapLabel", { name: site.name })}
       />
       {/* Skeleton + spinner shown until the core dataset is parsed; fades out
           (kept mounted, pointer-events disabled) so the map shows through. */}
@@ -402,31 +431,48 @@ export default function MapView({ embedded = false, countries = [] }) {
         </div>
       )}
       {!embedded && (
-        <div className="map-search">
+        <div
+          className="map-search"
+          role="combobox"
+          aria-expanded={suggestions.length > 0}
+          aria-haspopup="listbox"
+          aria-owns="map-search-listbox"
+        >
           <input
             type="search"
             className="map-search-input"
             value={query}
             onChange={onSearchChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && suggestions[0])
-                selectFeature(suggestions[0]);
-              else if (e.key === "Escape") {
-                setQuery("");
-                setSuggestions([]);
-              }
-            }}
+            onKeyDown={onSearchKeyDown}
             onBlur={() => setTimeout(() => setSuggestions([]), 150)}
             placeholder={t("searchPlaceholder")}
             aria-label={t("searchPlaceholder")}
+            aria-controls="map-search-listbox"
+            aria-autocomplete="list"
+            aria-activedescendant={
+              activeIdx >= 0 ? `map-search-opt-${activeIdx}` : undefined
+            }
+            role="searchbox"
           />
           {suggestions.length > 0 && (
-            <ul className="map-search-results">
+            <ul
+              className="map-search-results"
+              id="map-search-listbox"
+              role="listbox"
+            >
               {suggestions.map((f, i) => {
                 const p = f.properties || {};
                 return (
-                  <li key={i}>
-                    <button type="button" onClick={() => selectFeature(f)}>
+                  <li key={i} role="presentation">
+                    <button
+                      type="button"
+                      id={`map-search-opt-${i}`}
+                      role="option"
+                      aria-selected={i === activeIdx}
+                      className={i === activeIdx ? "is-active" : ""}
+                      onMouseEnter={() => setActiveIdx(i)}
+                      onClick={() => selectFeature(f)}
+                    >
                       <span className="r-name">{p.name}</span>
                       {p.country && (
                         <span className="r-country">{p.country}</span>

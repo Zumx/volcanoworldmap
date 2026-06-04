@@ -7,7 +7,8 @@
     "countries": "Länder",
     "faq": "FAQ",
     "menu": "Menü",
-    "stats": "Statistik"
+    "stats": "Statistik",
+    "skipToContent": "Zum Inhalt springen"
   },
   "home": {
     "tagline": "Eine interaktive Weltkarte",
@@ -17,7 +18,28 @@
     "countriesHeading": "Nach Land durchsuchen",
     "statsCountries": "Länder",
     "popularCountries": "Beliebte Länder",
-    "featuredHeading": "Ausgewählte Reiseziele"
+    "featuredHeading": "Ausgewählte Reiseziele",
+    "howHeading": "So funktioniert's",
+    "howSub": "In drei Schritten vom Stöbern zur nächsten Reise.",
+    "step1Title": "Erkunden",
+    "step1Body": "Verschiebe und zoome die Live-Karte oder suche nach Name und Land, um {noun} überall auf der Welt zu finden.",
+    "step2Title": "Entdecken",
+    "step2Body": "Klicke auf einen Punkt für Fotos, Beschreibungen, Öffnungszeiten und Orte in der Nähe – alles auf einen Blick.",
+    "step3Title": "Buchen",
+    "step3Body": "Einen Lieblingsort gefunden? Spring direkt zu Touren, Tickets und Erlebnissen.",
+    "testimonialsHeading": "Beliebt bei neugierigen Reisenden",
+    "t1Quote": "Ich habe ein ganzes Wochenende um drei Orte herum geplant, die ich sonst nie gefunden hätte. In dieser Karte verliert man mühelos eine Stunde.",
+    "t1Name": "Sofia M.",
+    "t1Role": "Wochenend-Entdeckerin",
+    "t2Quote": "Endlich eine Karte, die wirklich vollständig ist. Ich habe meine Heimatregion geprüft – sogar die versteckten Orte waren dabei.",
+    "t2Name": "Daniel R.",
+    "t2Role": "Lokaler Guide",
+    "t3Quote": "Die Fotos und die 'In der Nähe'-Liste machen die Reiseplanung superschnell. Mein erster Halt vor jedem Roadtrip.",
+    "t3Name": "Aiko T.",
+    "t3Role": "Roadtrip-Fan",
+    "latestHeading": "Neues aus dem Blog",
+    "readMore": "Weiterlesen →",
+    "viewAllPosts": "Alle Beiträge ansehen →"
   },
   "map": {
     "loading": "Karte wird geladen …",
@@ -34,7 +56,8 @@
     "type": "Typ",
     "allTypes": "Alle Typen",
     "visibility": "Anzeige",
-    "clearFilters": "Zurücksetzen"
+    "clearFilters": "Zurücksetzen",
+    "mapLabel": "Interaktive Karte von {name}"
   },
   "card": {
     "close": "Schließen",

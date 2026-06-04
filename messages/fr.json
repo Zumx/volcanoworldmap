@@ -7,7 +7,8 @@
     "countries": "Pays",
     "faq": "FAQ",
     "menu": "Menu",
-    "stats": "Statistiques"
+    "stats": "Statistiques",
+    "skipToContent": "Aller au contenu"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -17,7 +18,28 @@
     "countriesHeading": "Parcourir par pays",
     "statsCountries": "pays",
     "popularCountries": "Pays populaires",
-    "featuredHeading": "Destinations à la une"
+    "featuredHeading": "Destinations à la une",
+    "howHeading": "Comment ça marche",
+    "howSub": "Trois étapes, du simple coup d'œil à votre prochain voyage.",
+    "step1Title": "Explorer",
+    "step1Body": "Déplacez et zoomez la carte en direct, ou cherchez par nom et par pays pour trouver des {noun} partout dans le monde.",
+    "step2Title": "Découvrir",
+    "step2Body": "Cliquez sur un point pour voir photos, descriptions, horaires et les lieux à proximité — le tout au même endroit.",
+    "step3Title": "Réserver",
+    "step3Body": "Un endroit vous plaît ? Accédez directement aux visites, billets et expériences.",
+    "testimonialsHeading": "Apprécié des voyageurs curieux",
+    "t1Quote": "J'ai organisé tout un week-end autour de trois lieux que je n'aurais jamais trouvés autrement. On y perd une heure sans s'en rendre compte.",
+    "t1Name": "Sofia M.",
+    "t1Role": "Exploratrice du week-end",
+    "t2Quote": "Enfin une carte vraiment complète. J'ai vérifié ma région et même les coins méconnus y figuraient.",
+    "t2Name": "Daniel R.",
+    "t2Role": "Guide local",
+    "t3Quote": "Les photos et la liste 'à proximité' rendent la préparation si rapide. C'est mon premier réflexe avant chaque road trip.",
+    "t3Name": "Aiko T.",
+    "t3Role": "Passionné de road trip",
+    "latestHeading": "Derniers articles du blog",
+    "readMore": "Lire la suite →",
+    "viewAllPosts": "Voir tous les articles →"
   },
   "map": {
     "loading": "Chargement de la carte…",
@@ -34,7 +56,8 @@
     "type": "Type",
     "allTypes": "Tous les types",
     "visibility": "Affichage",
-    "clearFilters": "Tout effacer"
+    "clearFilters": "Tout effacer",
+    "mapLabel": "Carte interactive de {name}"
   },
   "card": {
     "close": "Fermer",

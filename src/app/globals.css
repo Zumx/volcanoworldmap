@@ -1922,3 +1922,242 @@ a {
     box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
   }
 }
+
+/* ============================================================
+   UX + accessibility + PWA pass: skip link, focus rings,
+   home sections (how-it-works, testimonials, latest posts)
+   ============================================================ */
+
+/* ---- Accessibility: skip link + visible keyboard focus ---- */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 4000;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.18s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+#main-content:focus {
+  outline: none;
+}
+/* One consistent focus ring for keyboard users site-wide. Pointer clicks don't
+   trigger :focus-visible, so it never shows for mouse users. */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}
+
+/* ---- Home: page fade-in on load ---- */
+.page-fade-in {
+  animation: pageFade 0.5s ease both;
+}
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-in {
+    animation: none;
+  }
+}
+
+/* ---- Home: shared section sub-heading ---- */
+.section-sub {
+  margin: -4px 0 4px;
+  color: color-mix(in srgb, var(--text) 78%, white);
+  font-size: 15px;
+}
+
+/* ---- Home: How it works ---- */
+.how-steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+  padding: 0;
+}
+.how-step {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 20px 20px;
+  background: var(--primary-light);
+}
+.how-step-num {
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.how-step-icon {
+  font-size: 34px;
+  line-height: 1;
+}
+.how-step-title {
+  margin: 12px 0 6px;
+  font-size: 18px;
+  color: var(--primary-dark);
+}
+.how-step-body {
+  margin: 0;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--text) 82%, white);
+}
+
+/* ---- Home: testimonials ---- */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+.testimonial {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.testimonial-stars {
+  color: #f5a623;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+.testimonial blockquote {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.testimonial figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: auto;
+}
+.testimonial-name {
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 14px;
+}
+.testimonial-role {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 72%, white);
+}
+
+/* ---- Home: latest blog posts ---- */
+.latest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+.latest-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  background: #fff;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.latest-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.latest-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  line-height: 1.35;
+}
+.latest-card h3 a {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+.latest-card h3 a:hover {
+  color: var(--accent);
+}
+.latest-meta {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 70%, white);
+  margin-bottom: 8px;
+}
+.latest-excerpt {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--text) 82%, white);
+}
+.latest-readmore {
+  margin-top: auto;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--accent);
+}
+.latest-readmore:hover {
+  text-decoration: underline;
+}
+.latest-all {
+  text-align: center;
+  margin-top: 22px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .latest-card {
+    transition: none;
+  }
+}
+
+/* ---- Map search: keyboard-highlighted suggestion ---- */
+.map-search-results button.is-active,
+.map-search-results button:hover {
+  background: var(--primary-light);
+}
+
+/* ---- Contrast: darken the lightest muted greys so small text clears AA ---- */
+.featured-country,
+.country-grid .c-count,
+.top-country .tc-count,
+.stat-label,
+.signup-social,
+.more-note {
+  color: color-mix(in srgb, var(--text) 74%, white);
+}
+.post-tag,
+.page-info {
+  color: color-mix(in srgb, var(--text) 78%, white);
+}
