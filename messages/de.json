@@ -8,7 +8,8 @@
     "faq": "FAQ",
     "menu": "Menü",
     "stats": "Statistik",
-    "skipToContent": "Zum Inhalt springen"
+    "skipToContent": "Zum Inhalt springen",
+    "search": "Suche"
   },
   "home": {
     "tagline": "Eine interaktive Weltkarte",
@@ -197,7 +198,8 @@
     "title": "Beste {niche} in {country}",
     "count": "{count, number} {noun} kartiert",
     "topHeading": "Top 10 {noun} in {country}",
-    "cta": "Alle {count, number} {noun} in {country} auf der Karte entdecken"
+    "cta": "Alle {count, number} {noun} in {country} auf der Karte entdecken",
+    "mapHeading": "{country} auf der Karte"
   },
   "stats": {
     "heading": "{niche} in Zahlen",
@@ -208,5 +210,18 @@
     "statUpdated": "Zuletzt aktualisiert",
     "topCountries": "Top 10 Länder",
     "byContinent": "Nach Kontinent"
+  },
+  "search": {
+    "title": "Suche",
+    "metaDescription": "Durchsuche alle Orte und Artikel auf {name}.",
+    "heading": "Suche",
+    "placeholder": "Orte und Artikel durchsuchen…",
+    "prompt": "Tippe, um Orte und Artikel zu durchsuchen.",
+    "resultsFor": "Ergebnisse für „{q}“",
+    "noResults": "Keine Ergebnisse gefunden.",
+    "places": "Orte",
+    "articles": "Artikel",
+    "tagCountry": "Land",
+    "tagPlace": "Ort"
   }
 }

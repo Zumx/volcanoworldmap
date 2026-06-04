@@ -8,7 +8,8 @@
     "faq": "FAQ",
     "menu": "Menu",
     "stats": "Statistics",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "search": "Search"
   },
   "home": {
     "tagline": "An interactive world map",
@@ -197,7 +198,8 @@
     "title": "Best {niche} in {country}",
     "count": "{count, number} {noun} mapped",
     "topHeading": "Top 10 {noun} in {country}",
-    "cta": "Explore all {count, number} {noun} in {country} on the map"
+    "cta": "Explore all {count, number} {noun} in {country} on the map",
+    "mapHeading": "{country} on the map"
   },
   "stats": {
     "heading": "{niche} in numbers",
@@ -208,5 +210,18 @@
     "statUpdated": "Last updated",
     "topCountries": "Top 10 countries",
     "byContinent": "By continent"
+  },
+  "search": {
+    "title": "Search",
+    "metaDescription": "Search every place and article on {name}.",
+    "heading": "Search",
+    "placeholder": "Search places and articles…",
+    "prompt": "Start typing to search places and articles.",
+    "resultsFor": "Results for “{q}”",
+    "noResults": "No results found.",
+    "places": "Places",
+    "articles": "Articles",
+    "tagCountry": "Country",
+    "tagPlace": "Place"
   }
 }

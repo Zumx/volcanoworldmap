@@ -21,6 +21,7 @@ export default function Footer() {
 
         <nav className="footer-links" aria-label={t("navLabel")}>
           <Link href="/map">{nav("map")}</Link>
+          <Link href="/search">{nav("search")}</Link>
           <Link href="/stats">{nav("stats")}</Link>
           <Link href="/blog">{nav("blog")}</Link>
           <Link href="/about">{nav("about")}</Link>

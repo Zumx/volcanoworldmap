@@ -5,6 +5,7 @@ import Breadcrumbs from "../../../../components/Breadcrumbs.js";
 import { routing } from "../../../../i18n/routing.js";
 import { site } from "../../../../lib/site.js";
 import { listCountries, countryBySlug } from "../../../../lib/data.js";
+import ExploreMap from "../../../../components/ExploreMap.js";
 
 // SEO landing pages for the best-covered countries. A static `explore` segment
 // sibling to the dynamic `[country]` route, so the two never collide.
@@ -135,6 +136,11 @@ export default async function ExploreCountry({ params }) {
         </p>
         <p>{cta}</p>
       </header>
+
+      <section>
+        <h2>{t("mapHeading", { country: data.name })}</h2>
+        <ExploreMap country={data.name} locale={locale} />
+      </section>
 
       {top.length > 0 && (
         <section>

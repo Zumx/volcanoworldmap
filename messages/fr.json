@@ -8,7 +8,8 @@
     "faq": "FAQ",
     "menu": "Menu",
     "stats": "Statistiques",
-    "skipToContent": "Aller au contenu"
+    "skipToContent": "Aller au contenu",
+    "search": "Recherche"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -197,7 +198,8 @@
     "title": "Meilleurs {niche} en {country}",
     "count": "{count, number} {noun} cartographiés",
     "topHeading": "Top 10 des {noun} en {country}",
-    "cta": "Explorer les {count, number} {noun} en {country} sur la carte"
+    "cta": "Explorer les {count, number} {noun} en {country} sur la carte",
+    "mapHeading": "{country} sur la carte"
   },
   "stats": {
     "heading": "{niche} en chiffres",
@@ -208,5 +210,18 @@
     "statUpdated": "Dernière mise à jour",
     "topCountries": "Top 10 des pays",
     "byContinent": "Par continent"
+  },
+  "search": {
+    "title": "Recherche",
+    "metaDescription": "Recherchez tous les lieux et articles sur {name}.",
+    "heading": "Recherche",
+    "placeholder": "Rechercher des lieux et des articles…",
+    "prompt": "Commencez à taper pour rechercher des lieux et des articles.",
+    "resultsFor": "Résultats pour « {q} »",
+    "noResults": "Aucun résultat trouvé.",
+    "places": "Lieux",
+    "articles": "Articles",
+    "tagCountry": "Pays",
+    "tagPlace": "Lieu"
   }
 }

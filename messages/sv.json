@@ -8,7 +8,8 @@
     "faq": "FAQ",
     "menu": "Meny",
     "stats": "Statistik",
-    "skipToContent": "Hoppa till innehåll"
+    "skipToContent": "Hoppa till innehåll",
+    "search": "Sök"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -197,7 +198,8 @@
     "title": "Bästa {niche} i {country}",
     "count": "{count, number} {noun} kartlagda",
     "topHeading": "Topp 10 {noun} i {country}",
-    "cta": "Utforska alla {count, number} {noun} i {country} på kartan"
+    "cta": "Utforska alla {count, number} {noun} i {country} på kartan",
+    "mapHeading": "{country} på kartan"
   },
   "stats": {
     "heading": "{niche} i siffror",
@@ -208,5 +210,18 @@
     "statUpdated": "Senast uppdaterad",
     "topCountries": "Topp 10 länder",
     "byContinent": "Per kontinent"
+  },
+  "search": {
+    "title": "Sök",
+    "metaDescription": "Sök bland alla platser och artiklar på {name}.",
+    "heading": "Sök",
+    "placeholder": "Sök platser och artiklar…",
+    "prompt": "Börja skriv för att söka platser och artiklar.",
+    "resultsFor": "Resultat för ”{q}”",
+    "noResults": "Inga resultat hittades.",
+    "places": "Platser",
+    "articles": "Artiklar",
+    "tagCountry": "Land",
+    "tagPlace": "Plats"
   }
 }
