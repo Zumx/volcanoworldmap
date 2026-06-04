@@ -9,7 +9,8 @@
     "menu": "Menu",
     "stats": "Statistiques",
     "skipToContent": "Aller au contenu",
-    "search": "Recherche"
+    "search": "Recherche",
+    "language": "Langue"
   },
   "home": {
     "tagline": "Une carte du monde interactive",
@@ -152,7 +153,8 @@
     "tagline": "Une carte du monde ouverte, propulsée par OpenStreetMap.",
     "navLabel": "Pied de page",
     "contact": "Contact",
-    "data": "Données © contributeurs d'OpenStreetMap"
+    "data": "Données © contributeurs d'OpenStreetMap",
+    "unsubscribe": "Se désabonner"
   },
   "notFound": {
     "title": "Page introuvable",
@@ -166,7 +168,14 @@
     "button": "S’abonner",
     "thanks": "Merci ! Votre messagerie va s’ouvrir pour confirmer.",
     "social": "Rejoignez plus de {count, number} voyageurs",
-    "invalid": "Veuillez saisir une adresse e-mail valide."
+    "invalid": "Veuillez saisir une adresse e-mail valide.",
+    "interestsLabel": "Je suis intéressé par",
+    "interestLocations": "Nouveaux lieux",
+    "interestBlog": "Articles du blog",
+    "interestTips": "Conseils de voyage",
+    "gdpr": "Nous respectons votre vie privée. Désabonnez-vous à tout moment.",
+    "confirmTitle": "C'est fait !",
+    "confirmInterests": "Vous recevrez des infos sur :"
   },
   "cookie": {
     "message": "Nous utilisons des cookies optionnels pour mesurer l’audience de façon anonyme.",

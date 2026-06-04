@@ -9,7 +9,8 @@
     "menu": "Menu",
     "stats": "Statistiche",
     "skipToContent": "Vai al contenuto",
-    "search": "Cerca"
+    "search": "Cerca",
+    "language": "Lingua"
   },
   "home": {
     "tagline": "Una mappa del mondo interattiva",
@@ -152,7 +153,8 @@
     "tagline": "Una mappa del mondo aperta, basata su OpenStreetMap.",
     "navLabel": "Piè di pagina",
     "contact": "Contatti",
-    "data": "Dati © contributori di OpenStreetMap"
+    "data": "Dati © contributori di OpenStreetMap",
+    "unsubscribe": "Annulla iscrizione"
   },
   "notFound": {
     "title": "Pagina non trovata",
@@ -166,7 +168,14 @@
     "button": "Iscriviti",
     "thanks": "Grazie! Si aprirà la tua app email per confermare.",
     "social": "Unisciti a oltre {count, number} viaggiatori",
-    "invalid": "Inserisci un indirizzo email valido."
+    "invalid": "Inserisci un indirizzo email valido.",
+    "interestsLabel": "Mi interessa",
+    "interestLocations": "Nuovi luoghi",
+    "interestBlog": "Articoli del blog",
+    "interestTips": "Consigli di viaggio",
+    "gdpr": "Rispettiamo la tua privacy. Disiscriviti in qualsiasi momento.",
+    "confirmTitle": "Tutto fatto!",
+    "confirmInterests": "Riceverai aggiornamenti su:"
   },
   "cookie": {
     "message": "Utilizziamo cookie facoltativi per misurare il traffico in modo anonimo.",

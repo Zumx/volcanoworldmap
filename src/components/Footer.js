@@ -27,6 +27,15 @@ export default function Footer() {
           <Link href="/about">{nav("about")}</Link>
           <Link href="/faq">{nav("faq")}</Link>
           {email && <a href={`mailto:${email}`}>{t("contact")}</a>}
+          {email && (
+            <a
+              href={`mailto:${email}?subject=${encodeURIComponent(
+                `Unsubscribe — ${site.name}`
+              )}`}
+            >
+              {t("unsubscribe")}
+            </a>
+          )}
         </nav>
       </div>
 

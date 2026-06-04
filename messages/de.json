@@ -9,7 +9,8 @@
     "menu": "Menü",
     "stats": "Statistik",
     "skipToContent": "Zum Inhalt springen",
-    "search": "Suche"
+    "search": "Suche",
+    "language": "Sprache"
   },
   "home": {
     "tagline": "Eine interaktive Weltkarte",
@@ -152,7 +153,8 @@
     "tagline": "Eine offene Weltkarte, basierend auf OpenStreetMap.",
     "navLabel": "Fußzeile",
     "contact": "Kontakt",
-    "data": "Daten © OpenStreetMap-Mitwirkende"
+    "data": "Daten © OpenStreetMap-Mitwirkende",
+    "unsubscribe": "Abmelden"
   },
   "notFound": {
     "title": "Seite nicht gefunden",
@@ -166,7 +168,14 @@
     "button": "Abonnieren",
     "thanks": "Danke! Deine E-Mail-App öffnet sich zur Bestätigung.",
     "social": "Schließe dich {count, number}+ Reisenden an",
-    "invalid": "Bitte gib eine gültige E-Mail-Adresse ein."
+    "invalid": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "interestsLabel": "Ich interessiere mich für",
+    "interestLocations": "Neue Orte",
+    "interestBlog": "Blogbeiträge",
+    "interestTips": "Reisetipps",
+    "gdpr": "Wir respektieren deine Privatsphäre. Du kannst dich jederzeit abmelden.",
+    "confirmTitle": "Alles erledigt!",
+    "confirmInterests": "Du erhältst Infos zu:"
   },
   "cookie": {
     "message": "Wir verwenden optionale Cookies zur anonymen Reichweitenmessung.",

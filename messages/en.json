@@ -9,7 +9,8 @@
     "menu": "Menu",
     "stats": "Statistics",
     "skipToContent": "Skip to content",
-    "search": "Search"
+    "search": "Search",
+    "language": "Language"
   },
   "home": {
     "tagline": "An interactive world map",
@@ -152,7 +153,8 @@
     "tagline": "An open world map, powered by OpenStreetMap.",
     "navLabel": "Footer",
     "contact": "Contact",
-    "data": "Data © OpenStreetMap contributors"
+    "data": "Data © OpenStreetMap contributors",
+    "unsubscribe": "Unsubscribe"
   },
   "notFound": {
     "title": "Page not found",
@@ -166,7 +168,14 @@
     "button": "Subscribe",
     "thanks": "Thanks! Your email app will open to confirm.",
     "social": "Join {count, number}+ travelers",
-    "invalid": "Please enter a valid email address."
+    "invalid": "Please enter a valid email address.",
+    "interestsLabel": "I'm interested in",
+    "interestLocations": "New locations",
+    "interestBlog": "Blog posts",
+    "interestTips": "Travel tips",
+    "gdpr": "We respect your privacy. Unsubscribe at any time.",
+    "confirmTitle": "You're all set!",
+    "confirmInterests": "You'll hear about:"
   },
   "cookie": {
     "message": "We use optional cookies to measure traffic anonymously.",

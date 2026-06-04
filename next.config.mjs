@@ -37,6 +37,43 @@ const nextConfig = {
       },
     ];
   },
+  async headers() {
+    // Note: /_next/static is already served `immutable, max-age=31536000` by
+    // Next itself, so we don't (and shouldn't) set it here.
+    return [
+      {
+        // Map/data artifacts (points.geojson, countries.json, …): refreshed
+        // only on the monthly rebuild, so serve from cache for an hour and keep
+        // serving the stale copy for a week while it revalidates in the
+        // background — fast repeat loads without ever blocking on a fetch.
+        source: "/data/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, stale-while-revalidate=604800",
+          },
+        ],
+      },
+      {
+        // The per-site SVG brandmark is effectively static between deploys.
+        source: "/:file(brandmark|brandmark-maskable).svg",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
+      {
+        // The service worker must be re-checked on every load so updates roll
+        // out promptly — never cache it for long.
+        source: "/sw.js",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

@@ -169,21 +169,86 @@ a {
   color: var(--accent);
   opacity: 1;
 }
+/* ---- Language switcher: flag + dropdown ---- */
 .language-switcher {
+  position: relative;
+  display: inline-block;
+}
+.lang-toggle {
   display: flex;
+  align-items: center;
   gap: 6px;
-}
-.language-switcher a {
-  font-size: 12px;
-  text-transform: uppercase;
+  font: 600 13px ui-sans-serif, system-ui, sans-serif;
+  color: var(--primary-dark);
+  background: #fff;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 3px 7px;
+  border-radius: 8px;
+  padding: 5px 9px;
+  cursor: pointer;
 }
-.language-switcher a.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
+.lang-toggle:hover {
+  border-color: var(--accent);
+}
+.lang-flag {
+  font-size: 15px;
+  line-height: 1;
+}
+.lang-caret {
+  font-size: 10px;
+  transition: transform 0.18s ease;
+}
+.lang-caret.is-open {
+  transform: rotate(180deg);
+}
+.lang-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 168px;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+  z-index: 1200;
+  display: none;
+}
+.lang-menu.is-open {
+  display: block;
+}
+.lang-menu li {
+  margin: 0;
+}
+.lang-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 14px;
+}
+.lang-menu a:hover {
+  background: var(--primary-light);
+}
+.lang-menu a.is-active {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+.lang-menu .lang-name {
+  flex: 1;
+}
+.lang-menu .lang-code-sm {
+  font-size: 11px;
+  color: color-mix(in srgb, var(--text) 60%, white);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-caret {
+    transition: none;
+  }
 }
 .site-footer {
   padding: 28px 24px;
@@ -1010,6 +1075,67 @@ a {
   font-weight: 600;
   color: var(--primary-dark);
 }
+
+/* ---- Signup: interest checkboxes, GDPR note, confirmation panel ---- */
+.signup-interests {
+  border: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: center;
+}
+.signup-interests legend {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-right: 4px;
+  padding: 0;
+}
+.signup-interest {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.signup-interest input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.signup-gdpr {
+  margin-top: 10px;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 62%, white);
+}
+.signup-confirm {
+  text-align: center;
+  padding: 8px 0;
+}
+.signup-confirm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.signup-confirm h2 {
+  margin: 0 0 6px;
+}
+.signup-confirm-interests {
+  margin-top: 8px;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--text) 78%, white);
+}
 @media (max-width: 480px) {
   .signup-form input {
     max-width: none;
@@ -1553,8 +1679,14 @@ a {
   color: var(--card-text);
   box-shadow: var(--card-shadow);
   transform: translateX(100%);
-  transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Spring-like entrance/exit: a gentle overshoot as the panel settles. */
+  transition: transform 0.46s cubic-bezier(0.34, 1.4, 0.5, 1);
   will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loc-panel {
+    transition: transform 0.2s ease;
+  }
 }
 .loc-panel.is-open {
   transform: translateX(0);
@@ -2946,5 +3078,84 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .search-results a {
     transition: none;
+  }
+}
+
+/* ============================================================
+   LocationCard + map controls + a11y pass
+   ============================================================ */
+
+/* Custom Leaflet controls: locate-me + fullscreen (stacked under the zoom
+   control). They reuse Leaflet's .leaflet-bar chrome; we only center the icon
+   and add a busy state. Dark-mode colours come from the .leaflet-bar overrides
+   in the dark media query above. */
+.map-extra-ctrl a {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-dark);
+}
+.map-extra-ctrl a:hover {
+  color: var(--accent);
+}
+.map-extra-ctrl a.is-busy {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Wikipedia categories as clickable tags in the LocationCard. */
+.loc-categories {
+  margin-top: 14px;
+}
+.loc-cat-heading {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--card-muted);
+  margin-bottom: 8px;
+}
+.loc-cat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.loc-cat {
+  font-size: 12px;
+  line-height: 1.2;
+  text-decoration: none;
+  color: var(--card-text);
+  background: var(--card-elev);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 4px 11px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.loc-cat:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Accessibility: a guaranteed visible focus ring on form controls whose own
+   :focus rules clear the native outline (these come last, so they win on equal
+   specificity). Keyboard-only via :focus-visible, so mouse users never see it. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.search-input:focus-visible,
+.map-search-input:focus-visible,
+.blog-search-input:focus-visible,
+.signup-form input:focus-visible,
+.map-filter-field select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  /* The CartoDB DarkMatter scale bar text/border needs lightening. */
+  .leaflet-control-scale-line {
+    background: rgba(30, 32, 39, 0.7) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
   }
 }

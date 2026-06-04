@@ -4,6 +4,11 @@ import { site } from "../../../lib/site.js";
 import { listCountries } from "../../../lib/data.js";
 import MapClient from "../../../components/MapClient.js";
 
+// The map shell rarely changes (the dataset is fetched client-side), so
+// regenerate at most weekly. Vercel turns this into s-maxage + stale-while-
+// revalidate CDN headers automatically.
+export const revalidate = 604800;
+
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations("nav");

@@ -9,7 +9,8 @@
     "menu": "Meny",
     "stats": "Statistik",
     "skipToContent": "Hoppa till innehåll",
-    "search": "Sök"
+    "search": "Sök",
+    "language": "Språk"
   },
   "home": {
     "tagline": "En interaktiv världskarta",
@@ -152,7 +153,8 @@
     "tagline": "En öppen världskarta, byggd på OpenStreetMap.",
     "navLabel": "Sidfot",
     "contact": "Kontakt",
-    "data": "Data © OpenStreetMap-bidragsgivare"
+    "data": "Data © OpenStreetMap-bidragsgivare",
+    "unsubscribe": "Avsluta prenumeration"
   },
   "notFound": {
     "title": "Sidan hittades inte",
@@ -166,7 +168,14 @@
     "button": "Prenumerera",
     "thanks": "Tack! Din e-postapp öppnas för att bekräfta.",
     "social": "Gå med {count, number}+ resenärer",
-    "invalid": "Ange en giltig e-postadress."
+    "invalid": "Ange en giltig e-postadress.",
+    "interestsLabel": "Jag är intresserad av",
+    "interestLocations": "Nya platser",
+    "interestBlog": "Blogginlägg",
+    "interestTips": "Resetips",
+    "gdpr": "Vi respekterar din integritet. Avsluta prenumerationen när som helst.",
+    "confirmTitle": "Klart!",
+    "confirmInterests": "Du får höra om:"
   },
   "cookie": {
     "message": "Vi använder valfria cookies för anonym trafikmätning.",

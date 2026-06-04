@@ -7,6 +7,10 @@ import MapClient from "../../components/MapClient.js";
 import EmailSignup from "../../components/EmailSignup.js";
 import FeaturedDestinations from "../../components/FeaturedDestinations.js";
 
+// The home page surfaces "latest posts" + live totals, so refresh hourly.
+// Vercel maps this to s-maxage=3600 + stale-while-revalidate on the CDN.
+export const revalidate = 3600;
+
 export default async function Home({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
