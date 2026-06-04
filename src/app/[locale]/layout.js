@@ -1,4 +1,5 @@
 import "../globals.css";
+import { Inter } from "next/font/google";
 import Script from "next/script";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale, getTranslations } from "next-intl/server";
@@ -9,6 +10,16 @@ import Header from "../../components/Header.js";
 import Footer from "../../components/Footer.js";
 import CookieConsent from "../../components/CookieConsent.js";
 import ServiceWorker from "../../components/ServiceWorker.js";
+
+// next/font self-hosts Inter (no runtime request to Google), preloads it, and
+// generates a size-adjusted system fallback so swapping in the web font causes
+// minimal layout shift. Exposed as a CSS variable consumed by globals.css,
+// with the system stack still listed as the fallback.
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -81,18 +92,19 @@ export default async function LocaleLayout({ children, params }) {
     .join(";");
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={inter.variable}>
       <body>
-        {/* Resource hints — warm the origins the basemap tiles and the
-            location-card enrichment (Wikipedia/Wikimedia) fetch from. The
-            basemap uses OpenStreetMap tiles, not CartoDB. */}
-        <link rel="preconnect" href="https://a.tile.openstreetmap.org" />
-        <link rel="dns-prefetch" href="https://a.tile.openstreetmap.org" />
-        <link rel="dns-prefetch" href="https://b.tile.openstreetmap.org" />
-        <link rel="dns-prefetch" href="https://c.tile.openstreetmap.org" />
+        {/* Resource hints. The basemap tiles are the above-the-fold LCP on the
+            home + map pages, so preconnect (DNS + TLS) all three OSM tile
+            subdomains. Wikipedia/Wikimedia are only hit lazily on a pin click,
+            so a lighter dns-prefetch is enough — except upload.wikimedia.org,
+            which serves the LocationCard photos/gallery, so we preconnect it. */}
+        <link rel="preconnect" href="https://a.tile.openstreetmap.org" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://b.tile.openstreetmap.org" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://c.tile.openstreetmap.org" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://upload.wikimedia.org" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={`https://${locale}.wikipedia.org`} />
         <link rel="dns-prefetch" href="https://commons.wikimedia.org" />
-        <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
         <style
           dangerouslySetInnerHTML={{ __html: `:root{${styleVars}}` }}
         />

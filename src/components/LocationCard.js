@@ -69,6 +69,7 @@ export default function LocationCard({
   const [open, setOpen] = useState(false); // drives the slide-in / slide-out
   const [dragY, setDragY] = useState(0); // live offset while swiping the sheet
   const [blogPosts, setBlogPosts] = useState([]); // posts that mention this place
+  const [imgIdx, setImgIdx] = useState(0); // active image in the gallery
   const dragStart = useRef(null);
   const panelRef = useRef(null); // dialog root, for focus management
   const restoreFocusRef = useRef(null); // element to return focus to on close
@@ -111,6 +112,7 @@ export default function LocationCard({
   useEffect(() => {
     let alive = true;
     setLoading(true);
+    setImgIdx(0); // reset the gallery when a different place is shown
     enrichLocation({ name: p.name, country: p.country, lat, lon, locale }).then(
       (r) => {
         if (alive) {
@@ -239,6 +241,20 @@ export default function LocationCard({
   for (const f of metaFieldsFor(p)) rows.push([f.label, f.value]);
 
   const image = enriched && enriched.image;
+  // Gallery: the enriched image list (primary + nearby Commons photos), or a
+  // single-item list when only the primary exists. Arrows appear at >1.
+  const gallery =
+    enriched && enriched.images && enriched.images.length
+      ? enriched.images
+      : image
+      ? [image]
+      : [];
+  const hasGallery = gallery.length > 1;
+  const safeIdx = gallery.length ? imgIdx % gallery.length : 0;
+  const currentImage = gallery[safeIdx] || image;
+  const showPrevImage = () =>
+    setImgIdx((i) => (i - 1 + gallery.length) % gallery.length);
+  const showNextImage = () => setImgIdx((i) => (i + 1) % gallery.length);
   const bookUrl = affiliateHref(p.name);
   const typeLabel = (p.type && String(p.type)) || site.mappedNoun;
   const ratingPct =
@@ -338,12 +354,18 @@ export default function LocationCard({
 
         <div className="loc-scroll">
           <div className="loc-hero">
-            {image ? (
+            {currentImage ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 className="loc-hero-img"
-                src={image}
-                alt={displayName}
+                src={currentImage}
+                alt={
+                  hasGallery
+                    ? `${displayName} (${safeIdx + 1}/${gallery.length})`
+                    : displayName
+                }
+                width="1024"
+                height="640"
                 loading="lazy"
                 decoding="async"
               />
@@ -354,7 +376,53 @@ export default function LocationCard({
                 </span>
               </div>
             )}
-            {image && enriched.source && (
+            {hasGallery && (
+              <>
+                <button
+                  type="button"
+                  className="loc-gallery-nav loc-gallery-prev"
+                  onClick={showPrevImage}
+                  aria-label={t("prevImage")}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 5l-7 7 7 7"
+                    />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="loc-gallery-nav loc-gallery-next"
+                  onClick={showNextImage}
+                  aria-label={t("nextImage")}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+                <div className="loc-gallery-dots" aria-hidden="true">
+                  {gallery.map((_, i) => (
+                    <span
+                      key={i}
+                      className={i === safeIdx ? "is-active" : ""}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+            {currentImage && enriched.source && (
               <span className="loc-photo-credit">
                 {t("photoVia", { source: enriched.source })}
               </span>

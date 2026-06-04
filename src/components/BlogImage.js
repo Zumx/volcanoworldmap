@@ -32,8 +32,13 @@ export default function BlogImage({ post, eager = false }) {
       <img
         src={img}
         alt={post.title}
+        width="1200"
+        height="675"
         loading={eager ? "eager" : "lazy"}
-        decoding="async"
+        // Above-the-fold hero (the featured post) is the LCP candidate — hint
+        // the browser to fetch it ahead of lazy/below-fold images.
+        fetchPriority={eager ? "high" : "auto"}
+        decoding={eager ? "sync" : "async"}
       />
     );
   }

@@ -78,7 +78,9 @@
     "nearbyHeading": "In der Nähe",
     "share": "Teilen",
     "copied": "Link kopiert!",
-    "inTheBlog": "Im Blog"
+    "inTheBlog": "Im Blog",
+    "prevImage": "Vorheriges Foto",
+    "nextImage": "Nächstes Foto"
   },
   "country": {
     "heading": "{noun} in {country}",
@@ -89,7 +91,11 @@
     "openOnMap": "Auf der Karte zeigen →",
     "moreNote": "Es werden die ersten {shown, number} von {total, number} angezeigt. Öffne die interaktive Karte, um sie alle zu erkunden.",
     "topHeading": "Beliebteste {noun}",
-    "relatedReading": "Weiterlesen"
+    "relatedReading": "Weiterlesen",
+    "statPlaces": "{noun} kartiert",
+    "statTopType": "Häufigster Typ",
+    "exploreCta": "Das Beste von {country} entdecken →",
+    "relatedCountries": "Ähnliche Länder"
   },
   "blog": {
     "heading": "Blog",

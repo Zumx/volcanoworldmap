@@ -78,7 +78,9 @@
     "nearbyHeading": "I närheten",
     "share": "Dela",
     "copied": "Länk kopierad!",
-    "inTheBlog": "I bloggen"
+    "inTheBlog": "I bloggen",
+    "prevImage": "Föregående foto",
+    "nextImage": "Nästa foto"
   },
   "country": {
     "heading": "{noun} i {country}",
@@ -89,7 +91,11 @@
     "openOnMap": "Visa på kartan →",
     "moreNote": "Visar de första {shown, number} av {total, number}. Öppna den interaktiva kartan för att utforska alla.",
     "topHeading": "Populäraste {noun}",
-    "relatedReading": "Läs mer"
+    "relatedReading": "Läs mer",
+    "statPlaces": "{noun} kartlagda",
+    "statTopType": "Vanligaste typen",
+    "exploreCta": "Utforska det bästa av {country} →",
+    "relatedCountries": "Liknande länder"
   },
   "blog": {
     "heading": "Blogg",

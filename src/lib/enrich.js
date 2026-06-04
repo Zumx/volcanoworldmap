@@ -180,6 +180,34 @@ async function commonsImageNearby(lat, lon) {
   return info ? info.thumburl || info.url : null;
 }
 
+// Several location-safe Commons photos near the point, for the LocationCard
+// gallery. Same geosearch-by-coordinates approach as the single lookup (never
+// name-based, so generic names can't pull the wrong subject), just a wider
+// radius and more results. Non-image files (audio/PDF/SVG maps) are filtered
+// out by MIME. Returns [] on any miss.
+async function commonsImagesNearby(lat, lon, limit = 8) {
+  if (typeof lat !== "number" || typeof lon !== "number") return [];
+  const url =
+    "https://commons.wikimedia.org/w/api.php?origin=*&format=json" +
+    `&action=query&generator=geosearch&ggsnamespace=6&ggslimit=${limit}` +
+    `&ggscoord=${lat}|${lon}&ggsradius=3000` +
+    "&prop=imageinfo&iiprop=url|mime&iiurlwidth=1024";
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const j = await res.json();
+    const pages = j.query && j.query.pages;
+    if (!pages) return [];
+    return Object.values(pages)
+      .map((p) => p.imageinfo && p.imageinfo[0])
+      .filter((info) => info && /^image\/(jpeg|png|webp|gif)/i.test(info.mime || ""))
+      .map((info) => info.thumburl || info.url)
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 // Last-resort fallback: a street-level Mapillary photo near the point.
 async function mapillaryImage(lat, lon) {
   if (!MAPILLARY_TOKEN) return null;
@@ -229,7 +257,13 @@ export async function wikiTopicImage(query, locale) {
 }
 
 export async function enrichLocation({ name, country, lat, lon, locale }) {
-  const result = { extract: null, image: null, source: null, wikiUrl: null };
+  const result = {
+    extract: null,
+    image: null,
+    images: [],
+    source: null,
+    wikiUrl: null,
+  };
   try {
     // Description: only a geo-verified Wikipedia article for this place. If
     // nothing passes, we deliberately show no Wikipedia text or image and fall
@@ -262,6 +296,20 @@ export async function enrichLocation({ name, country, lat, lon, locale }) {
         result.source = "Mapillary";
       }
     }
+    // Gallery: the primary image plus a few more location-safe Commons photos
+    // nearby, de-duplicated and capped at 4. Only attempted when we already
+    // have a Wikimedia image to lead with (so the gallery is genuinely "this
+    // place" rather than a lone unrelated street photo).
+    const gallery = [];
+    if (result.image) gallery.push(result.image);
+    if (result.image && result.source !== "Mapillary") {
+      const extra = await commonsImagesNearby(lat, lon, 8);
+      for (const u of extra) {
+        if (gallery.length >= 4) break;
+        if (!gallery.includes(u)) gallery.push(u);
+      }
+    }
+    result.images = gallery;
   } catch {
     /* best-effort: leave whatever we have */
   }

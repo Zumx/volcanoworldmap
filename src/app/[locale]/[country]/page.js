@@ -29,9 +29,11 @@ export async function generateMetadata({ params }) {
   const niche = cap(site.mappedNoun);
   const x = data.count.toLocaleString();
   const title = `${niche} in ${data.name} — ${x} locations on the map`;
-  // Per-country + per-niche description, with a few real place names so each
-  // country page has a distinct, specific meta description.
-  const sample = (data.places || [])
+  // Per-country + per-niche description, naming the country's most notable
+  // places (highest popularity score first, falling back to the alphabetical
+  // order) so each country page has a distinct, specific meta description.
+  const sample = [...(data.places || [])]
+    .sort((a, b) => (b.pop || 0) - (a.pop || 0))
     .slice(0, 3)
     .map((p) => p.name)
     .filter(Boolean)
@@ -73,6 +75,29 @@ export default async function CountryPage({ params }) {
     data.name,
     4
   );
+
+  // Mini-stats: the most-represented place type, derived from the sampled
+  // places (the index caps `places`, but the distribution is representative).
+  const typeCounts = new Map();
+  for (const pl of places) {
+    if (pl.type) typeCounts.set(pl.type, (typeCounts.get(pl.type) || 0) + 1);
+  }
+  let topType = null;
+  for (const [type, n] of typeCounts) {
+    if (!topType || n > topType.n) topType = { type, n };
+  }
+
+  // Related countries: the three with the closest total count to this one
+  // (similar coverage), plus whether this country has an /explore landing page
+  // (only the top-20 best-covered countries do — see explore route).
+  const allCountries = await listCountries();
+  const rank = allCountries.findIndex((c) => c.slug === country);
+  const hasExplore = rank > -1 && rank < 20;
+  const related = allCountries
+    .filter((c) => c.slug !== country)
+    .map((c) => ({ ...c, diff: Math.abs(c.count - data.count) }))
+    .sort((a, b) => a.diff - b.diff)
+    .slice(0, 3);
 
   // Place / ItemList structured data (capped to keep the HTML lean).
   const jsonLd = {
@@ -118,10 +143,32 @@ export default async function CountryPage({ params }) {
         </strong>
       </p>
       <p>{t("intro", { country: data.name })}</p>
-      <p>
+
+      {/* Mini-stats: total mapped places + most-represented type. */}
+      <div className="country-stats">
+        <div className="cstat">
+          <span className="cstat-v">{data.count.toLocaleString()}</span>
+          <span className="cstat-l">
+            {t("statPlaces", { noun: site.mappedNoun })}
+          </span>
+        </div>
+        {topType && (
+          <div className="cstat">
+            <span className="cstat-v">{topType.type}</span>
+            <span className="cstat-l">{t("statTopType")}</span>
+          </div>
+        )}
+      </div>
+
+      <p className="country-cta-row">
         <Link className="btn btn-primary" href="/map">
           {site.emoji} {t("openOnMap")}
         </Link>
+        {hasExplore && (
+          <Link className="btn btn-outline" href={`/explore/${country}`}>
+            {t("exploreCta", { country: data.name })}
+          </Link>
+        )}
       </p>
 
       {places.length > 0 && (
@@ -170,6 +217,22 @@ export default async function CountryPage({ params }) {
             </p>
           )}
         </>
+      )}
+
+      {related.length > 0 && (
+        <section className="related-countries">
+          <h2>{t("relatedCountries")}</h2>
+          <div className="related-countries-row">
+            {related.map((c) => (
+              <Link key={c.slug} href={`/${c.slug}`} className="related-country">
+                <span className="rc-name">{c.name}</span>
+                <span className="rc-count">
+                  {t("count", { count: c.count, noun: site.mappedNoun })}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
 
       {relatedReading.length > 0 && (

@@ -35,7 +35,8 @@ export async function generateMetadata({ params }) {
   const niche = cap(site.mappedNoun);
   const x = data.count.toLocaleString();
   const title = `Best ${niche} in ${data.name} — ${x} locations mapped`;
-  const sample = (data.places || [])
+  const sample = [...(data.places || [])]
+    .sort((a, b) => (b.pop || 0) - (a.pop || 0))
     .slice(0, 3)
     .map((p) => p.name)
     .filter(Boolean)

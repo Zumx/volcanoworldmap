@@ -78,7 +78,9 @@
     "nearbyHeading": "Nearby",
     "share": "Share",
     "copied": "Link copied!",
-    "inTheBlog": "In the blog"
+    "inTheBlog": "In the blog",
+    "prevImage": "Previous photo",
+    "nextImage": "Next photo"
   },
   "country": {
     "heading": "{noun} in {country}",
@@ -89,7 +91,11 @@
     "openOnMap": "Show on map →",
     "moreNote": "Showing the first {shown, number} of {total, number}. Open the interactive map to explore them all.",
     "topHeading": "Most popular {noun}",
-    "relatedReading": "Related reading"
+    "relatedReading": "Related reading",
+    "statPlaces": "{noun} mapped",
+    "statTopType": "Most common type",
+    "exploreCta": "Explore the best of {country} →",
+    "relatedCountries": "Related countries"
   },
   "blog": {
     "heading": "Blog",

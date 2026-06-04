@@ -42,7 +42,14 @@ function FeaturedCard({ item, locale }) {
       <div className="featured-img">
         {img ? (
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={img} alt={item.name} loading="lazy" decoding="async" />
+          <img
+            src={img}
+            alt={item.name}
+            width="400"
+            height="300"
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <span
             className={`featured-initial${loaded ? "" : " is-loading"}`}
