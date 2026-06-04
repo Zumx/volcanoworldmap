@@ -59,7 +59,9 @@
     "visibility": "Anzeige",
     "clearFilters": "Zurücksetzen",
     "mapLabel": "Interaktive Karte von {name}",
-    "exploreCountry": "{country} entdecken →"
+    "exploreCountry": "{country} entdecken →",
+    "unavailable": "Karte nicht verfügbar",
+    "retry": "Erneut versuchen"
   },
   "card": {
     "close": "Schließen",
@@ -82,7 +84,8 @@
     "copied": "Link kopiert!",
     "inTheBlog": "Im Blog",
     "prevImage": "Vorheriges Foto",
-    "nextImage": "Nächstes Foto"
+    "nextImage": "Nächstes Foto",
+    "scanForMap": "Für die Live-Karte scannen"
   },
   "country": {
     "heading": "{noun} in {country}",

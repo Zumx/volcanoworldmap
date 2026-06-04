@@ -8,6 +8,87 @@
   --primary-light: color-mix(in srgb, var(--primary) 8%, white);
   --text: color-mix(in srgb, var(--primary) 80%, black);
   --border: color-mix(in srgb, var(--primary) 15%, white);
+
+  /* Semantic surface tokens. Components reference these (not raw #fff) so the
+     whole fleet flips with one dark-mode override below. --grad-end is the
+     brand gradient end — it must stay dark in BOTH themes (the hero/OG card is
+     always a dark branded gradient), so it is NOT overridden in dark mode. */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: var(--primary-light);
+  --muted: color-mix(in srgb, var(--text) 60%, white);
+  --shadow: rgba(0, 0, 0, 0.12);
+  --grad-end: color-mix(in srgb, var(--primary) 65%, black);
+  /* Translucent "glass" surface for controls floating over the map. */
+  --surface-glass: rgba(255, 255, 255, 0.95);
+}
+
+/* ---- Dark mode: redefine the tokens, components follow automatically ---- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-dark: #eef0f4; /* was dark text → light text on dark surfaces */
+    --primary-light: #232634; /* was near-white fill → dark fill */
+    --text: #e6e7ea;
+    --border: #333845;
+    --bg: #14151a;
+    --surface: #1e2027;
+    --surface-2: #232634;
+    --muted: color-mix(in srgb, var(--text) 55%, #14151a);
+    --shadow: rgba(0, 0, 0, 0.55);
+    --surface-glass: rgba(30, 32, 39, 0.92);
+  }
+  /* Slightly tame bright photos so they don't glare on the dark UI. */
+  .loc-hero-img,
+  .blog-feature-img img {
+    filter: brightness(0.92);
+  }
+  /* Leaflet's own zoom/attribution controls default to white. */
+  .leaflet-bar a,
+  .leaflet-control-attribution {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+  }
+  .leaflet-bar a {
+    border-bottom-color: var(--border) !important;
+  }
+  .leaflet-control-attribution a {
+    color: var(--accent) !important;
+  }
+}
+
+/* Smooth light/dark transition on the major surfaces (not `*`, to avoid
+   transitioning unrelated animations). Suppressed for reduced-motion users. */
+body,
+.site-header,
+.site-footer,
+.loc-panel,
+.loc-cta-bar,
+.map-overlay,
+.map-search,
+.map-search-input,
+.map-filter-panel,
+.map-filter-btn,
+input,
+select,
+textarea,
+.btn,
+.featured-card,
+.blog-feature-card,
+.latest-card,
+.testimonial,
+.stat-card,
+.tag-chip,
+.share-btn {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .site-header,
+  .site-footer,
+  .loc-panel {
+    transition: none;
+  }
 }
 
 * {
@@ -25,7 +106,7 @@ body {
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
   color: var(--text);
-  background: #fff;
+  background: var(--bg);
   line-height: 1.55;
 }
 a {
@@ -40,7 +121,7 @@ a {
   gap: 16px;
   padding: 14px 24px;
   border-bottom: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface);
   position: sticky;
   top: 0;
   z-index: 1100;
@@ -194,7 +275,7 @@ a {
   background: linear-gradient(
     135deg,
     var(--primary) 0%,
-    var(--primary-dark) 100%
+    var(--grad-end) 100%
   );
   color: #fff;
   padding: 0 24px;
@@ -272,7 +353,7 @@ a {
   pointer-events: none;
 }
 .home-stats .stat {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--surface-glass);
   border-left: 4px solid var(--primary);
   border-radius: 8px;
   padding: 6px 12px;
@@ -340,7 +421,7 @@ a {
   left: 0;
   right: 0;
   flex-direction: column;
-  background: #fff;
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
   padding: 8px 16px 16px;
@@ -390,7 +471,7 @@ a {
   overflow: hidden;
   text-decoration: none;
   color: var(--text);
-  background: #fff;
+  background: var(--surface);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 .featured-card:hover {
@@ -421,7 +502,7 @@ a {
   background: linear-gradient(
     135deg,
     var(--primary) 0%,
-    var(--primary-dark) 100%
+    var(--grad-end) 100%
   );
 }
 .featured-initial.is-loading {
@@ -638,7 +719,7 @@ a {
 .tag-chip {
   font: 600 13px ui-sans-serif, system-ui, sans-serif;
   color: var(--primary-dark);
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 5px 13px;
@@ -915,7 +996,7 @@ a {
   font-size: 14px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface);
   outline: none;
 }
 .signup-form input:focus {
@@ -1011,7 +1092,7 @@ a {
   top: 80px;
   left: 16px;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--surface-glass);
   border-left: 6px solid var(--primary);
   border-radius: 10px;
   padding: 12px 16px;
@@ -1035,7 +1116,7 @@ a {
 .map-toggle {
   font: 600 13px ui-sans-serif, system-ui, sans-serif;
   color: var(--primary-dark);
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--surface-glass);
   border: 2px solid var(--primary);
   border-radius: 8px;
   padding: 7px 12px;
@@ -1058,7 +1139,7 @@ a {
   gap: 7px;
   font: 600 13px ui-sans-serif, system-ui, sans-serif;
   color: var(--primary-dark);
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--surface-glass);
   border: 2px solid var(--primary);
   border-radius: 999px;
   padding: 8px 14px;
@@ -1082,7 +1163,7 @@ a {
   height: 18px;
   padding: 0 5px;
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface);
   color: var(--primary-dark);
   font-size: 11px;
   font-weight: 700;
@@ -1093,7 +1174,7 @@ a {
   right: 12px;
   z-index: 1250;
   width: min(300px, calc(100vw - 24px));
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
@@ -1146,7 +1227,7 @@ a {
   font-size: 14px;
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: #fff;
+  background: var(--surface);
   cursor: pointer;
 }
 .map-filter-field select:focus {
@@ -1165,7 +1246,7 @@ a {
   font: inherit;
   font-size: 13px;
   font-weight: 600;
-  background: #fff;
+  background: var(--surface);
   border: 0;
   cursor: pointer;
   color: var(--text);
@@ -1240,7 +1321,7 @@ a {
   font-size: 15px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.97);
+  background: var(--surface-glass);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
   outline: none;
 }
@@ -1251,7 +1332,7 @@ a {
   list-style: none;
   margin: 6px 0 0;
   padding: 4px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
@@ -1421,7 +1502,7 @@ a {
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 12px 16px;
@@ -1525,7 +1606,7 @@ a {
   top: 58px;
   right: 14px;
   z-index: 5;
-  background: var(--primary-dark);
+  background: var(--primary);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
@@ -1972,7 +2053,7 @@ a {
   padding: 11px 16px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -2004,7 +2085,7 @@ a {
   overflow: hidden;
   text-decoration: none;
   color: var(--text);
-  background: #fff;
+  background: var(--surface);
   transition: border-color 0.15s ease, transform 0.15s ease,
     box-shadow 0.15s ease;
 }
@@ -2081,7 +2162,7 @@ a {
 .share-btn {
   font: 600 13px ui-sans-serif, system-ui, sans-serif;
   color: var(--primary-dark);
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 6px 14px;
@@ -2112,7 +2193,7 @@ a {
   justify-content: center;
   font-size: 28px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
 }
 .author-meta {
@@ -2132,7 +2213,33 @@ a {
 }
 
 /* Print: keep only the article body, drop chrome */
+/* Helpers that only exist on the printed page (e.g. the QR/URL block). */
+.print-only {
+  display: none;
+}
+
 @media print {
+  /* A4 sheet with comfortable margins. */
+  @page {
+    size: A4;
+    margin: 18mm;
+  }
+  /* Force a light, ink-friendly palette regardless of the dark-mode tokens. */
+  :root {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --text: #000;
+    --primary-dark: #000;
+    --muted: #444;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Hide all chrome, the map canvas + controls, ads, signups and the card's
+     interactive bits — leaving a clean place sheet (or blog article). */
   .no-print,
   .site-header,
   .site-footer,
@@ -2140,15 +2247,142 @@ a {
   .share-bar,
   .breadcrumbs,
   .related-posts,
-  .cookie-consent {
+  .cookie-consent,
+  .skip-link,
+  .nav-toggle,
+  .nav-mobile,
+  .home-map,
+  .map-fade,
+  .leaflet-container,
+  .leaflet-control-container,
+  .map-overlay,
+  .map-search,
+  .map-filter-btn,
+  .map-filter-panel,
+  .map-loading,
+  .map-error,
+  .email-signup,
+  .signup,
+  .loc-actions,
+  .loc-drag,
+  .loc-copied,
+  .loc-cta-bar,
+  .loc-gallery-nav,
+  .loc-gallery-dots,
+  .loc-photo-credit,
+  .loc-nearby,
+  .loc-blog,
+  .loc-reviews {
     display: none !important;
   }
+
+  /* Promote the location card from a fixed panel to a static full-page sheet. */
+  .loc-backdrop {
+    position: static !important;
+    display: block !important;
+    background: none !important;
+  }
+  .loc-panel {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+  }
+  .loc-scroll {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .loc-hero {
+    height: auto !important;
+  }
+  .loc-hero-img {
+    width: 100%;
+    max-height: 80mm;
+    object-fit: cover;
+    filter: none !important;
+  }
+  .loc-title {
+    font-size: 24pt;
+    margin-bottom: 1mm;
+  }
+  .loc-subtitle {
+    font-size: 12pt;
+    color: #333;
+  }
+  .loc-extract-box {
+    font-size: 11pt;
+    background: none !important;
+  }
+  .loc-meta-grid {
+    display: block !important;
+  }
+  .loc-meta {
+    margin: 1.5mm 0;
+  }
+  .loc-meta-k {
+    font-weight: 700;
+    margin-right: 4mm;
+  }
+
+  /* QR placeholder + the map URL — shown only when printing. */
+  .print-only {
+    display: flex !important;
+  }
+  .loc-print-qr {
+    align-items: center;
+    gap: 6mm;
+    margin-top: 6mm;
+    padding-top: 4mm;
+    border-top: 1px solid #ccc;
+  }
+  .loc-qr-box {
+    flex: 0 0 auto;
+    width: 28mm;
+    height: 28mm;
+    border: 2px solid #000;
+    border-radius: 2mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Hatch fill so it reads as a QR placeholder, not an empty box. */
+    background: repeating-linear-gradient(45deg, #000 0 1.6mm, #fff 1.6mm 3.2mm);
+  }
+  .loc-qr-label {
+    background: #fff;
+    padding: 1mm 2mm;
+    font-weight: 800;
+    font-size: 10pt;
+  }
+  .loc-print-url {
+    display: flex;
+    flex-direction: column;
+    gap: 1mm;
+  }
+  .loc-print-url-label {
+    font-weight: 700;
+    font-size: 11pt;
+  }
+  .loc-print-url-link {
+    font-size: 10pt;
+    word-break: break-all;
+  }
+
+  /* Blog article stays readable and full-width. */
   .container.prose {
-    max-width: 100%;
+    max-width: 100% !important;
   }
   .author-box {
     border: 1px solid #ccc;
     background: transparent;
+  }
+  a {
+    color: #000 !important;
   }
 }
 
@@ -2277,7 +2511,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 20px;
-  background: #fff;
+  background: var(--surface);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -2322,7 +2556,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 18px 18px 16px;
-  background: #fff;
+  background: var(--surface);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 .latest-card:hover {
@@ -2451,7 +2685,7 @@ a {
   padding: 12px 14px;
   text-decoration: none;
   color: var(--text);
-  background: #fff;
+  background: var(--surface);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 .related-country:hover {
@@ -2517,7 +2751,7 @@ a {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .loc-gallery-dots span.is-active {
-  background: #fff;
+  background: var(--surface);
 }
 @media (prefers-reduced-motion: reduce) {
   .loc-gallery-nav {
@@ -2548,7 +2782,7 @@ a {
 }
 .post-country-link:hover {
   border-color: var(--accent);
-  background: #fff;
+  background: var(--surface);
 }
 
 /* ---- Map filter: link through to the country's /explore guide ---- */
@@ -2624,7 +2858,7 @@ a {
   padding: 14px 16px;
   font-size: 16px;
   color: var(--text);
-  background: #fff;
+  background: var(--surface);
   border: 2px solid var(--border);
   border-radius: 12px;
 }

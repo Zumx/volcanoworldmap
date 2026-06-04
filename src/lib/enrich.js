@@ -4,6 +4,8 @@
 // silently. Wikipedia + Wikimedia Commons need no key; Mapillary uses
 // NEXT_PUBLIC_MAPILLARY_TOKEN when present and is only a last-resort fallback.
 
+import { fetchWithTimeout } from "./net.js";
+
 const MAPILLARY_TOKEN = process.env.NEXT_PUBLIC_MAPILLARY_TOKEN || "";
 
 // How far a Wikipedia article's coordinates may sit from the pin before we
@@ -78,7 +80,7 @@ async function pageCategories(lang, title) {
     "&action=query&prop=categories&cllimit=20&clshow=!hidden" +
     `&titles=${encodeURIComponent(title)}`;
   try {
-    const res = await fetch(url, { headers: { Accept: "application/json" } });
+    const res = await fetchWithTimeout(url, { headers: { Accept: "application/json" } });
     if (!res.ok) return [];
     const j = await res.json();
     const pages = j.query && j.query.pages;
@@ -142,7 +144,7 @@ async function wikipediaSummary(name, country, lat, lon, locale) {
   const searchUrl =
     `https://${lang}.wikipedia.org/w/rest.php/v1/search/page` +
     `?q=${encodeURIComponent(query)}&limit=5`;
-  const sRes = await fetch(searchUrl, { headers: { Accept: "application/json" } });
+  const sRes = await fetchWithTimeout(searchUrl, { headers: { Accept: "application/json" } });
   if (!sRes.ok) return null;
   const sJson = await sRes.json();
   const pages = (sJson && sJson.pages) || [];
@@ -152,7 +154,7 @@ async function wikipediaSummary(name, country, lat, lon, locale) {
     const sumUrl =
       `https://${lang}.wikipedia.org/api/rest_v1/page/summary/` +
       encodeURIComponent(page.key || page.title);
-    const res = await fetch(sumUrl, { headers: { Accept: "application/json" } });
+    const res = await fetchWithTimeout(sumUrl, { headers: { Accept: "application/json" } });
     if (!res.ok) continue;
     const j = await res.json();
     const verified = await verifySummary(j, lang, lat, lon);
@@ -170,7 +172,7 @@ async function commonsImageNearby(lat, lon) {
     "&action=query&generator=geosearch&ggsnamespace=6&ggslimit=1" +
     `&ggscoord=${lat}|${lon}&ggsradius=2000` +
     "&prop=imageinfo&iiprop=url&iiurlwidth=1024";
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url);
   if (!res.ok) return null;
   const j = await res.json();
   const pages = j.query && j.query.pages;
@@ -193,7 +195,7 @@ async function commonsImagesNearby(lat, lon, limit = 8) {
     `&ggscoord=${lat}|${lon}&ggsradius=3000` +
     "&prop=imageinfo&iiprop=url|mime&iiurlwidth=1024";
   try {
-    const res = await fetch(url);
+    const res = await fetchWithTimeout(url);
     if (!res.ok) return [];
     const j = await res.json();
     const pages = j.query && j.query.pages;
@@ -217,7 +219,7 @@ async function mapillaryImage(lat, lon) {
     "https://graph.mapillary.com/images" +
     `?access_token=${MAPILLARY_TOKEN}` +
     `&fields=thumb_1024_url&bbox=${bbox}&limit=1`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url);
   if (!res.ok) return null;
   const j = await res.json();
   const img = j.data && j.data[0];
@@ -241,7 +243,7 @@ export async function wikiTopicImage(query, locale) {
     `&gsrsearch=${encodeURIComponent(q)}` +
     "&prop=pageimages&piprop=thumbnail&pithumbsize=800";
   try {
-    const res = await fetch(url, { headers: { Accept: "application/json" } });
+    const res = await fetchWithTimeout(url, { headers: { Accept: "application/json" } });
     if (!res.ok) return null;
     const j = await res.json();
     const pages = j.query && j.query.pages;

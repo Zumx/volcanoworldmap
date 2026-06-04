@@ -70,6 +70,7 @@ export default function LocationCard({
   const [dragY, setDragY] = useState(0); // live offset while swiping the sheet
   const [blogPosts, setBlogPosts] = useState([]); // posts that mention this place
   const [imgIdx, setImgIdx] = useState(0); // active image in the gallery
+  const [broken, setBroken] = useState({}); // image src → failed to load
   const dragStart = useRef(null);
   const panelRef = useRef(null); // dialog root, for focus management
   const restoreFocusRef = useRef(null); // element to return focus to on close
@@ -252,6 +253,9 @@ export default function LocationCard({
   const hasGallery = gallery.length > 1;
   const safeIdx = gallery.length ? imgIdx % gallery.length : 0;
   const currentImage = gallery[safeIdx] || image;
+  // A broken/blocked image URL falls back to the branded emoji placeholder
+  // rather than a torn-image icon.
+  const imageOk = currentImage && !broken[currentImage];
   const showPrevImage = () =>
     setImgIdx((i) => (i - 1 + gallery.length) % gallery.length);
   const showNextImage = () => setImgIdx((i) => (i + 1) % gallery.length);
@@ -287,6 +291,16 @@ export default function LocationCard({
       }
     }
   };
+
+  // Canonical deep link to this place on the map — shown (with a QR-code
+  // placeholder) only on the printed sheet so a paper copy links back online.
+  const placeUrl = (() => {
+    if (typeof window === "undefined") return "";
+    const params = new URLSearchParams();
+    params.set("name", p.name || displayName);
+    if (p.country) params.set("country", p.country);
+    return `${window.location.origin}/${locale}/map?${params.toString()}`;
+  })();
 
   const panelStyle = dragY
     ? { transform: `translateY(${dragY}px)`, transition: "none" }
@@ -354,7 +368,7 @@ export default function LocationCard({
 
         <div className="loc-scroll">
           <div className="loc-hero">
-            {currentImage ? (
+            {imageOk ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 className="loc-hero-img"
@@ -368,6 +382,9 @@ export default function LocationCard({
                 height="640"
                 loading="lazy"
                 decoding="async"
+                onError={() =>
+                  setBroken((b) => ({ ...b, [currentImage]: true }))
+                }
               />
             ) : (
               <div className="loc-hero-ph">
@@ -422,7 +439,7 @@ export default function LocationCard({
                 </div>
               </>
             )}
-            {currentImage && enriched.source && (
+            {imageOk && enriched.source && (
               <span className="loc-photo-credit">
                 {t("photoVia", { source: enriched.source })}
               </span>
@@ -482,6 +499,18 @@ export default function LocationCard({
                 ))}
               </div>
             )}
+
+            {/* Print-only: a QR placeholder + the map URL so a paper copy can
+                be scanned back to the live location. Hidden on screen. */}
+            <div className="loc-print-qr print-only">
+              <div className="loc-qr-box" aria-hidden="true">
+                <span className="loc-qr-label">QR</span>
+              </div>
+              <div className="loc-print-url">
+                <span className="loc-print-url-label">{t("scanForMap")}</span>
+                <span className="loc-print-url-link">{placeUrl}</span>
+              </div>
+            </div>
 
             {((enriched && enriched.wikiUrl) || (p.osmType && p.osmId)) && (
               <div className="loc-links">

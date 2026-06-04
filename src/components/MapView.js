@@ -10,6 +10,19 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import dynamic from "next/dynamic";
 import { site } from "../lib/site.js";
 import { Link } from "../i18n/navigation.js";
+import { fetchWithTimeout } from "../lib/net.js";
+
+// Basemaps: OpenStreetMap standard in light mode, CartoDB DarkMatter in dark
+// mode. Both are free tile services; CARTO requires the attribution below.
+const LIGHT_TILES = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const DARK_TILES =
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+const TILE_ATTR =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const prefersDark = () =>
+  typeof window !== "undefined" &&
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 // LocationCard is only pulled in the first time a pin is clicked.
 const LocationCard = dynamic(() => import("./LocationCard.js"), {
@@ -40,6 +53,9 @@ export default function MapView({
   // Flips true once the core dataset is in: hides the skeleton loader and
   // fades the map in.
   const [ready, setReady] = useState(false);
+  // Flips true when the dataset can't be loaded (network error / 5s timeout) so
+  // we can show a "Map unavailable" panel with a retry button.
+  const [loadError, setLoadError] = useState(false);
 
   // ---- Filter state (driven by the React panel, applied imperatively) ----
   const [panelOpen, setPanelOpen] = useState(false);
@@ -70,10 +86,27 @@ export default function MapView({
     mapRef.current = map;
     if (typeof window !== "undefined") window.__wmMap = map;
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap contributors",
-    }).addTo(map);
+    const makeTiles = () =>
+      L.tileLayer(prefersDark() ? DARK_TILES : LIGHT_TILES, {
+        maxZoom: 19,
+        attribution: TILE_ATTR,
+      });
+    let tileLayer = makeTiles().addTo(map);
+    // Swap the basemap live when the OS colour scheme flips.
+    let mql = null;
+    const onThemeChange = () => {
+      if (!mapRef.current) return;
+      if (tileLayer) map.removeLayer(tileLayer);
+      tileLayer = makeTiles().addTo(map);
+      if (tileLayer.bringToBack) tileLayer.bringToBack();
+    };
+    try {
+      mql = window.matchMedia("(prefers-color-scheme: dark)");
+      if (mql.addEventListener) mql.addEventListener("change", onThemeChange);
+      else if (mql.addListener) mql.addListener(onThemeChange);
+    } catch {
+      /* matchMedia unavailable — stay on the initial basemap */
+    }
 
     // tolerance expands the clickable area around each canvas circle so
     // small 5–6px markers are actually hittable (default 0 = must click the
@@ -221,7 +254,7 @@ export default function MapView({
       if (restLoaded || restLoading) return restLoaded;
       restLoading = true;
       try {
-        const r = await fetch("/data/points.rest.geojson");
+        const r = await fetchWithTimeout("/data/points.rest.geojson");
         if (!r.ok) return false;
         const g = await r.json();
         // Append without re-framing the view (rebuild fits only on filter
@@ -241,33 +274,41 @@ export default function MapView({
       }
     };
 
+    // Core dataset load, wrapped so the retry button can re-run it. Each fetch
+    // has a 5s timeout (fetchWithTimeout); any failure flips loadError, which
+    // renders the "Map unavailable" panel instead of a stuck spinner.
+    const loadCore = () => {
+      setLoadError(false);
+      return fetchWithTimeout("/data/points.core.geojson")
+        .then((r) => {
+          if (r.ok) return r.json();
+          // Pre-split deployment: load the whole file the old way.
+          return fetchWithTimeout("/data/points.geojson")
+            .then((r2) => r2.json())
+            .then((g) => ({ __full: true, features: g.features }));
+        })
+        .then((res) => {
+          if (res && res.__full) restLoaded = true;
+          ingest((res && res.features) || []);
+          setReady(true);
+          // Deep link: /map?name=…&country=… opens the matching place so a
+          // shared LocationCard link lands the visitor right on it.
+          if (!embedded) openFromQuery();
+        })
+        .catch(() => {
+          setLoadError(true);
+          setReady(true);
+        });
+    };
+
     apiRef.current = {
       rebuild,
       loadRest,
+      loadCore,
       restLoaded: () => restLoaded,
     };
 
-    fetch("/data/points.core.geojson")
-      .then((r) => {
-        if (r.ok) return r.json();
-        // Pre-split deployment: load the whole file the old way.
-        return fetch("/data/points.geojson")
-          .then((r2) => r2.json())
-          .then((g) => ({ __full: true, features: g.features }));
-      })
-      .then((res) => {
-        if (res && res.__full) restLoaded = true;
-        ingest((res && res.features) || []);
-        setReady(true);
-        // Deep link: /map?name=…&country=… opens the matching place so a
-        // shared LocationCard link lands the visitor right on it.
-        if (!embedded) openFromQuery();
-      })
-      .catch(() => {
-        const el = document.getElementById("point-count");
-        if (el) el.textContent = t("couldNotLoad");
-        setReady(true);
-      });
+    loadCore();
 
     // Match a ?name=/&country= query against the loaded features and open it.
     function openFromQuery() {
@@ -299,12 +340,27 @@ export default function MapView({
     }
 
     return () => {
+      try {
+        if (mql) {
+          if (mql.removeEventListener)
+            mql.removeEventListener("change", onThemeChange);
+          else if (mql.removeListener) mql.removeListener(onThemeChange);
+        }
+      } catch {
+        /* ignore */
+      }
       map.remove();
       mapRef.current = null;
       apiRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Retry the dataset load from the "Map unavailable" panel.
+  const retryLoad = () => {
+    setReady(false);
+    if (apiRef.current && apiRef.current.loadCore) apiRef.current.loadCore();
+  };
 
   // Apply filter changes to the map. When the user turns on "show all" for the
   // first time, fetch the rest payload before rebuilding.
@@ -425,6 +481,23 @@ export default function MapView({
         <div className="map-spinner" aria-hidden="true" />
         <span className="map-loading-text">{t("loading")}</span>
       </div>
+      {loadError && (
+        <div className="map-error" role="alert">
+          <div className="map-error-box">
+            <span className="map-error-icon" aria-hidden="true">
+              🗺️
+            </span>
+            <p className="map-error-title">{t("unavailable")}</p>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={retryLoad}
+            >
+              {t("retry")}
+            </button>
+          </div>
+        </div>
+      )}
       {!embedded && (
         <div className="map-overlay">
           <h1>

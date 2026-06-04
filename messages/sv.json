@@ -59,7 +59,9 @@
     "visibility": "Visning",
     "clearFilters": "Rensa allt",
     "mapLabel": "Interaktiv karta över {name}",
-    "exploreCountry": "Utforska {country} →"
+    "exploreCountry": "Utforska {country} →",
+    "unavailable": "Kartan är inte tillgänglig",
+    "retry": "Försök igen"
   },
   "card": {
     "close": "Stäng",
@@ -82,7 +84,8 @@
     "copied": "Länk kopierad!",
     "inTheBlog": "I bloggen",
     "prevImage": "Föregående foto",
-    "nextImage": "Nästa foto"
+    "nextImage": "Nästa foto",
+    "scanForMap": "Skanna för livekartan"
   },
   "country": {
     "heading": "{noun} i {country}",
