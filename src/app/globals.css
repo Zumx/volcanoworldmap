@@ -75,7 +75,6 @@ textarea,
 .featured-card,
 .blog-feature-card,
 .latest-card,
-.testimonial,
 .stat-card,
 .tag-chip,
 .share-btn {
@@ -287,6 +286,23 @@ a {
   text-decoration: none;
 }
 .footer-links a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.footer-legal {
+  max-width: 960px;
+  margin: 14px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  font-size: 13px;
+}
+.footer-legal a {
+  color: inherit;
+  text-decoration: none;
+}
+.footer-legal a:hover {
   color: var(--primary);
   text-decoration: underline;
 }
@@ -2520,7 +2536,7 @@ a {
 
 /* ============================================================
    UX + accessibility + PWA pass: skip link, focus rings,
-   home sections (how-it-works, testimonials, latest posts)
+   home sections (how-it-works, latest posts)
    ============================================================ */
 
 /* ---- Accessibility: skip link + visible keyboard focus ---- */
@@ -2629,50 +2645,6 @@ a {
   margin: 0;
   font-size: 14px;
   color: color-mix(in srgb, var(--text) 82%, white);
-}
-
-/* ---- Home: testimonials ---- */
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
-}
-.testimonial {
-  margin: 0;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  background: var(--surface);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.testimonial-stars {
-  color: #f5a623;
-  font-size: 15px;
-  letter-spacing: 2px;
-}
-.testimonial blockquote {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text);
-}
-.testimonial figcaption {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-top: auto;
-}
-.testimonial-name {
-  font-weight: 700;
-  color: var(--primary-dark);
-  font-size: 14px;
-}
-.testimonial-role {
-  font-size: 12px;
-  color: color-mix(in srgb, var(--text) 72%, white);
 }
 
 /* ---- Home: latest blog posts ---- */

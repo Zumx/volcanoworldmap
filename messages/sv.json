@@ -29,16 +29,6 @@
     "step2Body": "Klicka på en punkt för foton, beskrivningar, öppettider och vad som finns i närheten – allt på ett ställe.",
     "step3Title": "Boka",
     "step3Body": "Hittat ett ställe du gillar? Gå direkt till turer, biljetter och upplevelser.",
-    "testimonialsHeading": "Älskad av nyfikna resenärer",
-    "t1Quote": "Jag planerade en hel helg kring tre platser jag annars aldrig hade hittat. Man tappar lätt en timme i den här kartan.",
-    "t1Name": "Sofia M.",
-    "t1Role": "Helgäventyrare",
-    "t2Quote": "Äntligen en karta som faktiskt är komplett. Jag kollade min hemtrakt och till och med de undanskymda platserna fanns med.",
-    "t2Name": "Daniel R.",
-    "t2Role": "Lokal guide",
-    "t3Quote": "Bilderna och 'i närheten'-listan gör planeringen så snabb. Numera mitt första stopp inför varje bilresa.",
-    "t3Name": "Aiko T.",
-    "t3Role": "Bilreseentusiast",
     "latestHeading": "Senaste från bloggen",
     "readMore": "Läs mer →",
     "viewAllPosts": "Visa alla inlägg →"
@@ -134,8 +124,8 @@
     "copyLink": "Kopiera länk",
     "copied": "Kopierat!",
     "print": "Skriv ut",
-    "writtenBy": "Skrivet av teamet bakom {team}",
-    "authorBio": "Vi kartlägger världens mest anmärkningsvärda platser, en nål i taget.",
+    "writtenBy": "Skriven av {author}",
+    "authorBio": "Oberoende utvecklare i Sverige — bygger interaktiva kartor av passion för resor och öppna data.",
     "exploreHeading": "Utforska länderna i den här guiden"
   },
   "about": {
@@ -153,14 +143,21 @@
     "creditsHeading": "Källor",
     "faqHeading": "Vanliga frågor",
     "faqBody": "Snabba svar på de vanligaste frågorna finns på vår",
-    "faqCta": "FAQ-sida →"
+    "faqCta": "FAQ-sida →",
+    "builtByHeading": "Vem ligger bakom sajten?",
+    "builtByBody": "{name} byggs och underhålls av {author}, en oberoende utvecklare baserad i Sverige. Sajten föddes ur en passion för kartor, resor och öppna data; i grunden finns en bakgrund inom IT-konsulting."
   },
   "footer": {
     "tagline": "En öppen världskarta, byggd på OpenStreetMap.",
     "navLabel": "Sidfot",
     "contact": "Kontakt",
     "data": "Data © OpenStreetMap-bidragsgivare",
-    "unsubscribe": "Avsluta prenumeration"
+    "unsubscribe": "Avsluta prenumeration",
+    "legalLabel": "Juridisk information",
+    "privacy": "Integritetspolicy",
+    "terms": "Användarvillkor",
+    "affiliateDisclosure": "Affiliate-information",
+    "cookiePolicy": "Cookiepolicy"
   },
   "notFound": {
     "title": "Sidan hittades inte",
@@ -241,5 +238,62 @@
     "articles": "Artiklar",
     "tagCountry": "Land",
     "tagPlace": "Plats"
+  },
+  "privacy": {
+    "heading": "Integritetspolicy",
+    "updated": "Senast uppdaterad: {date}",
+    "intro": "{name} värnar om din integritet. Den här sidan förklarar vilka uppgifter som behandlas när du använder sajten och vilka rättigheter du har.",
+    "collectTitle": "Vilka uppgifter vi samlar in",
+    "collectBody": "Sajten har inga användarkonton och inga formulär som sparar uppgifter på våra servrar. De enda användningsdata som samlas in är anonymiserad statistik via Google Analytics 4 (med IP-anonymisering, utan annonsfunktioner) — och bara efter att du godkänt analys i cookie-bannern.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "Google Analytics sätter cookies först efter ditt samtycke via cookie-bannern. Själva valet sparas i webbläsarens localStorage och lämnar aldrig din enhet.",
+    "thirdTitle": "Tredjepartstjänster",
+    "thirdBody": "Visst innehåll hämtas från tredje part när du använder sajten. Dessa tjänster ser din IP-adress som en del av ett vanligt webbanrop:",
+    "thirdAnalytics": "Google Analytics 4 — anonymiserad besöksstatistik (endast efter samtycke).",
+    "thirdWiki": "Wikipedia och Wikimedia Commons — platsbeskrivningar och foton som hämtas när du öppnar en plats.",
+    "thirdOsm": "OpenStreetMap — kartrutor och underliggande platsdata.",
+    "rightsTitle": "Dina rättigheter (GDPR)",
+    "rightsBody": "Enligt dataskyddsförordningen har du rätt att:",
+    "rightsAccess": "begära tillgång till dina personuppgifter;",
+    "rightsErasure": "begära rättelse eller radering;",
+    "rightsObjection": "invända mot eller begränsa behandlingen;",
+    "rightsComplaint": "lämna klagomål till Integritetsskyddsmyndigheten (IMY).",
+    "contactTitle": "Kontakt",
+    "contactBody": "Frågor om integritet? Mejla oss på"
+  },
+  "terms": {
+    "heading": "Användarvillkor",
+    "updated": "Senast uppdaterad: {date}",
+    "intro": "Genom att använda {name} godkänner du dessa villkor.",
+    "asIsTitle": "Tjänsten tillhandahålls i befintligt skick",
+    "asIsBody": "Sajten tillhandahålls kostnadsfritt, i befintligt skick och i mån av tillgänglighet, utan garantier av något slag. Vi kan när som helst ändra eller avveckla delar av tjänsten.",
+    "dataTitle": "Datakällor och licenser",
+    "dataBody": "Kartdata kommer från OpenStreetMap (Open Database License); beskrivningar och bilder kommer från Wikipedia och Wikimedia Commons (Creative Commons-licenser). Licenser:",
+    "accuracyTitle": "Ingen garanti för platsdatans riktighet",
+    "accuracyBody": "Platser, positioner och annan information underhålls av en community och kan vara ofullständiga, inaktuella eller felaktiga. Kontrollera alltid viktiga detaljer (tillgänglighet, säkerhet, öppettider) mot officiella källor innan du reser.",
+    "liabilityTitle": "Ansvarsbegränsning",
+    "liabilityBody": "I den utsträckning lagen tillåter ansvarar vi inte för förluster eller skador som uppstår genom användning av sajten eller genom tillit till informationen som visas.",
+    "contactTitle": "Kontakt",
+    "contactBody": "Frågor om villkoren? Mejla oss på"
+  },
+  "affiliate": {
+    "heading": "Affiliate-information",
+    "updated": "Senast uppdaterad: {date}",
+    "p1": "{name} innehåller affiliatelänkar — till exempel länkar till boknings- och upplevelsepartners som visas intill platser på kartan.",
+    "p2": "Om du bokar eller köper något via en sådan länk kan vi få en liten provision. Det kostar aldrig dig något extra — priset är detsamma som om du gått direkt till partnern.",
+    "p3": "Affiliate-samarbeten påverkar inte vilka platser som visas på kartan eller hur de presenteras. Kartdatan kommer från OpenStreetMap och är oberoende av alla partners.",
+    "contactBody": "Frågor om detta? Mejla oss på"
+  },
+  "cookiePolicy": {
+    "heading": "Cookiepolicy",
+    "updated": "Senast uppdaterad: {date}",
+    "intro": "Den här sidan förklarar vad {name} sparar i din webbläsare och hur du ändrar ditt val.",
+    "whichTitle": "Vad vi sparar",
+    "whichAnalytics": "Cookies från Google Analytics 4 (_ga med flera) — anonymiserad användningsstatistik. Sätts först efter att du godkänt analys i cookie-bannern.",
+    "whichConsent": "En post i localStorage som kommer ihåg ditt val i cookie-bannern. Den stannar på din enhet och är ingen spårningscookie.",
+    "changeTitle": "Ändra ditt val",
+    "changeBody": "För att ångra eller ändra ditt samtycke, rensa sajtens webbplatsdata i webbläsaren — bannern visas igen vid nästa besök. Du kan också blockera cookies helt i webbläsarens inställningar.",
+    "contactTitle": "Kontakt",
+    "contactBody": "Frågor om cookies? Mejla oss på"
   }
 }

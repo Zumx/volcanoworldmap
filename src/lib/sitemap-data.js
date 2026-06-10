@@ -20,6 +20,10 @@ const SECTIONS = [
   { path: "stats", changefreq: "weekly", priority: 0.5 },
   { path: "faq", changefreq: "yearly", priority: 0.4 },
   { path: "about", changefreq: "yearly", priority: 0.4 },
+  { path: "privacy", changefreq: "yearly", priority: 0.2 },
+  { path: "terms", changefreq: "yearly", priority: 0.2 },
+  { path: "affiliate-disclosure", changefreq: "yearly", priority: 0.2 },
+  { path: "cookie-policy", changefreq: "yearly", priority: 0.2 },
 ];
 
 const EXPLORE_TOP_N = 20; // must match the explore route's TOP_N

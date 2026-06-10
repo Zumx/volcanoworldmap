@@ -29,16 +29,6 @@
     "step2Body": "Click any point for photos, descriptions, opening hours and what's nearby — all in one place.",
     "step3Title": "Book",
     "step3Body": "Found somewhere you love? Jump straight to tours, tickets and experiences for it.",
-    "testimonialsHeading": "Loved by curious travelers",
-    "t1Quote": "I planned an entire weekend around three places I'd never have found otherwise. The map is ridiculously easy to lose an hour in.",
-    "t1Name": "Sofia M.",
-    "t1Role": "Weekend explorer",
-    "t2Quote": "Finally a map that's actually complete. I checked my home region and even the obscure spots were on it.",
-    "t2Name": "Daniel R.",
-    "t2Role": "Local guide",
-    "t3Quote": "The photos and the 'nearby' list make trip planning so quick. It's now my first stop before any road trip.",
-    "t3Name": "Aiko T.",
-    "t3Role": "Road-trip enthusiast",
     "latestHeading": "Latest from the blog",
     "readMore": "Read more →",
     "viewAllPosts": "View all posts →"
@@ -134,8 +124,8 @@
     "copyLink": "Copy link",
     "copied": "Copied!",
     "print": "Print",
-    "writtenBy": "Written by the {team} team",
-    "authorBio": "Mapping the world's most remarkable places, one pin at a time.",
+    "writtenBy": "Written by {author}",
+    "authorBio": "Independent developer based in Sweden — building interactive maps out of a passion for travel and open data.",
     "exploreHeading": "Explore the countries in this guide"
   },
   "about": {
@@ -153,14 +143,21 @@
     "creditsHeading": "Credits",
     "faqHeading": "Frequently asked questions",
     "faqBody": "Quick answers to the most common questions are on our",
-    "faqCta": "FAQ page →"
+    "faqCta": "FAQ page →",
+    "builtByHeading": "Who is behind this site?",
+    "builtByBody": "{name} is built and maintained by {author}, an independent developer based in Sweden. The site grew out of a passion for maps, travel and open data, alongside a professional background in IT consulting."
   },
   "footer": {
     "tagline": "An open world map, powered by OpenStreetMap.",
     "navLabel": "Footer",
     "contact": "Contact",
     "data": "Data © OpenStreetMap contributors",
-    "unsubscribe": "Unsubscribe"
+    "unsubscribe": "Unsubscribe",
+    "legalLabel": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "affiliateDisclosure": "Affiliate Disclosure",
+    "cookiePolicy": "Cookie Policy"
   },
   "notFound": {
     "title": "Page not found",
@@ -241,5 +238,62 @@
     "articles": "Articles",
     "tagCountry": "Country",
     "tagPlace": "Place"
+  },
+  "privacy": {
+    "heading": "Privacy Policy",
+    "updated": "Last updated: {date}",
+    "intro": "{name} respects your privacy. This page explains what data is processed when you use the site, and what your rights are.",
+    "collectTitle": "What we collect",
+    "collectBody": "The site has no user accounts and no forms that store data on our servers. The only usage data we collect is anonymised statistics via Google Analytics 4 (with IP anonymisation, no advertising features) — and only after you have accepted analytics in the cookie banner.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "Google Analytics sets cookies only after you give consent via the cookie banner. Your consent choice itself is stored in your browser's localStorage and never leaves your device.",
+    "thirdTitle": "Third-party services",
+    "thirdBody": "Some content is loaded from third parties when you use the site. These services receive your IP address as part of a normal web request:",
+    "thirdAnalytics": "Google Analytics 4 — anonymised visitor statistics (only after consent).",
+    "thirdWiki": "Wikipedia and Wikimedia Commons — place descriptions and photos, loaded when you open a place.",
+    "thirdOsm": "OpenStreetMap — map tiles and the underlying place data.",
+    "rightsTitle": "Your rights (GDPR)",
+    "rightsBody": "Under the EU General Data Protection Regulation you have the right to:",
+    "rightsAccess": "request access to your personal data;",
+    "rightsErasure": "request rectification or erasure;",
+    "rightsObjection": "object to or restrict processing;",
+    "rightsComplaint": "lodge a complaint with your local data protection authority.",
+    "contactTitle": "Contact",
+    "contactBody": "Questions about privacy? Email us at"
+  },
+  "terms": {
+    "heading": "Terms of Use",
+    "updated": "Last updated: {date}",
+    "intro": "By using {name} you agree to these terms.",
+    "asIsTitle": "Service provided as is",
+    "asIsBody": "The site is provided free of charge, “as is” and “as available”, without warranties of any kind, express or implied. We may change or discontinue any part of the service at any time.",
+    "dataTitle": "Data sources and licensing",
+    "dataBody": "Map data comes from OpenStreetMap (Open Database License); descriptions and images come from Wikipedia and Wikimedia Commons (Creative Commons licences). Licences:",
+    "accuracyTitle": "No guarantee of accuracy",
+    "accuracyBody": "Locations, positions and other place information are community-maintained and can be incomplete, outdated or wrong. Always verify critical details (access, safety, opening hours) with official sources before you travel.",
+    "liabilityTitle": "Limitation of liability",
+    "liabilityBody": "To the maximum extent permitted by law, we accept no liability for any loss or damage arising from your use of the site or from reliance on the information it presents.",
+    "contactTitle": "Contact",
+    "contactBody": "Questions about these terms? Email us at"
+  },
+  "affiliate": {
+    "heading": "Affiliate Disclosure",
+    "updated": "Last updated: {date}",
+    "p1": "{name} contains affiliate links — for example links to booking and experience partners shown next to places on the map.",
+    "p2": "If you book or buy something through one of these links, we may earn a small commission. This never costs you anything extra — the price is the same as if you had gone to the partner directly.",
+    "p3": "Affiliate partnerships do not influence which places appear on the map or how they are presented. The map data comes from OpenStreetMap and is independent of any partner.",
+    "contactBody": "Questions about this disclosure? Email us at"
+  },
+  "cookiePolicy": {
+    "heading": "Cookie Policy",
+    "updated": "Last updated: {date}",
+    "intro": "This page explains what {name} stores in your browser and how you can change your choice.",
+    "whichTitle": "What we store",
+    "whichAnalytics": "Google Analytics 4 cookies (_ga and similar) — anonymised usage statistics. Set only after you accept analytics in the cookie banner.",
+    "whichConsent": "A localStorage entry that remembers your cookie-banner choice. It stays on your device and is not a tracking cookie.",
+    "changeTitle": "Changing your choice",
+    "changeBody": "To withdraw or change your consent, clear this site's browsing data (cookies and site data) in your browser — the consent banner will appear again on your next visit. You can also block cookies entirely in your browser settings.",
+    "contactTitle": "Contact",
+    "contactBody": "Questions about cookies? Email us at"
   }
 }

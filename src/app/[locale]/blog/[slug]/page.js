@@ -14,7 +14,7 @@ import {
   countriesInText,
 } from "../../../../lib/blog.js";
 import { listCountries } from "../../../../lib/data.js";
-import { site } from "../../../../lib/site.js";
+import { site, author } from "../../../../lib/site.js";
 import { pingIndexNow, isFreshlyPublished } from "../../../../lib/indexnow.js";
 
 // ISR: regenerate at most once per day so drip-scheduled posts go live
@@ -98,7 +98,11 @@ export default async function BlogPost({ params }) {
     description,
     datePublished: post.meta.date,
     dateModified: post.meta.date,
-    author: { "@type": "Organization", name: site.name, url: `https://${site.domain}` },
+    author: {
+      "@type": "Person",
+      name: author.name,
+      url: `https://${site.domain}/${locale}/about`,
+    },
     inLanguage: locale,
     url,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
@@ -150,7 +154,7 @@ export default async function BlogPost({ params }) {
           {site.emoji}
         </div>
         <div className="author-meta">
-          <p className="author-name">{t("writtenBy", { team: site.name })}</p>
+          <p className="author-name">{t("writtenBy", { author: author.name })}</p>
           <p className="author-bio">{t("authorBio")}</p>
         </div>
       </aside>

@@ -5,6 +5,10 @@ import config from "../../site.config.json";
 
 export const site = config;
 
+// The person behind the sites — used by the about page, the blog author box
+// and JSON-LD (Article author, Organization founder). Fleet-wide constant.
+export const author = { name: "Emil Björk" };
+
 // primary + accent are author-provided; darker/lighter shades are derived
 // at render time with CSS color-mix (see globals.css).
 export const cssVars = {

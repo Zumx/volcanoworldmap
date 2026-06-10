@@ -29,16 +29,6 @@
     "step2Body": "Clicca un punto per foto, descrizioni, orari e cosa c'è nelle vicinanze — tutto in un posto.",
     "step3Title": "Prenota",
     "step3Body": "Trovato un posto che ami? Vai dritto a tour, biglietti ed esperienze.",
-    "testimonialsHeading": "Amato dai viaggiatori curiosi",
-    "t1Quote": "Ho organizzato un intero weekend attorno a tre luoghi che non avrei mai trovato. Su questa mappa si perde un'ora senza accorgersene.",
-    "t1Name": "Sofia M.",
-    "t1Role": "Esploratrice del weekend",
-    "t2Quote": "Finalmente una mappa davvero completa. Ho controllato la mia regione e c'erano anche i posti più nascosti.",
-    "t2Name": "Daniel R.",
-    "t2Role": "Guida locale",
-    "t3Quote": "Le foto e l'elenco 'nelle vicinanze' rendono tutto rapidissimo. È la mia prima tappa prima di ogni viaggio in auto.",
-    "t3Name": "Aiko T.",
-    "t3Role": "Appassionato di viaggi on the road",
     "latestHeading": "Ultimi dal blog",
     "readMore": "Leggi di più →",
     "viewAllPosts": "Vedi tutti gli articoli →"
@@ -134,8 +124,8 @@
     "copyLink": "Copia link",
     "copied": "Copiato!",
     "print": "Stampa",
-    "writtenBy": "Scritto dal team di {team}",
-    "authorBio": "Mappiamo i luoghi più straordinari del mondo, un segnaposto alla volta.",
+    "writtenBy": "Scritto da {author}",
+    "authorBio": "Sviluppatore indipendente in Svezia — crea mappe interattive per passione per i viaggi e i dati aperti.",
     "exploreHeading": "Esplora i paesi di questa guida"
   },
   "about": {
@@ -153,14 +143,21 @@
     "creditsHeading": "Crediti",
     "faqHeading": "Domande frequenti",
     "faqBody": "Risposte rapide alle domande più comuni sono nella nostra",
-    "faqCta": "pagina FAQ →"
+    "faqCta": "pagina FAQ →",
+    "builtByHeading": "Chi c’è dietro questo sito?",
+    "builtByBody": "{name} è creato e mantenuto da {author}, sviluppatore indipendente con base in Svezia. Il sito nasce dalla passione per mappe, viaggi e dati aperti; professionalmente viene dalla consulenza informatica."
   },
   "footer": {
     "tagline": "Una mappa del mondo aperta, basata su OpenStreetMap.",
     "navLabel": "Piè di pagina",
     "contact": "Contatti",
     "data": "Dati © contributori di OpenStreetMap",
-    "unsubscribe": "Annulla iscrizione"
+    "unsubscribe": "Annulla iscrizione",
+    "legalLabel": "Note legali",
+    "privacy": "Informativa sulla privacy",
+    "terms": "Termini di utilizzo",
+    "affiliateDisclosure": "Informativa sull’affiliazione",
+    "cookiePolicy": "Politica sui cookie"
   },
   "notFound": {
     "title": "Pagina non trovata",
@@ -241,5 +238,62 @@
     "articles": "Articoli",
     "tagCountry": "Paese",
     "tagPlace": "Luogo"
+  },
+  "privacy": {
+    "heading": "Informativa sulla privacy",
+    "updated": "Ultimo aggiornamento: {date}",
+    "intro": "{name} rispetta la tua privacy. Questa pagina spiega quali dati vengono trattati quando usi il sito e quali sono i tuoi diritti.",
+    "collectTitle": "Quali dati raccogliamo",
+    "collectBody": "Il sito non prevede account utente e nessun modulo salva dati sui nostri server. Gli unici dati di utilizzo raccolti sono statistiche anonimizzate tramite Google Analytics 4 (con anonimizzazione IP, senza funzioni pubblicitarie) — e solo dopo che hai accettato l’analisi nel banner dei cookie.",
+    "cookiesTitle": "Cookie",
+    "cookiesBody": "Google Analytics imposta i cookie solo dopo il tuo consenso tramite il banner. La tua scelta viene salvata nel localStorage del browser e non lascia mai il tuo dispositivo.",
+    "thirdTitle": "Servizi di terze parti",
+    "thirdBody": "Alcuni contenuti vengono caricati da servizi di terze parti, che ricevono il tuo indirizzo IP nell’ambito di una normale richiesta web:",
+    "thirdAnalytics": "Google Analytics 4 — statistiche anonimizzate dei visitatori (solo dopo il consenso).",
+    "thirdWiki": "Wikipedia e Wikimedia Commons — descrizioni e foto dei luoghi, caricate quando apri un luogo.",
+    "thirdOsm": "OpenStreetMap — tessere della mappa e dati dei luoghi.",
+    "rightsTitle": "I tuoi diritti (GDPR)",
+    "rightsBody": "Ai sensi del regolamento generale sulla protezione dei dati hai il diritto di:",
+    "rightsAccess": "accedere ai tuoi dati personali;",
+    "rightsErasure": "chiederne la rettifica o la cancellazione;",
+    "rightsObjection": "opporti al trattamento o chiederne la limitazione;",
+    "rightsComplaint": "presentare reclamo alla tua autorità di controllo.",
+    "contactTitle": "Contatti",
+    "contactBody": "Domande sulla privacy? Scrivici a"
+  },
+  "terms": {
+    "heading": "Termini di utilizzo",
+    "updated": "Ultimo aggiornamento: {date}",
+    "intro": "Utilizzando {name} accetti questi termini.",
+    "asIsTitle": "Servizio fornito così com’è",
+    "asIsBody": "Il sito è fornito gratuitamente, così com’è e secondo disponibilità, senza garanzie di alcun tipo, esplicite o implicite. Possiamo modificare o interrompere qualsiasi parte del servizio in qualunque momento.",
+    "dataTitle": "Fonti dei dati e licenze",
+    "dataBody": "I dati della mappa provengono da OpenStreetMap (licenza Open Database License); descrizioni e immagini provengono da Wikipedia e Wikimedia Commons (licenze Creative Commons). Licenze:",
+    "accuracyTitle": "Nessuna garanzia di accuratezza",
+    "accuracyBody": "Luoghi, posizioni e altre informazioni sono mantenuti da una community e possono essere incompleti, obsoleti o errati. Verifica sempre i dettagli importanti (accesso, sicurezza, orari) presso fonti ufficiali prima di metterti in viaggio.",
+    "liabilityTitle": "Limitazione di responsabilità",
+    "liabilityBody": "Nella misura massima consentita dalla legge, decliniamo ogni responsabilità per perdite o danni derivanti dall’uso del sito o dall’affidamento sulle informazioni presentate.",
+    "contactTitle": "Contatti",
+    "contactBody": "Domande su questi termini? Scrivici a"
+  },
+  "affiliate": {
+    "heading": "Informativa sull’affiliazione",
+    "updated": "Ultimo aggiornamento: {date}",
+    "p1": "{name} contiene link di affiliazione — ad esempio link a partner di prenotazione ed esperienze mostrati accanto ai luoghi sulla mappa.",
+    "p2": "Se prenoti o acquisti tramite uno di questi link, potremmo ricevere una piccola commissione. Per te non cambia nulla — il prezzo è lo stesso che andando direttamente dal partner.",
+    "p3": "Le partnership di affiliazione non influenzano quali luoghi compaiono sulla mappa né come vengono presentati. I dati provengono da OpenStreetMap e sono indipendenti da qualsiasi partner.",
+    "contactBody": "Domande su questa informativa? Scrivici a"
+  },
+  "cookiePolicy": {
+    "heading": "Politica sui cookie",
+    "updated": "Ultimo aggiornamento: {date}",
+    "intro": "Questa pagina spiega cosa {name} salva nel tuo browser e come puoi cambiare la tua scelta.",
+    "whichTitle": "Cosa salviamo",
+    "whichAnalytics": "Cookie di Google Analytics 4 (_ga e simili) — statistiche di utilizzo anonimizzate, impostati solo dopo il tuo consenso nel banner.",
+    "whichConsent": "Una voce nel localStorage che ricorda la tua scelta nel banner dei cookie. Resta sul tuo dispositivo e non è un cookie di tracciamento.",
+    "changeTitle": "Cambiare la tua scelta",
+    "changeBody": "Per revocare o modificare il consenso, cancella i dati di questo sito nel browser — il banner riapparirà alla prossima visita. Puoi anche bloccare del tutto i cookie nelle impostazioni del browser.",
+    "contactTitle": "Contatti",
+    "contactBody": "Domande sui cookie? Scrivici a"
   }
 }

@@ -29,16 +29,6 @@
     "step2Body": "Klicke auf einen Punkt für Fotos, Beschreibungen, Öffnungszeiten und Orte in der Nähe – alles auf einen Blick.",
     "step3Title": "Buchen",
     "step3Body": "Einen Lieblingsort gefunden? Spring direkt zu Touren, Tickets und Erlebnissen.",
-    "testimonialsHeading": "Beliebt bei neugierigen Reisenden",
-    "t1Quote": "Ich habe ein ganzes Wochenende um drei Orte herum geplant, die ich sonst nie gefunden hätte. In dieser Karte verliert man mühelos eine Stunde.",
-    "t1Name": "Sofia M.",
-    "t1Role": "Wochenend-Entdeckerin",
-    "t2Quote": "Endlich eine Karte, die wirklich vollständig ist. Ich habe meine Heimatregion geprüft – sogar die versteckten Orte waren dabei.",
-    "t2Name": "Daniel R.",
-    "t2Role": "Lokaler Guide",
-    "t3Quote": "Die Fotos und die 'In der Nähe'-Liste machen die Reiseplanung superschnell. Mein erster Halt vor jedem Roadtrip.",
-    "t3Name": "Aiko T.",
-    "t3Role": "Roadtrip-Fan",
     "latestHeading": "Neues aus dem Blog",
     "readMore": "Weiterlesen →",
     "viewAllPosts": "Alle Beiträge ansehen →"
@@ -134,8 +124,8 @@
     "copyLink": "Link kopieren",
     "copied": "Kopiert!",
     "print": "Drucken",
-    "writtenBy": "Geschrieben vom Team von {team}",
-    "authorBio": "Wir kartieren die bemerkenswertesten Orte der Welt – Pin für Pin.",
+    "writtenBy": "Geschrieben von {author}",
+    "authorBio": "Unabhängiger Entwickler aus Schweden — baut interaktive Karten aus Leidenschaft für Reisen und offene Daten.",
     "exploreHeading": "Entdecke die Länder in diesem Beitrag"
   },
   "about": {
@@ -153,14 +143,21 @@
     "creditsHeading": "Quellen",
     "faqHeading": "Häufig gestellte Fragen",
     "faqBody": "Schnelle Antworten auf die häufigsten Fragen findest du auf unserer",
-    "faqCta": "FAQ-Seite →"
+    "faqCta": "FAQ-Seite →",
+    "builtByHeading": "Wer steckt hinter dieser Seite?",
+    "builtByBody": "{name} wird von {author} gebaut und gepflegt, einem unabhängigen Entwickler aus Schweden. Die Seite entstand aus einer Leidenschaft für Karten, Reisen und offene Daten; beruflich kommt er aus der IT-Beratung."
   },
   "footer": {
     "tagline": "Eine offene Weltkarte, basierend auf OpenStreetMap.",
     "navLabel": "Fußzeile",
     "contact": "Kontakt",
     "data": "Daten © OpenStreetMap-Mitwirkende",
-    "unsubscribe": "Abmelden"
+    "unsubscribe": "Abmelden",
+    "legalLabel": "Rechtliches",
+    "privacy": "Datenschutzerklärung",
+    "terms": "Nutzungsbedingungen",
+    "affiliateDisclosure": "Affiliate-Hinweis",
+    "cookiePolicy": "Cookie-Richtlinie"
   },
   "notFound": {
     "title": "Seite nicht gefunden",
@@ -241,5 +238,62 @@
     "articles": "Artikel",
     "tagCountry": "Land",
     "tagPlace": "Ort"
+  },
+  "privacy": {
+    "heading": "Datenschutzerklärung",
+    "updated": "Zuletzt aktualisiert: {date}",
+    "intro": "{name} respektiert deine Privatsphäre. Diese Seite erklärt, welche Daten bei der Nutzung der Seite verarbeitet werden und welche Rechte du hast.",
+    "collectTitle": "Welche Daten wir erheben",
+    "collectBody": "Es gibt keine Nutzerkonten und keine Formulare, die Daten auf unseren Servern speichern. Die einzigen Nutzungsdaten sind anonymisierte Statistiken über Google Analytics 4 (mit IP-Anonymisierung, ohne Werbefunktionen) — und nur, nachdem du Analyse im Cookie-Banner akzeptiert hast.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "Google Analytics setzt Cookies erst nach deiner Einwilligung über das Cookie-Banner. Deine Auswahl selbst wird im localStorage deines Browsers gespeichert und verlässt dein Gerät nicht.",
+    "thirdTitle": "Dienste von Drittanbietern",
+    "thirdBody": "Einige Inhalte werden bei der Nutzung von Drittanbietern geladen. Diese Dienste erhalten dabei deine IP-Adresse als Teil einer normalen Webanfrage:",
+    "thirdAnalytics": "Google Analytics 4 — anonymisierte Besucherstatistik (nur nach Einwilligung).",
+    "thirdWiki": "Wikipedia und Wikimedia Commons — Ortsbeschreibungen und Fotos, geladen, wenn du einen Ort öffnest.",
+    "thirdOsm": "OpenStreetMap — Kartenkacheln und die zugrunde liegenden Ortsdaten.",
+    "rightsTitle": "Deine Rechte (DSGVO)",
+    "rightsBody": "Nach der EU-Datenschutz-Grundverordnung hast du das Recht,",
+    "rightsAccess": "Auskunft über deine personenbezogenen Daten zu verlangen;",
+    "rightsErasure": "Berichtigung oder Löschung zu verlangen;",
+    "rightsObjection": "der Verarbeitung zu widersprechen oder sie einschränken zu lassen;",
+    "rightsComplaint": "Beschwerde bei deiner Datenschutz-Aufsichtsbehörde einzulegen.",
+    "contactTitle": "Kontakt",
+    "contactBody": "Fragen zum Datenschutz? Schreib uns an"
+  },
+  "terms": {
+    "heading": "Nutzungsbedingungen",
+    "updated": "Zuletzt aktualisiert: {date}",
+    "intro": "Mit der Nutzung von {name} erklärst du dich mit diesen Bedingungen einverstanden.",
+    "asIsTitle": "Bereitstellung ohne Gewähr",
+    "asIsBody": "Die Seite wird kostenlos, „wie besehen“ und „wie verfügbar“ bereitgestellt, ohne ausdrückliche oder stillschweigende Gewährleistung. Wir können Teile des Angebots jederzeit ändern oder einstellen.",
+    "dataTitle": "Datenquellen und Lizenzen",
+    "dataBody": "Kartendaten stammen aus OpenStreetMap (Open Database License); Beschreibungen und Bilder stammen aus Wikipedia und Wikimedia Commons (Creative-Commons-Lizenzen). Lizenzen:",
+    "accuracyTitle": "Keine Garantie für Richtigkeit",
+    "accuracyBody": "Orte, Positionen und weitere Angaben werden von einer Community gepflegt und können unvollständig, veraltet oder falsch sein. Prüfe wichtige Details (Zugang, Sicherheit, Öffnungszeiten) vor einer Reise immer bei offiziellen Quellen.",
+    "liabilityTitle": "Haftungsbeschränkung",
+    "liabilityBody": "Soweit gesetzlich zulässig, übernehmen wir keine Haftung für Verluste oder Schäden, die aus der Nutzung der Seite oder dem Vertrauen auf die dargestellten Informationen entstehen.",
+    "contactTitle": "Kontakt",
+    "contactBody": "Fragen zu diesen Bedingungen? Schreib uns an"
+  },
+  "affiliate": {
+    "heading": "Affiliate-Hinweis",
+    "updated": "Zuletzt aktualisiert: {date}",
+    "p1": "{name} enthält Affiliate-Links — zum Beispiel Links zu Buchungs- und Erlebnispartnern, die neben Orten auf der Karte angezeigt werden.",
+    "p2": "Wenn du über einen dieser Links etwas buchst oder kaufst, erhalten wir unter Umständen eine kleine Provision. Für dich entstehen dabei keine Mehrkosten — der Preis ist derselbe wie beim direkten Besuch des Partners.",
+    "p3": "Affiliate-Partnerschaften haben keinen Einfluss darauf, welche Orte auf der Karte erscheinen oder wie sie dargestellt werden. Die Kartendaten stammen aus OpenStreetMap und sind von Partnern unabhängig.",
+    "contactBody": "Fragen zu diesem Hinweis? Schreib uns an"
+  },
+  "cookiePolicy": {
+    "heading": "Cookie-Richtlinie",
+    "updated": "Zuletzt aktualisiert: {date}",
+    "intro": "Diese Seite erklärt, was {name} in deinem Browser speichert und wie du deine Auswahl ändern kannst.",
+    "whichTitle": "Was wir speichern",
+    "whichAnalytics": "Cookies von Google Analytics 4 (_ga und ähnliche) — anonymisierte Nutzungsstatistik. Werden erst gesetzt, nachdem du Analyse im Cookie-Banner akzeptiert hast.",
+    "whichConsent": "Ein localStorage-Eintrag, der deine Auswahl im Cookie-Banner speichert. Er bleibt auf deinem Gerät und ist kein Tracking-Cookie.",
+    "changeTitle": "Auswahl ändern",
+    "changeBody": "Um deine Einwilligung zu ändern oder zu widerrufen, lösche die Websitedaten dieser Seite in deinem Browser — das Banner erscheint beim nächsten Besuch erneut. Cookies lassen sich außerdem komplett in den Browsereinstellungen blockieren.",
+    "contactTitle": "Kontakt",
+    "contactBody": "Fragen zu Cookies? Schreib uns an"
   }
 }

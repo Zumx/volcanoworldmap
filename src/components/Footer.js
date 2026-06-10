@@ -39,6 +39,13 @@ export default function Footer() {
         </nav>
       </div>
 
+      <nav className="footer-legal" aria-label={t("legalLabel")}>
+        <Link href="/privacy">{t("privacy")}</Link>
+        <Link href="/terms">{t("terms")}</Link>
+        <Link href="/affiliate-disclosure">{t("affiliateDisclosure")}</Link>
+        <Link href="/cookie-policy">{t("cookiePolicy")}</Link>
+      </nav>
+
       <div className="footer-bottom">
         <p>
           © {year} {site.name} ·{" "}

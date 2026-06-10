@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { site } from "../../../lib/site.js";
+import { site, author } from "../../../lib/site.js";
 import { routing } from "../../../i18n/routing.js";
 import Breadcrumbs from "../../../components/Breadcrumbs.js";
 
@@ -69,6 +69,9 @@ export default async function About({ params }) {
           tag).
         </p>
       )}
+
+      <h2>{t("builtByHeading")}</h2>
+      <p>{t("builtByBody", { author: author.name, name: site.name })}</p>
 
       <h2>{t("howHeading")}</h2>
       <p>

@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "../../i18n/navigation.js";
-import { site } from "../../lib/site.js";
+import { site, author } from "../../lib/site.js";
 import { listCountries, listFeatured } from "../../lib/data.js";
 import { listPosts } from "../../lib/blog.js";
 import MapClient from "../../components/MapClient.js";
@@ -32,14 +32,6 @@ export default async function Home({ params }) {
     { icon: "🗺️", title: t("step1Title"), body: t("step1Body", { noun: site.mappedNoun }) },
     { icon: "📍", title: t("step2Title"), body: t("step2Body", { noun: site.mappedNoun }) },
     { icon: "🎟️", title: t("step3Title"), body: t("step3Body", { noun: site.mappedNoun }) },
-  ];
-
-  // Static social proof. Kept niche-agnostic so the same three reviews read
-  // naturally on every site in the fleet.
-  const testimonials = [
-    { quote: t("t1Quote"), name: t("t1Name"), role: t("t1Role") },
-    { quote: t("t2Quote"), name: t("t2Name"), role: t("t2Role") },
-    { quote: t("t3Quote"), name: t("t3Name"), role: t("t3Role") },
   ];
 
   // schema.org Dataset — tells search engines this is a structured,
@@ -74,6 +66,11 @@ export default async function Home({ params }) {
     name: site.name,
     url: base,
     logo: `${base}/brandmark.svg`,
+    founder: {
+      "@type": "Person",
+      name: author.name,
+      url: `${base}/${locale}/about`,
+    },
     ...(site.contactEmail
       ? {
           contactPoint: {
@@ -193,25 +190,6 @@ export default async function Home({ params }) {
           </div>
         </section>
       )}
-
-      {/* Testimonials — static social proof */}
-      <section className="container testimonials">
-        <h2 className="prose">{t("testimonialsHeading")}</h2>
-        <div className="testimonial-grid">
-          {testimonials.map((r, i) => (
-            <figure className="testimonial" key={i}>
-              <div className="testimonial-stars" aria-label="5 / 5">
-                <span aria-hidden="true">★★★★★</span>
-              </div>
-              <blockquote>{r.quote}</blockquote>
-              <figcaption>
-                <span className="testimonial-name">{r.name}</span>
-                <span className="testimonial-role">{r.role}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
 
       {latestPosts.length > 0 && (
         <section className="container latest-posts">
