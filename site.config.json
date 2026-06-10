@@ -24,6 +24,7 @@
   "mappedNoun": "volcanoes",
   "unnamedLabel": "Unnamed volcano",
   "affiliateUrl": "https://www.getyourguide.com/s/?q={q}",
+  "ctaType": "tour",
   "metaFields": [
     {
       "key": "elevation",

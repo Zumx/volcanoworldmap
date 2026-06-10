@@ -82,7 +82,10 @@
     "elevation": "Altitude",
     "openGoogleMaps": "Ouvrir dans Google Maps",
     "openOsm": "Ouvrir dans OpenStreetMap",
-    "categoriesHeading": "Catégories"
+    "categoriesHeading": "Catégories",
+    "ctaStay": "Trouver un hébergement à proximité",
+    "ctaTour": "Réserver une visite",
+    "ctaGear": "Trouver équipement et guides"
   },
   "country": {
     "heading": "{noun} en {country}",

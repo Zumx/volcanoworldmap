@@ -38,6 +38,11 @@ function findPosts(index, locale, name, limit = 2) {
   return hits.slice(0, limit);
 }
 
+// CTA copy follows the site's conversion type (site.config.json "ctaType"):
+// "stay" → accommodation, "tour" → tours, "gear" → gear & guides; anything
+// else falls back to the generic experience wording.
+const CTA_KEYS = { stay: "ctaStay", tour: "ctaTour", gear: "ctaGear" };
+
 // Build the affiliate "Book an experience" URL. site.affiliateUrl may contain
 // a {q} placeholder which is replaced with the place name (so a generic
 // search/affiliate link still lands on something relevant); otherwise the
@@ -649,7 +654,7 @@ export default function LocationCard({
               target="_blank"
               rel="noreferrer nofollow sponsored"
             >
-              {t("bookExperience")}
+              {t(CTA_KEYS[site.ctaType] || "bookExperience")}
             </a>
           </div>
         )}

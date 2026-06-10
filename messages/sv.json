@@ -82,7 +82,10 @@
     "elevation": "Höjd över havet",
     "openGoogleMaps": "Öppna i Google Maps",
     "openOsm": "Öppna i OpenStreetMap",
-    "categoriesHeading": "Kategorier"
+    "categoriesHeading": "Kategorier",
+    "ctaStay": "Hitta boende i närheten",
+    "ctaTour": "Boka en rundtur",
+    "ctaGear": "Hitta utrustning & guider"
   },
   "country": {
     "heading": "{noun} i {country}",
