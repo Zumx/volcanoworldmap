@@ -13,7 +13,7 @@
     "language": "Language"
   },
   "home": {
-    "tagline": "An interactive world map",
+    "tagline": "Discover {total, number} {noun} worldwide",
     "ctaMap": "Explore the full map",
     "ctaBlog": "Read the blog",
     "intro": "Every mapped place below is sourced live from OpenStreetMap. Click any point to see details, photos and descriptions.",

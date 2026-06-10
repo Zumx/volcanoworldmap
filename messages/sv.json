@@ -13,7 +13,7 @@
     "language": "Språk"
   },
   "home": {
-    "tagline": "En interaktiv världskarta",
+    "tagline": "Upptäck {total, number} {noun} världen över",
     "ctaMap": "Utforska hela kartan",
     "ctaBlog": "Läs bloggen",
     "intro": "Varje kartlagd plats nedan hämtas direkt från OpenStreetMap. Klicka på en punkt för detaljer, foton och beskrivningar.",

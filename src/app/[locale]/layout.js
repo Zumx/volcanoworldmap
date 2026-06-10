@@ -6,6 +6,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing.js";
 import { site, cssVars } from "../../lib/site.js";
+import { listCountries } from "../../lib/data.js";
 import Header from "../../components/Header.js";
 import Footer from "../../components/Footer.js";
 import CookieConsent from "../../components/CookieConsent.js";
@@ -37,6 +38,12 @@ export function generateViewport() {
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const base = `https://${site.domain}`;
+  // Niche tagline ("Discover N campsites worldwide") in the home <title> —
+  // subpages keep the "%s · name" template.
+  const t = await getTranslations({ locale, namespace: "home" });
+  const countries = await listCountries();
+  const total = countries.reduce((s, c) => s + (c.count || 0), 0);
+  const tagline = t("tagline", { total, noun: site.mappedNoun });
   // hreflang for each locale + x-default to the default locale's URL.
   const languages = Object.fromEntries(
     routing.locales.map((l) => [l, `/${l}`])
@@ -45,7 +52,7 @@ export async function generateMetadata({ params }) {
   return {
     metadataBase: new URL(base),
     title: {
-      default: `${site.name} ${site.emoji}`,
+      default: `${site.name} — ${tagline}`,
       template: `%s · ${site.name}`,
     },
     description: `${site.name} — an interactive world map of every ${site.mappedNoun}, sourced live from OpenStreetMap.`,

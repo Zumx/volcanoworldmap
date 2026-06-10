@@ -13,7 +13,7 @@
     "language": "Sprache"
   },
   "home": {
-    "tagline": "Eine interaktive Weltkarte",
+    "tagline": "Entdecke {total, number} {noun} weltweit",
     "ctaMap": "Die ganze Karte erkunden",
     "ctaBlog": "Blog lesen",
     "intro": "Jeder hier kartierte Ort stammt live aus OpenStreetMap. Klicke einen Punkt an, um Details, Fotos und Beschreibungen zu sehen.",

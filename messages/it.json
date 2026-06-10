@@ -13,7 +13,7 @@
     "language": "Lingua"
   },
   "home": {
-    "tagline": "Una mappa del mondo interattiva",
+    "tagline": "Scopri {total, number} {noun} in tutto il mondo",
     "ctaMap": "Esplora l'intera mappa",
     "ctaBlog": "Leggi il blog",
     "intro": "Ogni luogo mappato qui sotto proviene in tempo reale da OpenStreetMap. Clicca un punto per vedere dettagli, foto e descrizioni.",

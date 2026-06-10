@@ -139,7 +139,9 @@ export default async function Home({ params }) {
         <div className="hero-brand">
           <span className="hero-emoji">{site.emoji}</span>
           <span className="hero-name">{site.name}</span>
-          <span className="hero-tagline">{t("tagline")}</span>
+          <span className="hero-tagline">
+            {t("tagline", { total, noun: site.mappedNoun })}
+          </span>
         </div>
       </section>
 
