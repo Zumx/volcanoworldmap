@@ -2322,6 +2322,21 @@ a {
   border-color: var(--accent);
   background: var(--primary-light);
 }
+.post-hero {
+  margin: 18px 0 6px;
+}
+.post-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.post-hero figcaption {
+  margin-top: 6px;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 65%, white);
+}
 .author-box {
   display: flex;
   align-items: center;

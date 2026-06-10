@@ -21,6 +21,23 @@ import { pingIndexNow, isFreshlyPublished } from "../../../../lib/indexnow.js";
 // (and future-dated 404s flip to content) without a rebuild.
 export const revalidate = 86400;
 
+// MDX element overrides. External markdown links open in a new tab with
+// rel="noopener"; in-site links (relative hrefs) render unchanged.
+const mdxComponents = {
+  a: ({ href = "", children, ...rest }) => {
+    const external = /^https?:\/\//.test(href);
+    return (
+      <a
+        href={href}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        {...rest}
+      >
+        {children}
+      </a>
+    );
+  },
+};
+
 export async function generateStaticParams() {
   // Union of slugs across all locales (incl. legacy root posts). Combinations
   // where the slug doesn't exist in the requested locale resolve to 404.
@@ -135,6 +152,22 @@ export default async function BlogPost({ params }) {
         </p>
       )}
       <ShareBar url={url} title={headline} />
+      {post.meta.image && (
+        <figure className="post-hero">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.meta.image}
+            alt={post.meta.imageAlt || post.meta.title || slug}
+            width="1200"
+            height="675"
+            fetchPriority="high"
+            decoding="sync"
+          />
+          {post.meta.imageCredit && (
+            <figcaption>{post.meta.imageCredit}</figcaption>
+          )}
+        </figure>
+      )}
       {postCountries.length > 0 && (
         <nav className="post-countries" aria-label={t("exploreHeading")}>
           {postCountries.map((c) => (
@@ -148,7 +181,7 @@ export default async function BlogPost({ params }) {
           ))}
         </nav>
       )}
-      <MDXRemote source={post.content} />
+      <MDXRemote source={post.content} components={mdxComponents} />
       <aside className="author-box">
         <div className="author-avatar" aria-hidden="true">
           {site.emoji}
