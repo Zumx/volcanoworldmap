@@ -31,7 +31,8 @@
     "step3Body": "Un endroit vous plaît ? Accédez directement aux visites, billets et expériences.",
     "latestHeading": "Derniers articles du blog",
     "readMore": "Lire la suite →",
-    "viewAllPosts": "Voir tous les articles →"
+    "viewAllPosts": "Voir tous les articles →",
+    "metaDescription": "Explorez {total, number} {noun} dans {countries, number} pays sur une carte interactive. Trouvez des {noun} près de chez vous, avec photos, détails et guides de voyage."
   },
   "map": {
     "loading": "Chargement de la carte…",

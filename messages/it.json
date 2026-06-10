@@ -31,7 +31,8 @@
     "step3Body": "Trovato un posto che ami? Vai dritto a tour, biglietti ed esperienze.",
     "latestHeading": "Ultimi dal blog",
     "readMore": "Leggi di più →",
-    "viewAllPosts": "Vedi tutti gli articoli →"
+    "viewAllPosts": "Vedi tutti gli articoli →",
+    "metaDescription": "Esplora {total, number} {noun} in {countries, number} paesi su una mappa interattiva. Trova {noun} vicino a te, con foto, dettagli e guide di viaggio."
   },
   "map": {
     "loading": "Caricamento della mappa…",

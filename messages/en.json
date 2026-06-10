@@ -31,7 +31,8 @@
     "step3Body": "Found somewhere you love? Jump straight to tours, tickets and experiences for it.",
     "latestHeading": "Latest from the blog",
     "readMore": "Read more →",
-    "viewAllPosts": "View all posts →"
+    "viewAllPosts": "View all posts →",
+    "metaDescription": "Explore {total, number} {noun} across {countries, number} countries on an interactive map. Find {noun} near you with photos, details and travel guides."
   },
   "map": {
     "loading": "Loading map…",

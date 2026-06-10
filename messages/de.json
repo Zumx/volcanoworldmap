@@ -31,7 +31,8 @@
     "step3Body": "Einen Lieblingsort gefunden? Spring direkt zu Touren, Tickets und Erlebnissen.",
     "latestHeading": "Neues aus dem Blog",
     "readMore": "Weiterlesen →",
-    "viewAllPosts": "Alle Beiträge ansehen →"
+    "viewAllPosts": "Alle Beiträge ansehen →",
+    "metaDescription": "Entdecke {total, number} {noun} in {countries, number} Ländern auf einer interaktiven Karte. Finde {noun} in deiner Nähe – mit Fotos, Details und Reiseguides."
   },
   "map": {
     "loading": "Karte wird geladen …",

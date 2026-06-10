@@ -31,7 +31,8 @@
     "step3Body": "Hittat ett ställe du gillar? Gå direkt till turer, biljetter och upplevelser.",
     "latestHeading": "Senaste från bloggen",
     "readMore": "Läs mer →",
-    "viewAllPosts": "Visa alla inlägg →"
+    "viewAllPosts": "Visa alla inlägg →",
+    "metaDescription": "Utforska {total, number} {noun} i {countries, number} länder på en interaktiv karta. Hitta {noun} nära dig med foton, detaljer och reseguider."
   },
   "map": {
     "loading": "Laddar karta…",

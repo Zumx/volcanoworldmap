@@ -11,6 +11,23 @@ import FeaturedDestinations from "../../components/FeaturedDestinations.js";
 // Vercel maps this to s-maxage=3600 + stale-while-revalidate on the CDN.
 export const revalidate = 3600;
 
+// Home-page meta description: localized and data-driven (live place/country
+// counts). Only `description` is returned so the layout's openGraph/title
+// metadata is inherited rather than clobbered (Next replaces nested keys).
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "home" });
+  const allCountries = await listCountries();
+  const total = allCountries.reduce((s, c) => s + c.count, 0);
+  return {
+    description: t("metaDescription", {
+      total,
+      countries: allCountries.length,
+      noun: site.mappedNoun,
+    }),
+  };
+}
+
 export default async function Home({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
