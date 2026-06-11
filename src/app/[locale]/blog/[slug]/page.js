@@ -14,7 +14,7 @@ import {
   countriesInText,
 } from "../../../../lib/blog.js";
 import { listCountries } from "../../../../lib/data.js";
-import { site, author } from "../../../../lib/site.js";
+import { site, author, jsonLdSafe } from "../../../../lib/site.js";
 import { pingIndexNow, isFreshlyPublished } from "../../../../lib/indexnow.js";
 
 // ISR: regenerate at most once per day so drip-scheduled posts go live
@@ -113,12 +113,21 @@ export default async function BlogPost({ params }) {
     "@type": "Article",
     headline,
     description,
+    ...(post.meta.image ? { image: [post.meta.image] } : {}),
     datePublished: post.meta.date,
     dateModified: post.meta.date,
     author: {
       "@type": "Person",
       name: author.name,
       url: `https://${site.domain}/${locale}/about`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `https://${site.domain}/brandmark.svg`,
+      },
     },
     inLanguage: locale,
     url,
@@ -130,7 +139,7 @@ export default async function BlogPost({ params }) {
       <ReadingProgress />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(jsonLd) }}
       />
       <Breadcrumbs
         locale={locale}

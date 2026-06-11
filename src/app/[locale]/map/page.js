@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "../../../i18n/routing.js";
-import { site } from "../../../lib/site.js";
+import { site, jsonLdSafe } from "../../../lib/site.js";
 import { listCountries } from "../../../lib/data.js";
 import MapClient from "../../../components/MapClient.js";
 
@@ -100,11 +100,11 @@ export default async function MapPage({ params }) {
     <main className="map-page">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(mapLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(mapLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(breadcrumbLd) }}
       />
       <MapClient countries={countryNames} exploreCountries={exploreCountries} />
     </main>

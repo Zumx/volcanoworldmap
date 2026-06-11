@@ -42,6 +42,22 @@ const nextConfig = {
     // Next itself, so we don't (and shouldn't) set it here.
     return [
       {
+        // Baseline security headers on every response. No CSP here yet — a
+        // strict policy needs to allow the GA4 inline script, the inline
+        // critical CSS and the OSM/Wikimedia tile/image hosts, so it's left
+        // for a dedicated pass. These four are safe, no-config hardening.
+        source: "/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(self), browsing-topics=()",
+          },
+        ],
+      },
+      {
         // Map/data artifacts (points.geojson, countries.json, …): refreshed
         // only on the monthly rebuild, so serve from cache for an hour and keep
         // serving the stale copy for a week while it revalidates in the

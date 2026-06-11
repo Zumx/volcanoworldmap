@@ -14,9 +14,6 @@
   },
   "home": {
     "tagline": "Scopri {total, number} {noun} in tutto il mondo",
-    "ctaMap": "Esplora l'intera mappa",
-    "ctaBlog": "Leggi il blog",
-    "intro": "Ogni luogo mappato qui sotto proviene in tempo reale da OpenStreetMap. Clicca un punto per vedere dettagli, foto e descrizioni.",
     "countriesHeading": "Sfoglia per paese",
     "statsCountries": "paesi",
     "popularCountries": "Paesi popolari",
@@ -40,7 +37,6 @@
     "showAll": "Mostra tutti",
     "namedCount": "{count, number} {noun} con nome",
     "allCount": "{count, number} {noun} mappati",
-    "couldNotLoad": "Impossibile caricare i dati",
     "searchPlaceholder": "Cerca per nome o paese…",
     "filters": "Filtri",
     "filterTitle": "Filtra luoghi",
@@ -65,7 +61,6 @@
     "phone": "Telefono",
     "address": "Indirizzo",
     "bookExperience": "Prenota un'esperienza",
-    "loading": "Caricamento dei dettagli…",
     "noDescription": "Nessuna descrizione ancora disponibile.",
     "googleRating": "{rating} ⭐ ({count, number} recensioni Google)",
     "photoVia": "Foto via {source}",
@@ -108,9 +103,7 @@
     "empty": "Nessun articolo ancora.",
     "back": "← Torna al blog",
     "readMore": "Continua a leggere →",
-    "related": "Articoli correlati",
     "readTime": "{min} min di lettura",
-    "featured": "In evidenza",
     "all": "Tutti",
     "prev": "← Più recenti",
     "next": "Meno recenti →",
@@ -299,5 +292,10 @@
     "changeBody": "Per revocare o modificare il consenso, cancella i dati di questo sito nel browser — il banner riapparirà alla prossima visita. Puoi anche bloccare del tutto i cookie nelle impostazioni del browser.",
     "contactTitle": "Contatti",
     "contactBody": "Domande sui cookie? Scrivici a"
+  },
+  "error": {
+    "title": "Qualcosa è andato storto",
+    "body": "Si è verificato un errore imprevisto durante il caricamento della pagina. Riprova oppure torna alla mappa.",
+    "retry": "Riprova"
   }
 }

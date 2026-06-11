@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { site } from "../../../lib/site.js";
+import { site, jsonLdSafe } from "../../../lib/site.js";
 import { routing } from "../../../i18n/routing.js";
 import Breadcrumbs from "../../../components/Breadcrumbs.js";
 
@@ -51,7 +51,7 @@ export default async function FAQ({ params }) {
     <main className="container prose">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(jsonLd) }}
       />
       <Breadcrumbs
         locale={locale}

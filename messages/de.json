@@ -14,9 +14,6 @@
   },
   "home": {
     "tagline": "Entdecke {total, number} {noun} weltweit",
-    "ctaMap": "Die ganze Karte erkunden",
-    "ctaBlog": "Blog lesen",
-    "intro": "Jeder hier kartierte Ort stammt live aus OpenStreetMap. Klicke einen Punkt an, um Details, Fotos und Beschreibungen zu sehen.",
     "countriesHeading": "Nach Land durchsuchen",
     "statsCountries": "Länder",
     "popularCountries": "Beliebte Länder",
@@ -40,7 +37,6 @@
     "showAll": "Alle anzeigen",
     "namedCount": "{count, number} benannte {noun}",
     "allCount": "{count, number} {noun} kartiert",
-    "couldNotLoad": "Daten konnten nicht geladen werden",
     "searchPlaceholder": "Nach Name oder Land suchen…",
     "filters": "Filter",
     "filterTitle": "Orte filtern",
@@ -65,7 +61,6 @@
     "phone": "Telefon",
     "address": "Adresse",
     "bookExperience": "Erlebnis buchen",
-    "loading": "Details werden geladen …",
     "noDescription": "Noch keine Beschreibung verfügbar.",
     "googleRating": "{rating} ⭐ ({count, number} Google-Bewertungen)",
     "photoVia": "Foto via {source}",
@@ -108,9 +103,7 @@
     "empty": "Noch keine Beiträge.",
     "back": "← Zurück zum Blog",
     "readMore": "Weiterlesen →",
-    "related": "Verwandte Beiträge",
     "readTime": "{min} Min. Lesezeit",
-    "featured": "Empfohlen",
     "all": "Alle",
     "prev": "← Neuer",
     "next": "Älter →",
@@ -299,5 +292,10 @@
     "changeBody": "Um deine Einwilligung zu ändern oder zu widerrufen, lösche die Websitedaten dieser Seite in deinem Browser — das Banner erscheint beim nächsten Besuch erneut. Cookies lassen sich außerdem komplett in den Browsereinstellungen blockieren.",
     "contactTitle": "Kontakt",
     "contactBody": "Fragen zu Cookies? Schreib uns an"
+  },
+  "error": {
+    "title": "Etwas ist schiefgelaufen",
+    "body": "Beim Laden dieser Seite ist ein unerwarteter Fehler aufgetreten. Versuche es erneut oder kehre zur Karte zurück.",
+    "retry": "Erneut versuchen"
   }
 }

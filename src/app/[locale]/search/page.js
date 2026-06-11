@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import Breadcrumbs from "../../../components/Breadcrumbs.js";
 import SearchClient from "../../../components/SearchClient.js";
 import { routing } from "../../../i18n/routing.js";
-import { site } from "../../../lib/site.js";
+import { site, jsonLdSafe } from "../../../lib/site.js";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -43,7 +43,7 @@ export default async function SearchPage({ params }) {
     <main className="container search-page">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(jsonLd) }}
       />
       <Breadcrumbs
         locale={locale}

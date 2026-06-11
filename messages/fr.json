@@ -14,9 +14,6 @@
   },
   "home": {
     "tagline": "Découvrez {total, number} {noun} dans le monde entier",
-    "ctaMap": "Explorer la carte complète",
-    "ctaBlog": "Lire le blog",
-    "intro": "Chaque lieu cartographié ci-dessous provient en direct d'OpenStreetMap. Cliquez sur un point pour voir les détails, les photos et les descriptions.",
     "countriesHeading": "Parcourir par pays",
     "statsCountries": "pays",
     "popularCountries": "Pays populaires",
@@ -40,7 +37,6 @@
     "showAll": "Tout afficher",
     "namedCount": "{count, number} {noun} nommés",
     "allCount": "{count, number} {noun} cartographiés",
-    "couldNotLoad": "Impossible de charger les données",
     "searchPlaceholder": "Rechercher par nom ou pays…",
     "filters": "Filtres",
     "filterTitle": "Filtrer les lieux",
@@ -65,7 +61,6 @@
     "phone": "Téléphone",
     "address": "Adresse",
     "bookExperience": "Réserver une expérience",
-    "loading": "Chargement des détails…",
     "noDescription": "Aucune description disponible pour le moment.",
     "googleRating": "{rating} ⭐ ({count, number} avis Google)",
     "photoVia": "Photo via {source}",
@@ -108,9 +103,7 @@
     "empty": "Aucun article pour le moment.",
     "back": "← Retour au blog",
     "readMore": "Lire la suite →",
-    "related": "Articles liés",
     "readTime": "{min} min de lecture",
-    "featured": "À la une",
     "all": "Tous",
     "prev": "← Plus récents",
     "next": "Plus anciens →",
@@ -299,5 +292,10 @@
     "changeBody": "Pour retirer ou modifier votre consentement, effacez les données de ce site dans votre navigateur — le bandeau réapparaîtra lors de votre prochaine visite. Vous pouvez aussi bloquer entièrement les cookies dans les réglages du navigateur.",
     "contactTitle": "Contact",
     "contactBody": "Une question sur les cookies ? Écrivez-nous à"
+  },
+  "error": {
+    "title": "Une erreur s'est produite",
+    "body": "Une erreur inattendue est survenue lors du chargement de cette page. Réessayez ou revenez à la carte.",
+    "retry": "Réessayer"
   }
 }

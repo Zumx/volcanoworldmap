@@ -619,26 +619,8 @@ export default function LocationCard({
               </div>
             )}
 
-            {/* Reviews — intentionally disabled for now. To activate later,
-                remove the disabled note below and uncomment this scaffold:
-
-            {enriched && enriched.reviews && enriched.reviews.length > 0 && (
-              <div className="loc-reviews">
-                <h3>{t("reviewsHeading")}</h3>
-                <ul className="review-list">
-                  {enriched.reviews.map((r, i) => (
-                    <li key={i} className="review">
-                      <div className="review-head">
-                        <span className="review-author">{r.author}</span>
-                        <span className="review-stars">{r.rating} ⭐</span>
-                      </div>
-                      <p className="review-text">{r.text}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            */}
+            {/* Reviews are intentionally disabled for now (no review source
+                wired up); the card shows a short disabled note instead. */}
             <div className="loc-reviews">
               <h3>{t("reviewsHeading")}</h3>
               <p className="disabled-note">{t("reviewsDisabled")}</p>

@@ -14,9 +14,6 @@
   },
   "home": {
     "tagline": "Discover {total, number} {noun} worldwide",
-    "ctaMap": "Explore the full map",
-    "ctaBlog": "Read the blog",
-    "intro": "Every mapped place below is sourced live from OpenStreetMap. Click any point to see details, photos and descriptions.",
     "countriesHeading": "Browse by country",
     "statsCountries": "countries",
     "popularCountries": "Popular countries",
@@ -40,7 +37,6 @@
     "showAll": "Show all",
     "namedCount": "{count, number} named {noun}",
     "allCount": "{count, number} {noun} mapped",
-    "couldNotLoad": "Could not load data",
     "searchPlaceholder": "Search by name or country…",
     "filters": "Filters",
     "filterTitle": "Filter places",
@@ -65,7 +61,6 @@
     "phone": "Phone",
     "address": "Address",
     "bookExperience": "Book an experience",
-    "loading": "Loading details…",
     "noDescription": "No description available yet.",
     "googleRating": "{rating} ⭐ ({count, number} Google reviews)",
     "photoVia": "Photo via {source}",
@@ -108,9 +103,7 @@
     "empty": "No posts yet.",
     "back": "← Back to blog",
     "readMore": "Read more →",
-    "related": "Related posts",
     "readTime": "{min} min read",
-    "featured": "Featured",
     "all": "All",
     "prev": "← Newer",
     "next": "Older →",
@@ -299,5 +292,10 @@
     "changeBody": "To withdraw or change your consent, clear this site's browsing data (cookies and site data) in your browser — the consent banner will appear again on your next visit. You can also block cookies entirely in your browser settings.",
     "contactTitle": "Contact",
     "contactBody": "Questions about cookies? Email us at"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "body": "An unexpected error occurred while loading this page. You can try again, or head back to the map.",
+    "retry": "Try again"
   }
 }

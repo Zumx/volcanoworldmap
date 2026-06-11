@@ -14,9 +14,6 @@
   },
   "home": {
     "tagline": "Upptäck {total, number} {noun} världen över",
-    "ctaMap": "Utforska hela kartan",
-    "ctaBlog": "Läs bloggen",
-    "intro": "Varje kartlagd plats nedan hämtas direkt från OpenStreetMap. Klicka på en punkt för detaljer, foton och beskrivningar.",
     "countriesHeading": "Bläddra efter land",
     "statsCountries": "länder",
     "popularCountries": "Populära länder",
@@ -40,7 +37,6 @@
     "showAll": "Visa alla",
     "namedCount": "{count, number} namngivna {noun}",
     "allCount": "{count, number} {noun} kartlagda",
-    "couldNotLoad": "Kunde inte ladda data",
     "searchPlaceholder": "Sök på namn eller land…",
     "filters": "Filter",
     "filterTitle": "Filtrera platser",
@@ -65,7 +61,6 @@
     "phone": "Telefon",
     "address": "Adress",
     "bookExperience": "Boka en upplevelse",
-    "loading": "Laddar detaljer…",
     "noDescription": "Ingen beskrivning tillgänglig ännu.",
     "googleRating": "{rating} ⭐ ({count, number} Google-recensioner)",
     "photoVia": "Foto via {source}",
@@ -108,9 +103,7 @@
     "empty": "Inga inlägg ännu.",
     "back": "← Tillbaka till bloggen",
     "readMore": "Läs mer →",
-    "related": "Relaterade inlägg",
     "readTime": "{min} min läsning",
-    "featured": "Utvalda",
     "all": "Alla",
     "prev": "← Nyare",
     "next": "Äldre →",
@@ -299,5 +292,10 @@
     "changeBody": "För att ångra eller ändra ditt samtycke, rensa sajtens webbplatsdata i webbläsaren — bannern visas igen vid nästa besök. Du kan också blockera cookies helt i webbläsarens inställningar.",
     "contactTitle": "Kontakt",
     "contactBody": "Frågor om cookies? Mejla oss på"
+  },
+  "error": {
+    "title": "Något gick fel",
+    "body": "Ett oväntat fel inträffade när sidan laddades. Försök igen eller gå tillbaka till kartan.",
+    "retry": "Försök igen"
   }
 }

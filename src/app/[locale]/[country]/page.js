@@ -4,7 +4,7 @@ import { Link } from "../../../i18n/navigation.js";
 import Breadcrumbs from "../../../components/Breadcrumbs.js";
 import CountryMiniMap from "../../../components/CountryMiniMap.js";
 import { routing } from "../../../i18n/routing.js";
-import { site } from "../../../lib/site.js";
+import { site, jsonLdSafe } from "../../../lib/site.js";
 import { listCountries, countryBySlug } from "../../../lib/data.js";
 import { relatedPostsForCountry } from "../../../lib/blog.js";
 
@@ -125,7 +125,7 @@ export default async function CountryPage({ params }) {
     <main className="container prose">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(jsonLd) }}
       />
       <Breadcrumbs
         locale={locale}

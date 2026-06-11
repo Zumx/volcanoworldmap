@@ -5,6 +5,14 @@ import config from "../../site.config.json";
 
 export const site = config;
 
+// Serialize an object for embedding in a <script type="application/ld+json">
+// block. Plain JSON.stringify does NOT escape "<", so a string containing
+// "</script>" (e.g. a world-editable OpenStreetMap place name) could break out
+// of the script tag. Escaping "<" as < is the standard, sufficient guard.
+export function jsonLdSafe(obj) {
+  return JSON.stringify(obj).replace(/</g, "\\u003c");
+}
+
 // The person behind the sites — used by the about page, the blog author box
 // and JSON-LD (Article author, Organization founder). Fleet-wide constant.
 export const author = { name: "Emil Björk" };

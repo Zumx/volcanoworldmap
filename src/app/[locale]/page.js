@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "../../i18n/navigation.js";
-import { site, author } from "../../lib/site.js";
+import { site, author, jsonLdSafe } from "../../lib/site.js";
 import { listCountries, listFeatured } from "../../lib/data.js";
 import { listPosts } from "../../lib/blog.js";
 import MapClient from "../../components/MapClient.js";
@@ -123,15 +123,15 @@ export default async function Home({ params }) {
     <main className="page-fade-in">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(datasetLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(organizationLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(websiteLd) }}
       />
       {/* Compact hero: brand + tagline on a single ≤80px strip. The CTAs
           moved to the navbar and the map now dominates the viewport. */}

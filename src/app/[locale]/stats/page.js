@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "../../../i18n/routing.js";
-import { site } from "../../../lib/site.js";
+import { site, jsonLdSafe } from "../../../lib/site.js";
 import { listCountries, getDataMeta } from "../../../lib/data.js";
 import { listPosts } from "../../../lib/blog.js";
 import { continentOf, CONTINENTS } from "../../../lib/geo.js";
@@ -120,7 +120,7 @@ export default async function Stats({ params }) {
     <main className="container prose stats">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(datasetLd) }}
       />
       <Breadcrumbs
         locale={locale}

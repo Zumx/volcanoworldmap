@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "../../../../i18n/navigation.js";
 import Breadcrumbs from "../../../../components/Breadcrumbs.js";
 import { routing } from "../../../../i18n/routing.js";
-import { site } from "../../../../lib/site.js";
+import { site, jsonLdSafe } from "../../../../lib/site.js";
 import { listCountries, countryBySlug } from "../../../../lib/data.js";
 import ExploreMap from "../../../../components/ExploreMap.js";
 
@@ -115,7 +115,7 @@ export default async function ExploreCountry({ params }) {
     <main className="container prose explore">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(jsonLd) }}
       />
       <Breadcrumbs
         locale={locale}

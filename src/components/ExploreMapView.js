@@ -9,6 +9,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import dynamic from "next/dynamic";
 import { site } from "../lib/site.js";
+import { fetchWithTimeout } from "../lib/net.js";
 
 // LocationCard is only pulled in the first time a pin is clicked (same as the
 // full map).
@@ -125,11 +126,11 @@ export default function ExploreMapView({ country }) {
     };
 
     let cancelled = false;
-    fetch("/data/points.core.geojson")
+    fetchWithTimeout("/data/points.core.geojson")
       .then((r) =>
         r.ok
           ? r.json()
-          : fetch("/data/points.geojson").then((r2) => r2.json())
+          : fetchWithTimeout("/data/points.geojson").then((r2) => r2.json())
       )
       .then((g) => {
         if (cancelled) return;
@@ -137,7 +138,7 @@ export default function ExploreMapView({ country }) {
         setReady(true);
         // Background: pull the rest payload and append this country's extras
         // without re-framing the (already fitted) view.
-        return fetch("/data/points.rest.geojson")
+        return fetchWithTimeout("/data/points.rest.geojson")
           .then((r) => (r.ok ? r.json() : null))
           .then((rest) => {
             if (cancelled || !rest) return;
