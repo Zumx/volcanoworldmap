@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import ReactDOM from "react-dom";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Link } from "../../../../i18n/navigation.js";
@@ -83,6 +84,13 @@ export default async function BlogPost({ params }) {
   const nav = await getTranslations("nav");
   const post = await getPost(locale, slug);
   if (!post) notFound();
+
+  // The hero image (when present) is the post's LCP element. Emit a high-priority
+  // <link rel="preload"> into <head> so the browser starts fetching it before it
+  // has parsed/hydrated the body — paired with fetchPriority="high" on the <img>.
+  if (post.meta.image) {
+    ReactDOM.preload(post.meta.image, { as: "image", fetchPriority: "high" });
+  }
 
   const related = await relatedPosts(locale, slug, 3);
   // Internal links to the country guides for any country named in the post

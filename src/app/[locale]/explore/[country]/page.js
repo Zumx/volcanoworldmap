@@ -139,7 +139,7 @@ export default async function ExploreCountry({ params }) {
 
       <section>
         <h2>{t("mapHeading", { country: data.name })}</h2>
-        <ExploreMap country={data.name} locale={locale} />
+        <ExploreMap country={data.name} countrySlug={country} locale={locale} />
       </section>
 
       {top.length > 0 && (

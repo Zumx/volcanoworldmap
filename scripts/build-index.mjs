@@ -29,6 +29,7 @@ import {
   existsSync,
   statSync,
   readdirSync,
+  rmSync,
 } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -95,6 +96,83 @@ export function writeCountryIndex(features, dataDir) {
   return list;
 }
 
+// ---- Nearest-country fallback (coastal / offshore geocoding) ----
+// Many niches (reefs, lighthouses, dive sites) sit just offshore, so a strict
+// point-in-polygon test against the Natural Earth land polygons leaves a large
+// share of points with no country. These helpers assign such a point to the
+// nearest country's coastline when it lies within `maxKm` of it — turning an
+// offshore lighthouse 3 km off the coast into "France" instead of null.
+//
+// Pure functions (no I/O): they operate on the prepared country array that
+// fetch-data.mjs / geocode-offshore.mjs build from the Natural Earth data:
+//   [{ name, bbox: [minX, minY, maxX, maxY], feature }]  (feature = GeoJSON)
+const EARTH_R_KM = 6371;
+const DEG2KM = (Math.PI / 180) * EARTH_R_KM; // ~111.19 km per degree
+
+// Distance (km) from point P to the lon/lat segment A–B, using a local
+// equirectangular projection (longitude scaled by cos(lat)). Accurate enough at
+// the sub-100 km scales we care about here.
+function segDistKm(plon, plat, alon, alat, blon, blat) {
+  const cosLat = Math.cos((plat * Math.PI) / 180);
+  const ax = (alon - plon) * cosLat,
+    ay = alat - plat;
+  const bx = (blon - plon) * cosLat,
+    by = blat - plat;
+  const dx = bx - ax,
+    dy = by - ay;
+  const len2 = dx * dx + dy * dy;
+  let t = len2 > 0 ? -(ax * dx + ay * dy) / len2 : 0;
+  t = t < 0 ? 0 : t > 1 ? 1 : t;
+  const cx = ax + t * dx,
+    cy = ay + t * dy;
+  return Math.hypot(cx, cy) * DEG2KM;
+}
+
+// Minimum distance (km) from a point to a country's polygon boundary. Walks
+// every ring of the Polygon/MultiPolygon. Returns early once within `bestStop`.
+function minDistToCountryKm(feature, lon, lat, bestSoFar) {
+  let best = bestSoFar;
+  const rings = (poly) => {
+    for (const ring of poly) {
+      for (let i = 1; i < ring.length; i++) {
+        const a = ring[i - 1],
+          b = ring[i];
+        const d = segDistKm(lon, lat, a[0], a[1], b[0], b[1]);
+        if (d < best) best = d;
+        if (best < 1) return; // close enough — stop scanning this country
+      }
+    }
+  };
+  const g = feature.geometry;
+  if (!g) return best;
+  if (g.type === "Polygon") rings(g.coordinates);
+  else if (g.type === "MultiPolygon") for (const poly of g.coordinates) rings(poly);
+  return best;
+}
+
+export function nearestCountryWithin(countries, lon, lat, maxKm = 100) {
+  const padDeg = maxKm / 111 + 0.0001; // bbox slack so coastal points qualify
+  let bestName = null;
+  let bestDist = maxKm;
+  for (const c of countries) {
+    const [minX, minY, maxX, maxY] = c.bbox;
+    // Cheap bbox reject: skip countries that can't possibly be within maxKm.
+    if (
+      lon < minX - padDeg ||
+      lon > maxX + padDeg ||
+      lat < minY - padDeg ||
+      lat > maxY + padDeg
+    )
+      continue;
+    const d = minDistToCountryKm(c.feature, lon, lat, bestDist);
+    if (d < bestDist) {
+      bestDist = d;
+      bestName = c.name;
+    }
+  }
+  return bestName;
+}
+
 const DEFAULT_INITIAL_CAP = 8000;
 
 // site.config.json "initialCap" (positive number) or the default. Read at
@@ -142,11 +220,167 @@ export function writeSplit(features, dataDir, cap) {
   return { core: core.length, rest: rest.length };
 }
 
+// Per-country map payloads for the /explore landing pages. Each landing page
+// only ever shows ONE country, so shipping the whole (multi-MB) points.geojson
+// to it is wasteful. Here we pre-split the dataset into one small file per
+// top-`topN` country — public/data/explore/<country-slug>.geojson — holding
+// just that country's features. ExploreMapView fetches its own country's file
+// and falls back to the core split only if the file is missing (older deploys).
+//
+// `topN` mirrors the explore route's TOP_N (only the best-covered countries get
+// a landing page), so we never write files no page will request. The directory
+// is cleared first so a shrinking dataset can't leave stale country files.
+export function writeExploreByCountry(features, list, dataDir, topN = 20) {
+  const dir = join(dataDir, "explore");
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  // list is sorted by count desc → the first topN are the landing-page countries.
+  const wanted = new Map(); // country name -> slug
+  for (const e of list.slice(0, topN)) wanted.set(e.name, e.slug);
+  if (!wanted.size) return { countries: 0, features: 0 };
+  const buckets = new Map(); // slug -> features[]
+  for (const f of features) {
+    const c = f.properties && f.properties.country;
+    if (!c) continue;
+    const slug = wanted.get(c);
+    if (!slug) continue;
+    let b = buckets.get(slug);
+    if (!b) buckets.set(slug, (b = []));
+    b.push(f);
+  }
+  let total = 0;
+  for (const [slug, feats] of buckets) {
+    writeFileSync(
+      join(dir, `${slug}.geojson`),
+      JSON.stringify({ type: "FeatureCollection", features: feats })
+    );
+    total += feats.length;
+  }
+  return { countries: buckets.size, features: total };
+}
+
+// ---- Build-time image resolution for the home-page featured cards ----
+// Historically each FeaturedDestinations card ran the client-side enrichLocation
+// lookup on mount (a Wikipedia + Wikimedia round-trip per card), which delayed
+// the hero imagery and hurt LCP. We now resolve the image URL once at build time
+// and bake it into featured.json, so the card can render the <img> immediately.
+// All calls are best-effort with a hard timeout; a miss just leaves the card to
+// fall back to its client-side lookup (unchanged behaviour for that card).
+const FEATURED_LANG = "en"; // home page featured cards are resolved in English
+const IMG_MAX_GEO_KM = 50; // reject Wikipedia hits farther than this from the pin
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// JSON GET with a hard timeout and polite retry on rate limiting. Wikipedia /
+// Wikimedia throttle aggressively (HTTP 429) when a build resolves several
+// images in quick succession, so we honour Retry-After / back off exponentially
+// rather than silently giving up (which would leave the card image-less).
+async function fetchJSON(url, ms = 8000, retries = 3) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ms);
+    try {
+      const res = await fetch(url, {
+        headers: { Accept: "application/json", "User-Agent": "worldmap-build/1.0 (zumxet@gmail.com)" },
+        signal: controller.signal,
+      });
+      if ((res.status === 429 || res.status === 503) && attempt < retries) {
+        const ra = Number(res.headers.get("retry-after"));
+        await sleep(Number.isFinite(ra) && ra > 0 ? ra * 1000 : 1000 * 2 ** attempt);
+        continue;
+      }
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      if (attempt < retries) {
+        await sleep(500 * 2 ** attempt);
+        continue;
+      }
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  return null;
+}
+
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const toRad = (d) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+
+// Geo-verified Wikipedia lead image: search "<name> <country>", walk the top
+// hits and return the first article that sits within IMG_MAX_GEO_KM of the pin
+// (so a generic name can't pull an unrelated subject's photo).
+async function wikiFeaturedImage(name, country, lat, lon) {
+  const query = country ? `${name} ${country}` : name;
+  const searchUrl =
+    `https://${FEATURED_LANG}.wikipedia.org/w/rest.php/v1/search/page` +
+    `?q=${encodeURIComponent(query)}&limit=5`;
+  const sJson = await fetchJSON(searchUrl);
+  const pages = (sJson && sJson.pages) || [];
+  for (const page of pages.slice(0, 5)) {
+    const sumUrl =
+      `https://${FEATURED_LANG}.wikipedia.org/api/rest_v1/page/summary/` +
+      encodeURIComponent(page.key || page.title);
+    const j = await fetchJSON(sumUrl);
+    if (!j || j.type === "disambiguation") continue;
+    const coord = j.coordinates;
+    if (!coord || typeof coord.lat !== "number" || typeof coord.lon !== "number")
+      continue;
+    if (
+      Number.isFinite(lat) &&
+      Number.isFinite(lon) &&
+      haversineKm(lat, lon, coord.lat, coord.lon) > IMG_MAX_GEO_KM
+    )
+      continue;
+    const img =
+      (j.originalimage && j.originalimage.source) ||
+      (j.thumbnail && j.thumbnail.source) ||
+      null;
+    if (img) return img;
+  }
+  return null;
+}
+
+// Location-safe fallback: nearest Wikimedia Commons photo by coordinates.
+async function commonsFeaturedImage(lat, lon) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  const url =
+    "https://commons.wikimedia.org/w/api.php?origin=*&format=json" +
+    "&action=query&generator=geosearch&ggsnamespace=6&ggslimit=1" +
+    `&ggscoord=${lat}|${lon}&ggsradius=2000` +
+    "&prop=imageinfo&iiprop=url&iiurlwidth=1024";
+  const j = await fetchJSON(url);
+  const pages = j && j.query && j.query.pages;
+  if (!pages) return null;
+  const first = Object.values(pages)[0];
+  const info = first && first.imageinfo && first.imageinfo[0];
+  return info ? info.thumburl || info.url || null : null;
+}
+
+async function resolveFeaturedImage(item) {
+  try {
+    const wiki = await wikiFeaturedImage(item.name, item.country, item.lat, item.lon);
+    if (wiki) return wiki;
+    return await commonsFeaturedImage(item.lat, item.lon);
+  } catch {
+    return null;
+  }
+}
+
 // Six diverse "featured destinations" for the home page — one per country,
 // preferring places that carry a website (a decent proxy for a notable,
-// well-documented place likely to have a Wikipedia/Wikimedia photo). Only
-// name/country/coords are stored; the home page enriches the image
-// client-side via the same path the LocationCard uses.
+// well-documented place likely to have a Wikipedia/Wikimedia photo). The hero
+// image URL is resolved at build time (resolveFeaturedImage) and baked into
+// each item so the home page can paint it immediately — see writeFeatured. The
+// client still falls back to its own lookup for any item that resolved no image.
 export function buildFeatured(features, n = 6) {
   const round = (v) => Math.round(v * 1e5) / 1e5;
   const out = [];
@@ -170,9 +404,17 @@ export function buildFeatured(features, n = 6) {
   return out;
 }
 
-export function writeFeatured(features, dataDir, n = 6) {
+export async function writeFeatured(features, dataDir, n = 6) {
   mkdirSync(dataDir, { recursive: true });
   const featured = buildFeatured(features, n);
+  // Resolve each card's hero image at build time. Done serially (not in
+  // parallel) to stay under Wikipedia/Wikimedia rate limits — there are only a
+  // handful of cards, so the extra wall-clock is negligible and the hit rate is
+  // far higher than firing all requests at once.
+  for (const it of featured) {
+    const img = await resolveFeaturedImage(it);
+    if (img) it.image = img;
+  }
   writeFileSync(join(dataDir, "featured.json"), JSON.stringify(featured));
   return featured;
 }
@@ -300,8 +542,9 @@ export function writeBlogIndex(root, dataDir) {
   return { locales: Object.keys(index).length, posts: total };
 }
 
-// CLI: derive the index from an existing points.geojson.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+// CLI: derive the index from an existing points.geojson. Guard on argv[1] so
+// importing this module (e.g. from fetch-data.mjs) never runs the CLI block.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const __dirname = dirname(fileURLToPath(import.meta.url));
   const root = join(__dirname, "..");
   const dataDir = join(root, "public", "data");
@@ -321,17 +564,22 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   } else {
     const { features = [] } = JSON.parse(readFileSync(geo, "utf8"));
     const list = writeCountryIndex(features, dataDir);
-    const featured = writeFeatured(features, dataDir);
+    const featured = await writeFeatured(features, dataDir);
     writeMeta(features, dataDir, geo);
     const cap = readInitialCap(root);
     const { core, rest } = writeSplit(features, dataDir, cap);
+    const explore = writeExploreByCountry(features, list, dataDir);
     const blog = writeBlogIndex(root, dataDir);
-    console.log(`Featured destinations: ${featured.length}.`);
+    const withImg = featured.filter((f) => f.image).length;
+    console.log(`Featured destinations: ${featured.length} (${withImg} with image).`);
     console.log(
       `Country index: ${list.length} countries from ${features.length} features.`
     );
     console.log(
       `Map split (cap ${cap}): core ${core} + rest ${rest} features.`
+    );
+    console.log(
+      `Explore per-country: ${explore.countries} files, ${explore.features} features.`
     );
     console.log(
       `Blog index: ${blog.posts} posts across ${blog.locales} locales.`

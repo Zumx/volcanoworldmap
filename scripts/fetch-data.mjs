@@ -11,7 +11,18 @@ import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
-import { writeCountryIndex, writeSplit, readInitialCap } from "./build-index.mjs";
+import {
+  writeCountryIndex,
+  writeSplit,
+  writeExploreByCountry,
+  readInitialCap,
+  nearestCountryWithin,
+} from "./build-index.mjs";
+
+// Offshore points (reefs, lighthouses, dive sites) fall outside every land
+// polygon, so after the strict point-in-polygon test we assign any still-
+// untagged point to the nearest country's coastline within this many km.
+const COAST_MAX_KM = 100;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -371,8 +382,9 @@ async function main() {
     const out = join(ROOT, "public", "data", "points.geojson");
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, JSON.stringify({ type: "FeatureCollection", features }));
-    writeCountryIndex(features, join(ROOT, "public", "data"));
+    const obList = writeCountryIndex(features, join(ROOT, "public", "data"));
     writeSplit(features, join(ROOT, "public", "data"), readInitialCap(ROOT));
+    writeExploreByCountry(features, obList, join(ROOT, "public", "data"));
     const withCountry = features.filter((f) => f.properties.country).length;
     console.log(
       `\nWrote ${features.length} features (${withCountry} country-tagged) -> ${out}`
@@ -424,7 +436,10 @@ async function main() {
         },
         properties: {
           name,
-          country: countries.length ? countryFor(countries, lon, lat) : null,
+          country: countries.length
+            ? countryFor(countries, lon, lat) ||
+              nearestCountryWithin(countries, lon, lat, COAST_MAX_KM)
+            : null,
           website: t.website || t["contact:website"] || null,
           opening_hours: t.opening_hours || null,
           capacity: t.capacity || null,
@@ -459,8 +474,9 @@ async function main() {
     out,
     JSON.stringify({ type: "FeatureCollection", features: deduped })
   );
-  writeCountryIndex(deduped, join(ROOT, "public", "data"));
+  const opList = writeCountryIndex(deduped, join(ROOT, "public", "data"));
   writeSplit(deduped, join(ROOT, "public", "data"), readInitialCap(ROOT));
+  writeExploreByCountry(deduped, opList, join(ROOT, "public", "data"));
   const withCountry = deduped.filter((f) => f.properties.country).length;
   console.log(
     `\nWrote ${deduped.length} features (${withCountry} country-tagged) -> ${out}`

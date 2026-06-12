@@ -18,11 +18,12 @@ const LocationCard = dynamic(() => import("./LocationCard.js"), { ssr: false });
 const CLUSTER_COLOR = site.colors.primary;
 
 // A compact, interactive map for a single country on its /explore page. Fetches
-// the same prebuilt point payloads the full map uses, keeps only the features
-// in this country, and clusters them with identical settings. Clicking a pin
-// opens the shared LocationCard. The core file paints first; the rest file is
-// fetched in the background and appended so the country is eventually complete.
-export default function ExploreMapView({ country }) {
+// a tiny per-country payload prebuilt for the best-covered countries
+// (/data/explore/<slug>.geojson — just this country's features), so the page no
+// longer downloads the whole multi-MB dataset. Older deploys (or countries
+// outside the prebuilt top-N) fall back to the shared core/rest split, filtered
+// to this country client-side. Clicking a pin opens the shared LocationCard.
+export default function ExploreMapView({ country, countrySlug }) {
   const t = useTranslations("map");
   const locale = useLocale();
   const containerRef = useRef(null);
@@ -126,29 +127,51 @@ export default function ExploreMapView({ country }) {
     };
 
     let cancelled = false;
-    fetchWithTimeout("/data/points.core.geojson")
-      .then((r) =>
-        r.ok
-          ? r.json()
-          : fetchWithTimeout("/data/points.geojson").then((r2) => r2.json())
-      )
-      .then((g) => {
-        if (cancelled) return;
-        addFeatures(inCountry(g), true);
-        setReady(true);
-        // Background: pull the rest payload and append this country's extras
-        // without re-framing the (already fitted) view.
-        return fetchWithTimeout("/data/points.rest.geojson")
-          .then((r) => (r.ok ? r.json() : null))
-          .then((rest) => {
-            if (cancelled || !rest) return;
-            addFeatures(inCountry(rest), false);
-          })
-          .catch(() => {});
-      })
-      .catch(() => {
-        if (!cancelled) setReady(true);
-      });
+
+    // Fallback path for older deploys / countries without a prebuilt file:
+    // fetch the shared core/rest split and filter to this country client-side.
+    const loadFromSplit = () =>
+      fetchWithTimeout("/data/points.core.geojson")
+        .then((r) =>
+          r.ok
+            ? r.json()
+            : fetchWithTimeout("/data/points.geojson").then((r2) => r2.json())
+        )
+        .then((g) => {
+          if (cancelled) return;
+          addFeatures(inCountry(g), true);
+          setReady(true);
+          // Background: pull the rest payload and append this country's extras
+          // without re-framing the (already fitted) view.
+          return fetchWithTimeout("/data/points.rest.geojson")
+            .then((r) => (r.ok ? r.json() : null))
+            .then((rest) => {
+              if (cancelled || !rest) return;
+              addFeatures(inCountry(rest), false);
+            })
+            .catch(() => {});
+        })
+        .catch(() => {
+          if (!cancelled) setReady(true);
+        });
+
+    // Fast path: the per-country file is already just this country's features,
+    // so there's nothing to filter and no second request to make.
+    if (countrySlug) {
+      fetchWithTimeout(`/data/explore/${countrySlug}.geojson`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((g) => {
+          if (cancelled) return;
+          if (!g) return loadFromSplit();
+          addFeatures(g.features || [], true);
+          setReady(true);
+        })
+        .catch(() => {
+          if (!cancelled) loadFromSplit();
+        });
+    } else {
+      loadFromSplit();
+    }
 
     return () => {
       cancelled = true;

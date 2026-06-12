@@ -11,14 +11,17 @@ function mapHref(name, country) {
   return `/map?${q.toString()}`;
 }
 
-function FeaturedCard({ item, locale }) {
-  const [img, setImg] = useState(null);
-  const [loaded, setLoaded] = useState(false);
+function FeaturedCard({ item, locale, eager = false }) {
+  // The image URL is normally resolved at build time and shipped in
+  // featured.json (item.image) — render it immediately for a fast LCP. Only
+  // when the build-time lookup found nothing do we fall back to the same lazy
+  // client-side enrichment the LocationCard uses.
+  const [img, setImg] = useState(item.image || null);
+  const [loaded, setLoaded] = useState(!!item.image);
   const initial = (item.name.match(/[A-Za-z0-9]/) || ["•"])[0].toUpperCase();
 
-  // Same lazy Wikipedia/Wikimedia lookup the LocationCard uses, run once per
-  // card on mount. Best-effort: no image just leaves the styled initial.
   useEffect(() => {
+    if (item.image) return; // already resolved at build time — nothing to fetch
     let alive = true;
     enrichLocation({
       name: item.name,
@@ -47,8 +50,11 @@ function FeaturedCard({ item, locale }) {
             alt={item.name}
             width="400"
             height="300"
-            loading="lazy"
-            decoding="async"
+            // First card is above the fold (LCP candidate when it carries a
+            // build-time image); the rest stay lazy.
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager ? "high" : "auto"}
+            decoding={eager ? "sync" : "async"}
           />
         ) : (
           <span
@@ -72,7 +78,7 @@ export default function FeaturedDestinations({ items, locale }) {
   return (
     <div className="featured-grid">
       {items.map((it, i) => (
-        <FeaturedCard key={i} item={it} locale={locale} />
+        <FeaturedCard key={i} item={it} locale={locale} eager={i === 0} />
       ))}
     </div>
   );
