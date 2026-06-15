@@ -2,6 +2,7 @@
 // (C:\dev\_gen\generate.mjs) overwrites site.config.json; nothing else
 // in the template needs to change between sites.
 import config from "../../site.config.json";
+import { getContrastColor } from "./contrast.js";
 
 export const site = config;
 
@@ -18,10 +19,15 @@ export function jsonLdSafe(obj) {
 export const author = { name: "Emil Björk" };
 
 // primary + accent are author-provided; darker/lighter shades are derived
-// at render time with CSS color-mix (see globals.css).
+// at render time with CSS color-mix (see globals.css). --accent-contrast is the
+// legible text/icon color (near-black or white) for anything painted ON the
+// accent — the navbar "Map" pill, the hero band, accent CTAs. Computed once
+// per site so light accents (gold/pale yellow) get dark text instead of the
+// old hard-coded white.
 export const cssVars = {
   "--primary": config.colors.primary,
   "--accent": config.colors.accent,
+  "--accent-contrast": getContrastColor(config.colors.accent),
 };
 
 export function metaFieldsFor(properties) {

@@ -43,7 +43,7 @@ export async function generateMetadata({ params }) {
   const t = await getTranslations({ locale, namespace: "home" });
   const countries = await listCountries();
   const total = countries.reduce((s, c) => s + (c.count || 0), 0);
-  const tagline = t("tagline", { total, noun: site.mappedNoun });
+  const tagline = t("tagline", { total, noun: t("itemNoun") });
   // hreflang for each locale + x-default to the default locale's URL.
   const languages = Object.fromEntries(
     routing.locales.map((l) => [l, `/${l}`])

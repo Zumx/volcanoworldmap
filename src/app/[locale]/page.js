@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
     description: t("metaDescription", {
       total,
       countries: allCountries.length,
-      noun: site.mappedNoun,
+      noun: t("itemNoun"),
     }),
   };
 }
@@ -133,26 +133,31 @@ export default async function Home({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdSafe(websiteLd) }}
       />
-      {/* Compact hero: brand + tagline on a single ≤80px strip. The CTAs
-          moved to the navbar and the map now dominates the viewport. */}
+      {/* Compact hero: the live stat headline + localized tagline on a ≤80px
+          strip painted in the site accent. The wordmark lives only in the
+          navbar; text color is derived from the accent for legibility. */}
       <section className="hero">
-        <div className="hero-brand">
-          <span className="hero-emoji">{site.emoji}</span>
-          <span className="hero-name">{site.name}</span>
-          <span className="hero-tagline">
-            {t("tagline", { total, noun: site.mappedNoun })}
-          </span>
-        </div>
+        <h1 className="hero-title">
+          {t("heroTitle", {
+            total,
+            noun: t("itemNoun"),
+            countries: allCountries.length,
+          })}
+        </h1>
+        <p className="hero-tagline">
+          {t("tagline", { total, noun: t("itemNoun") })}
+        </p>
       </section>
 
       <div className="home-map">
         <MapClient embedded />
         <div className="home-stats" aria-hidden="false">
           <span className="stat">
-            <strong>{total.toLocaleString()}</strong> {site.mappedNoun}
+            <strong>{total.toLocaleString(locale)}</strong> {t("itemNoun")}
           </span>
           <span className="stat">
-            <strong>{allCountries.length}</strong> {t("statsCountries")}
+            <strong>{allCountries.length.toLocaleString(locale)}</strong>{" "}
+            {t("statsCountries")}
           </span>
         </div>
       </div>
@@ -202,7 +207,7 @@ export default async function Home({ params }) {
               >
                 <span className="tc-name">{c.name}</span>
                 <span className="tc-count">
-                  {c.count.toLocaleString()} {site.mappedNoun}
+                  {c.count.toLocaleString(locale)} {t("itemNoun")}
                 </span>
               </Link>
             ))}
@@ -251,7 +256,7 @@ export default async function Home({ params }) {
               <Link key={c.slug} href={`/${c.slug}`}>
                 <span className="c-name">{c.name}</span>
                 <span className="c-count">
-                  {c.count.toLocaleString()} {site.mappedNoun}
+                  {c.count.toLocaleString(locale)} {t("itemNoun")}
                 </span>
               </Link>
             ))}

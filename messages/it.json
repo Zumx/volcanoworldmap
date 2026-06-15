@@ -29,7 +29,9 @@
     "latestHeading": "Ultimi dal blog",
     "readMore": "Leggi di più →",
     "viewAllPosts": "Vedi tutti gli articoli →",
-    "metaDescription": "Esplora {total, number} {noun} in {countries, number} paesi su una mappa interattiva. Trova {noun} vicino a te, con foto, dettagli e guide di viaggio."
+    "metaDescription": "Esplora {total, number} {noun} in {countries, number} paesi su una mappa interattiva. Trova {noun} vicino a te, con foto, dettagli e guide di viaggio.",
+    "itemNoun": "vulcani",
+    "heroTitle": "{total, number} {noun} in {countries, number} paesi"
   },
   "map": {
     "loading": "Caricamento della mappa…",

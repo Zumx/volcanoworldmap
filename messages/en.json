@@ -29,7 +29,9 @@
     "latestHeading": "Latest from the blog",
     "readMore": "Read more →",
     "viewAllPosts": "View all posts →",
-    "metaDescription": "Explore {total, number} {noun} across {countries, number} countries on an interactive map. Find {noun} near you with photos, details and travel guides."
+    "metaDescription": "Explore {total, number} {noun} across {countries, number} countries on an interactive map. Find {noun} near you with photos, details and travel guides.",
+    "itemNoun": "volcanoes",
+    "heroTitle": "{total, number} {noun} in {countries, number} countries"
   },
   "map": {
     "loading": "Loading map…",

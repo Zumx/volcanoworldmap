@@ -340,6 +340,20 @@ a {
   margin: 28px 0 10px;
   color: var(--primary-dark);
 }
+/* Home-page section headings carry `prose` directly on the <h2> (e.g.
+   <h2 className="prose">Så funkar det</h2>), so the descendant `.prose h2`
+   rule above never matched them — they fell back to the UA default and, with
+   the global `*{margin:0}` reset + tight box, the ring on a Swedish "å" got
+   clipped at the top while English headings (no tall diacritics) looked fine.
+   Give them the intended look plus a comfortable line-height and a little top
+   room so diacritics are never clipped. */
+h2.prose {
+  font-size: 24px;
+  line-height: 1.3;
+  padding-top: 2px;
+  margin: 0 0 8px;
+  color: var(--primary-dark);
+}
 .prose p {
   margin: 12px 0;
 }
@@ -347,42 +361,38 @@ a {
   margin: 12px 0 12px 22px;
 }
 
-/* ---- Hero (compact strip: brand + tagline on one row, ≤80px) ---- */
+/* ---- Hero (compact strip: stat headline + tagline, ≤80px) ----
+   Painted in the site accent, so the text color is derived from the accent
+   (--accent-contrast) rather than hard-coded white — light accents (gold,
+   pale yellow/blue) would otherwise be illegible. The wordmark lives only in
+   the navbar; the hero leads with the live stat headline instead. */
 .hero {
   display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 0 14px;
-  background: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--grad-end) 100%
-  );
-  color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  background: var(--accent);
+  color: var(--accent-contrast);
   padding: 0 24px;
   height: 64px;
   min-height: 56px;
   max-height: 80px;
   overflow: hidden;
 }
-.hero-brand {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  min-width: 0;
-}
-.hero-emoji {
-  font-size: 22px;
-  line-height: 1;
-}
-.hero-name {
-  font-size: clamp(18px, 2.4vw, 24px);
+.hero-title {
+  margin: 0;
+  font-size: clamp(16px, 2.3vw, 21px);
   font-weight: 800;
+  line-height: 1.15;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .hero-tagline {
-  font-size: 14px;
-  opacity: 0.85;
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -402,7 +412,7 @@ a {
 }
 .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 .btn-ghost {
   border-color: rgba(255, 255, 255, 0.7);
@@ -434,18 +444,25 @@ a {
   pointer-events: none;
 }
 .home-stats .stat {
+  display: flex;
+  flex-direction: column;
   background: var(--surface-glass);
   border-left: 4px solid var(--primary);
   border-radius: 8px;
   padding: 6px 12px;
-  font-size: 13px;
-  line-height: 1.2;
+  font-size: 12px;
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--text) 70%, white);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
+/* Value stacked above the label, larger and in tabular figures so the digits
+   line up regardless of locale grouping (e.g. "4 162" on /sv). */
 .home-stats .stat strong {
   display: block;
   font-size: 18px;
+  font-weight: 800;
   color: var(--primary-dark);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---- Mobile hamburger + drawer ---- */
@@ -1139,7 +1156,7 @@ a {
   height: 48px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 26px;
   font-weight: 800;
   margin-bottom: 10px;
@@ -1267,7 +1284,7 @@ a {
 }
 .map-toggle:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 /* ---- Map filters (button + slide-out panel) ---- */
@@ -1291,7 +1308,7 @@ a {
 .map-filter-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 .map-filter-btn.is-active {
   background: var(--primary);
@@ -1415,7 +1432,7 @@ a {
 }
 .map-filter-clear:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 @media (max-width: 640px) {
   /* The search bar spans the top on mobile, so the filter trigger drops to a
@@ -1747,6 +1764,7 @@ a {
 }
 .loc-iconbtn:hover {
   background: var(--accent);
+  color: var(--accent-contrast);
   transform: translateY(-1px);
 }
 .loc-copied {
@@ -2077,7 +2095,7 @@ a {
   text-align: center;
   padding: 14px 18px;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-weight: 700;
   font-size: 15px;
   text-decoration: none;
@@ -2639,7 +2657,7 @@ a {
   height: 30px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-weight: 800;
   font-size: 14px;
   display: flex;
@@ -2923,7 +2941,7 @@ a {
 .map-filter-explore:hover {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 /* ============================================================

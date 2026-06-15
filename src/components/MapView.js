@@ -149,9 +149,11 @@ export default function MapView({
       /* matchMedia unavailable — stay on the initial basemap */
     }
 
-    // Scale bar (metric + imperial), bottom-left.
+    // Scale bar (metric + imperial), bottom-right — keeps the bottom-left
+    // corner clear for the home-page stat badges and the top-left for the
+    // map overlay/zoom controls.
     L.control
-      .scale({ position: "bottomleft", imperial: true, metric: true })
+      .scale({ position: "bottomright", imperial: true, metric: true })
       .addTo(map);
 
     // ---- Locate-me + fullscreen, stacked under the zoom control ----

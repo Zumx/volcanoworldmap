@@ -29,7 +29,9 @@
     "latestHeading": "Senaste från bloggen",
     "readMore": "Läs mer →",
     "viewAllPosts": "Visa alla inlägg →",
-    "metaDescription": "Utforska {total, number} {noun} i {countries, number} länder på en interaktiv karta. Hitta {noun} nära dig med foton, detaljer och reseguider."
+    "metaDescription": "Utforska {total, number} {noun} i {countries, number} länder på en interaktiv karta. Hitta {noun} nära dig med foton, detaljer och reseguider.",
+    "itemNoun": "vulkaner",
+    "heroTitle": "{total, number} {noun} i {countries, number} länder"
   },
   "map": {
     "loading": "Laddar karta…",

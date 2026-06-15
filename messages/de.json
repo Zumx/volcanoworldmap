@@ -29,7 +29,9 @@
     "latestHeading": "Neues aus dem Blog",
     "readMore": "Weiterlesen →",
     "viewAllPosts": "Alle Beiträge ansehen →",
-    "metaDescription": "Entdecke {total, number} {noun} in {countries, number} Ländern auf einer interaktiven Karte. Finde {noun} in deiner Nähe – mit Fotos, Details und Reiseguides."
+    "metaDescription": "Entdecke {total, number} {noun} in {countries, number} Ländern auf einer interaktiven Karte. Finde {noun} in deiner Nähe – mit Fotos, Details und Reiseguides.",
+    "itemNoun": "Vulkane",
+    "heroTitle": "{total, number} {noun} in {countries, number} Ländern"
   },
   "map": {
     "loading": "Karte wird geladen …",
