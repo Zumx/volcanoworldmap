@@ -169,7 +169,7 @@ export default async function Home({ params }) {
       </p>
 
       {/* How it works — Explore → Discover → Book */}
-      <section className="container how-it-works">
+      <section className="container how-it-works" id="how-it-works">
         <h2 className="prose">{t("howHeading")}</h2>
         <p className="section-sub">{t("howSub")}</p>
         <ol className="how-steps">

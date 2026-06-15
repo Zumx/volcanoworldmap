@@ -99,6 +99,14 @@ html,
 body {
   height: 100%;
 }
+/* The header is sticky (position:sticky; top:0), so any in-page scroll target —
+   anchor links AND scrollIntoView() — must reserve the header's height, or the
+   target's top (e.g. the ring on "å" in "Så funkar det") lands UNDER the
+   opaque header and reads as clipped. scroll-padding on the scroll container is
+   the correct, free-scroll-safe fix (a line-height tweak never addressed this). */
+html {
+  scroll-padding-top: calc(var(--header-h) + 14px);
+}
 body {
   /* Inter via next/font (self-hosted, preloaded, size-adjusted) with the
      system stack as the zero-cost fallback before/if the font is unavailable. */
@@ -1680,12 +1688,17 @@ h2.prose {
 }
 
 /* ---- LocationCard: modern slide-in panel / bottom sheet ---- */
+/* Anchored to the map, not the viewport: `absolute` inside the map wrapper
+   (.home-map / .map-page, both position:relative) so the drawer spans exactly
+   the map's height and hugs its LEFT edge — never a free-floating centered
+   column. (position:fixed previously made it viewport-relative, which on the
+   embedded home map read as a panel floating mid-page.) */
 .loc-backdrop {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 2000;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   background: rgba(15, 18, 25, 0);
   backdrop-filter: blur(0);
   transition: background 0.28s ease, backdrop-filter 0.28s ease;
@@ -1701,20 +1714,29 @@ h2.prose {
   --card-text: #1a1d24;
   --card-muted: #5b6472;
   --card-border: #e6e8ec;
-  --card-shadow: -16px 0 50px rgba(10, 15, 30, 0.28);
+  /* Shadow falls to the RIGHT now that the drawer is pinned to the left edge. */
+  --card-shadow: 16px 0 50px rgba(10, 15, 30, 0.28);
 
   position: relative;
-  width: min(440px, 100vw);
+  width: min(400px, 100%);
   height: 100%;
   display: flex;
   flex-direction: column;
   background: var(--card-bg);
   color: var(--card-text);
   box-shadow: var(--card-shadow);
-  transform: translateX(100%);
+  transform: translateX(-100%);
   /* Spring-like entrance/exit: a gentle overshoot as the panel settles. */
   transition: transform 0.46s cubic-bezier(0.34, 1.4, 0.5, 1);
   will-change: transform;
+}
+/* The dialog root is focused programmatically on open for screen-reader/keyboard
+   users; it is not an interactive control, so suppress the global accent focus
+   ring that otherwise drew loose accent lines around the panel edges. Focus
+   inside the panel (buttons/links) still shows its own ring. */
+.loc-panel:focus,
+.loc-panel:focus-visible {
+  outline: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .loc-panel {
@@ -2165,7 +2187,7 @@ h2.prose {
     --card-text: #eef1f5;
     --card-muted: #9aa4b2;
     --card-border: #2a2f3a;
-    --card-shadow: -16px 0 50px rgba(0, 0, 0, 0.5);
+    --card-shadow: 16px 0 50px rgba(0, 0, 0, 0.5);
   }
   .loc-cta-bar {
     box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
@@ -2634,6 +2656,11 @@ h2.prose {
 }
 
 /* ---- Home: How it works ---- */
+/* Explicit scroll-margin so this section (and its heading) clears the sticky
+   header when linked/scrolled to, independent of the global scroll-padding. */
+.how-it-works {
+  scroll-margin-top: calc(var(--header-h) + 14px);
+}
 .how-steps {
   list-style: none;
   display: grid;
