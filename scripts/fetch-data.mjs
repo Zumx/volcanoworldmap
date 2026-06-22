@@ -7,7 +7,13 @@
 //
 // Run: node scripts/fetch-data.mjs   (writes the file only at the very end)
 
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import {
+  writeFileSync,
+  mkdirSync,
+  existsSync,
+  readFileSync,
+  renameSync,
+} from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
@@ -157,7 +163,18 @@ async function fetchTile(s, w, n, e) {
         continue;
       }
       if (!res.ok) throw new Error("HTTP " + res.status);
-      return (await res.json()).elements || [];
+      const json = await res.json();
+      // Overpass signals a server-side timeout / runtime error with HTTP 200,
+      // an empty `elements` array, and a `remark` field. Without this check a
+      // timed-out heavy tile (e.g. Japan's castle density) looks identical to a
+      // genuinely empty region and is silently dropped. Treat it as a failure.
+      const remark = json.remark || "";
+      if (/timed out|runtime error|out of memory/i.test(remark)) {
+        console.log(`  remark: ${remark.slice(0, 90)} -> retry`);
+        await sleep(8000 + attempt * 4000);
+        continue;
+      }
+      return json.elements || [];
     } catch (err) {
       console.log(`  retry (${attempt + 1}) ${endpoint}: ${err.message}`);
       await sleep(5000 + attempt * 3000);
@@ -374,6 +391,80 @@ async function fetchOpenBreweryDb() {
   return features;
 }
 
+// Set FRESH=1 to bypass the non-destructive merge for a periodic clean
+// rebuild (the only way an object deleted upstream in OSM leaves our data).
+const FRESH = process.env.FRESH === "1";
+
+// Write JSON atomically: serialise to a sibling .tmp, parse it back to confirm
+// it is well-formed, then rename(2) over the target (atomic on one filesystem).
+// A crash or a flaky run can therefore never leave a half-written or truncated
+// points.geojson where a good one used to be.
+function atomicWriteJSON(path, data) {
+  const tmp = path + ".tmp";
+  writeFileSync(tmp, JSON.stringify(data));
+  JSON.parse(readFileSync(tmp, "utf8")); // validate round-trip before the swap
+  renameSync(tmp, path);
+}
+
+// Merge identity — OSM type+id, NEVER coordinates. The same OSM object keeps
+// one key across runs even if its geometry was nudged or recomputed.
+function osmKey(f) {
+  const p = f.properties || {};
+  return p.osmId != null ? `${p.osmType}/${p.osmId}` : null;
+}
+
+function loadExistingFeatures(path) {
+  if (!existsSync(path)) return [];
+  try {
+    const g = JSON.parse(readFileSync(path, "utf8"));
+    return Array.isArray(g.features) ? g.features : [];
+  } catch {
+    return [];
+  }
+}
+
+// Non-destructive union keyed on OSM identity. The features already on disk are
+// the floor: a flaky/empty/partial tile yields no fresh features for its region,
+// so those previously-collected features simply carry over and are NEVER
+// dropped. Fresh data wins on conflicts, but any field null/absent in the fresh
+// copy is backfilled from the existing one so prior enrichment (rating,
+// reviewCount, geocoded country) survives. Features lacking an OSM id are kept
+// under synthetic keys so nothing is ever lost.
+function mergeByOsmId(existing, fresh) {
+  const byKey = new Map();
+  let synth = 0;
+  for (const f of existing) byKey.set(osmKey(f) || `__exist/${synth++}`, f);
+  const existingCount = byKey.size;
+  let added = 0;
+  let updated = 0;
+  for (const f of fresh) {
+    const k = osmKey(f);
+    if (!k) {
+      byKey.set(`__fresh/${synth++}`, f);
+      added++;
+      continue;
+    }
+    const prev = byKey.get(k);
+    if (!prev) {
+      byKey.set(k, f);
+      added++;
+      continue;
+    }
+    const props = { ...f.properties };
+    for (const [pk, pv] of Object.entries(prev.properties || {})) {
+      if (props[pk] == null && pv != null) props[pk] = pv;
+    }
+    byKey.set(k, { ...f, properties: props });
+    updated++;
+  }
+  return {
+    merged: [...byKey.values()],
+    added,
+    updated,
+    carried: existingCount - updated,
+  };
+}
+
 async function main() {
   if (DATA_SOURCE.type === "openbrewerydb") {
     console.log("Source: OpenBreweryDB (paginated REST)");
@@ -381,7 +472,10 @@ async function main() {
     await enrichGoogle(features);
     const out = join(ROOT, "public", "data", "points.geojson");
     mkdirSync(dirname(out), { recursive: true });
-    writeFileSync(out, JSON.stringify({ type: "FeatureCollection", features }));
+    // OpenBreweryDB returns the full dataset deterministically (no flaky tiles),
+    // so no merge is needed — but still write atomically to avoid leaving a
+    // truncated file behind on a crash.
+    atomicWriteJSON(out, { type: "FeatureCollection", features });
     const obList = writeCountryIndex(features, join(ROOT, "public", "data"));
     writeSplit(features, join(ROOT, "public", "data"), readInitialCap(ROOT));
     writeExploreByCountry(features, obList, join(ROOT, "public", "data"));
@@ -466,20 +560,40 @@ async function main() {
       `Proximity dedupe (${DEDUPE_M}m): ${features.length} -> ${deduped.length}`
     );
 
-  await enrichGoogle(deduped);
-
   const out = join(ROOT, "public", "data", "points.geojson");
+
+  // Non-destructive merge: fold this run's features into whatever is already on
+  // disk, keyed on OSM id, so a flaky Overpass run (timed-out or silently-empty
+  // tiles) can only ADD, never wipe, previously-collected data.
+  let finalFeatures = deduped;
+  if (FRESH) {
+    console.log("FRESH=1: skipping merge — full rebuild (prunes OSM-deleted objects).");
+  } else {
+    const existing = loadExistingFeatures(out);
+    if (existing.length) {
+      const { merged, added, updated, carried } = mergeByOsmId(existing, deduped);
+      console.log(
+        `Merge (osmId, non-destructive): existing ${existing.length} + fresh ${deduped.length} -> ${merged.length} (added ${added}, updated ${updated}, carried ${carried})`
+      );
+      if (merged.length < existing.length) {
+        throw new Error(
+          `merge regression (${merged.length} < existing ${existing.length}); refusing to write`
+        );
+      }
+      finalFeatures = merged;
+    }
+  }
+
+  await enrichGoogle(finalFeatures);
+
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(
-    out,
-    JSON.stringify({ type: "FeatureCollection", features: deduped })
-  );
-  const opList = writeCountryIndex(deduped, join(ROOT, "public", "data"));
-  writeSplit(deduped, join(ROOT, "public", "data"), readInitialCap(ROOT));
-  writeExploreByCountry(deduped, opList, join(ROOT, "public", "data"));
-  const withCountry = deduped.filter((f) => f.properties.country).length;
+  atomicWriteJSON(out, { type: "FeatureCollection", features: finalFeatures });
+  const opList = writeCountryIndex(finalFeatures, join(ROOT, "public", "data"));
+  writeSplit(finalFeatures, join(ROOT, "public", "data"), readInitialCap(ROOT));
+  writeExploreByCountry(finalFeatures, opList, join(ROOT, "public", "data"));
+  const withCountry = finalFeatures.filter((f) => f.properties.country).length;
   console.log(
-    `\nWrote ${deduped.length} features (${withCountry} country-tagged) -> ${out}`
+    `\nWrote ${finalFeatures.length} features (${withCountry} country-tagged) -> ${out}`
   );
 }
 
