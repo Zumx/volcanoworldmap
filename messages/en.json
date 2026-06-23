@@ -83,7 +83,11 @@
     "categoriesHeading": "Categories",
     "ctaStay": "Find accommodation nearby",
     "ctaTour": "Book a tour",
-    "ctaGear": "Find gear & guides"
+    "ctaGear": "Find gear & guides",
+    "operator": "Operated by",
+    "wheelchair": "Wheelchair access",
+    "wheelchairYes": "Accessible",
+    "wheelchairLimited": "Limited access"
   },
   "country": {
     "heading": "{noun} in {country}",

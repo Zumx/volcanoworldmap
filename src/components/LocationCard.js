@@ -257,6 +257,14 @@ export default function LocationCard({
       Number.isFinite(eleNum) ? `${Math.round(eleNum)} m` : String(p.ele),
     ]);
   }
+  if (p.operator) rows.push([t("operator"), p.operator]);
+  const wheelchairMap = {
+    yes: t("wheelchairYes"),
+    designated: t("wheelchairYes"),
+    limited: t("wheelchairLimited"),
+  };
+  const wheelchairLabel = p.wheelchair && wheelchairMap[p.wheelchair];
+  if (wheelchairLabel) rows.push([t("wheelchair"), wheelchairLabel]);
 
   const image = enriched && enriched.image;
   // Gallery: the enriched image list (primary + nearby Commons photos), or a
@@ -499,6 +507,10 @@ export default function LocationCard({
             ) : enriched && enriched.extract ? (
               <div className="loc-extract-box">
                 <p>{enriched.extract}</p>
+              </div>
+            ) : p.description ? (
+              <div className="loc-extract-box">
+                <p>{p.description}</p>
               </div>
             ) : (
               <div className="loc-extract-box loc-extract-box--empty">

@@ -71,6 +71,14 @@ function passesInclude(tags, name) {
   }
   return true;
 }
+// Optional geographic scope: array of {latMin,latMax,lonMin,lonMax} boxes.
+// When set, only tiles overlapping at least one box are fetched — prevents a
+// global Overpass sweep from overwriting a deliberately-scoped dataset.
+const REGIONS = Array.isArray(site.regions) && site.regions.length ? site.regions : null;
+function tileInRegion(s, w, n, e) {
+  if (!REGIONS) return true;
+  return REGIONS.some((r) => s < r.latMax && n > r.latMin && w < r.lonMax && e > r.lonMin);
+}
 // Pluggable data source: "overpass" (default) or "openbrewerydb".
 const DATA_SOURCE = site.dataSource || { type: "overpass" };
 const GP = site.googlePlaces || {};
@@ -408,9 +416,21 @@ function atomicWriteJSON(path, data) {
 
 // Merge identity — OSM type+id, NEVER coordinates. The same OSM object keeps
 // one key across runs even if its geometry was nudged or recomputed.
+// Recognises two id formats:
+//   • New (Overpass): osmType="node", osmId=12345  → "node/12345"
+//   • Legacy (OpenBeta): id="n12345"               → "node/12345"
+// Both normalise to the same key so cross-format merges deduplicate correctly.
 function osmKey(f) {
   const p = f.properties || {};
-  return p.osmId != null ? `${p.osmType}/${p.osmId}` : null;
+  if (p.osmId != null) return `${p.osmType}/${p.osmId}`;
+  if (typeof p.id === "string") {
+    const m = p.id.match(/^([nwr])(\d+)$/);
+    if (m) {
+      const type = m[1] === "n" ? "node" : m[1] === "w" ? "way" : "relation";
+      return `${type}/${m[2]}`;
+    }
+  }
+  return null;
 }
 
 function loadExistingFeatures(path) {
@@ -493,13 +513,10 @@ async function main() {
   const features = [];
   const tiles = [];
   for (let lat = LAT_MIN; lat < LAT_MAX; lat += TILE)
-    for (let lon = LON_MIN; lon < LON_MAX; lon += TILE)
-      tiles.push([
-        lat,
-        lon,
-        Math.min(lat + TILE, LAT_MAX),
-        Math.min(lon + TILE, LON_MAX),
-      ]);
+    for (let lon = LON_MIN; lon < LON_MAX; lon += TILE) {
+      const [s, w, n, e] = [lat, lon, Math.min(lat + TILE, LAT_MAX), Math.min(lon + TILE, LON_MAX)];
+      if (tileInRegion(s, w, n, e)) tiles.push([s, w, n, e]);
+    }
 
   const filterDesc = FILTERS.map((f) => `${f.key}=${f.value}`).join(" + ");
   console.log(
@@ -543,6 +560,11 @@ async function main() {
           // when present — shown in the LocationCard. resolveMeta() may also map
           // it into a site-specific field; the card de-duplicates.
           ele: t.ele || null,
+          operator: t.operator || null,
+          wikipedia: t.wikipedia || null,
+          wikidata: t.wikidata || null,
+          description: t.description || null,
+          wheelchair: t.wheelchair || null,
           osmType: el.type,
           osmId: el.id,
           ...resolveMeta(t),

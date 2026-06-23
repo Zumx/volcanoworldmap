@@ -83,7 +83,11 @@
     "categoriesHeading": "Kategorien",
     "ctaStay": "Unterkunft in der Nähe finden",
     "ctaTour": "Tour buchen",
-    "ctaGear": "Ausrüstung & Guides finden"
+    "ctaGear": "Ausrüstung & Guides finden",
+    "operator": "Betreiber",
+    "wheelchair": "Rollstuhlzugang",
+    "wheelchairYes": "Zugänglich",
+    "wheelchairLimited": "Eingeschränkt zugänglich"
   },
   "country": {
     "heading": "{noun} in {country}",

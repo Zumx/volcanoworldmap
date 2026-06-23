@@ -83,7 +83,11 @@
     "categoriesHeading": "Kategorier",
     "ctaStay": "Hitta boende i närheten",
     "ctaTour": "Boka en rundtur",
-    "ctaGear": "Hitta utrustning & guider"
+    "ctaGear": "Hitta utrustning & guider",
+    "operator": "Drivs av",
+    "wheelchair": "Rullstolsåtkomst",
+    "wheelchairYes": "Tillgänglig",
+    "wheelchairLimited": "Begränsad åtkomst"
   },
   "country": {
     "heading": "{noun} i {country}",
