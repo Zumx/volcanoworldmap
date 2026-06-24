@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "../i18n/navigation.js";
-import { site } from "../lib/site.js";
+import { site, author } from "../lib/site.js";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -26,7 +26,7 @@ export default function Footer() {
           <Link href="/blog">{nav("blog")}</Link>
           <Link href="/about">{nav("about")}</Link>
           <Link href="/faq">{nav("faq")}</Link>
-          {email && <a href={`mailto:${email}`}>{t("contact")}</a>}
+          <Link href="/contact">{nav("contact")}</Link>
           {email && (
             <a
               href={`mailto:${email}?subject=${encodeURIComponent(
@@ -47,6 +47,7 @@ export default function Footer() {
       </nav>
 
       <div className="footer-bottom">
+        <p className="footer-byline">{t("byline", { author: author.name })}</p>
         <p>
           © {year} {site.name} ·{" "}
           <a

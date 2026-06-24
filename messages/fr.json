@@ -10,7 +10,8 @@
     "stats": "Statistiques",
     "skipToContent": "Aller au contenu",
     "search": "Recherche",
-    "language": "Langue"
+    "language": "Langue",
+    "contact": "Contact"
   },
   "home": {
     "tagline": "Découvrez {total, number} {noun} dans le monde entier",
@@ -160,7 +161,8 @@
     "privacy": "Politique de confidentialité",
     "terms": "Conditions d’utilisation",
     "affiliateDisclosure": "Information sur l’affiliation",
-    "cookiePolicy": "Politique de cookies"
+    "cookiePolicy": "Politique de cookies",
+    "byline": "Un site du portfolio WorldMap · maintenu par {author}"
   },
   "notFound": {
     "title": "Page introuvable",
@@ -285,7 +287,9 @@
     "p1": "{name} contient des liens d’affiliation — par exemple des liens vers des partenaires de réservation et d’activités, affichés à côté des lieux sur la carte.",
     "p2": "Si vous réservez ou achetez via l’un de ces liens, nous pouvons percevoir une petite commission. Cela ne vous coûte rien de plus — le prix est le même que si vous alliez directement chez le partenaire.",
     "p3": "Les partenariats d’affiliation n’influencent ni les lieux affichés sur la carte ni leur présentation. Les données proviennent d’OpenStreetMap et sont indépendantes de tout partenaire.",
-    "contactBody": "Une question sur cette page ? Écrivez-nous à"
+    "contactBody": "Une question sur cette page ? Écrivez-nous à",
+    "osmTitle": "À propos des données cartographiques",
+    "osmBody": "Les lieux affichés sur cette carte proviennent d'OpenStreetMap, une base de données ouverte tenue à jour par la communauté. Les données peuvent être incomplètes, périmées ou parfois erronées, et nous ne pouvons en garantir l'exactitude. Vérifiez toujours les informations essentielles — horaires, accès et sécurité — auprès d'une source officielle avant de vous y fier."
   },
   "cookiePolicy": {
     "heading": "Politique de cookies",
@@ -303,5 +307,18 @@
     "title": "Une erreur s'est produite",
     "body": "Une erreur inattendue est survenue lors du chargement de cette page. Réessayez ou revenez à la carte.",
     "retry": "Réessayer"
+  },
+  "contact": {
+    "heading": "Contact",
+    "intro": "Une question, un retour ou une idée de partenariat à propos de {name} ? Nous serons ravis de vous lire — l'e-mail est le meilleur moyen de nous joindre.",
+    "emailTitle": "Écrivez-nous",
+    "emailBody": "Pour tout ce qui concerne le site lui-même — un retour, une correction sur une page, ou une demande presse ou partenariat — envoyez-nous un e-mail et nous vous répondrons.",
+    "responseBody": "Le site est géré par une petite équipe indépendante ; une réponse peut donc prendre quelques jours. Merci de votre patience.",
+    "dataTitle": "Corriger les données de la carte",
+    "dataBody": "Un {noun} mal placé, avec des informations périmées, ou totalement absent ? Les données vivent dans OpenStreetMap, pas sur nos serveurs : le plus rapide est d'y laisser une courte note — un contributeur local la vérifie et la correction revient sur cette carte à la prochaine mise à jour mensuelle.",
+    "dataCta": "Laisser une note sur OpenStreetMap →",
+    "faqTitle": "Avant d'écrire",
+    "faqBody": "Beaucoup de questions courantes trouvent déjà leur réponse sur notre",
+    "faqCta": "page FAQ →"
   }
 }

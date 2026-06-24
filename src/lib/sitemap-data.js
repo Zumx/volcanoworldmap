@@ -20,6 +20,7 @@ const SECTIONS = [
   { path: "stats", changefreq: "weekly", priority: 0.5 },
   { path: "faq", changefreq: "yearly", priority: 0.4 },
   { path: "about", changefreq: "yearly", priority: 0.4 },
+  { path: "contact", changefreq: "yearly", priority: 0.3 },
   { path: "privacy", changefreq: "yearly", priority: 0.2 },
   { path: "terms", changefreq: "yearly", priority: 0.2 },
   { path: "affiliate-disclosure", changefreq: "yearly", priority: 0.2 },

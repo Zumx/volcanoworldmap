@@ -4,7 +4,7 @@ import { routing } from "../../../i18n/routing.js";
 import Breadcrumbs from "../../../components/Breadcrumbs.js";
 
 // Bump when the disclosure text in messages/*.json changes.
-const LAST_UPDATED = "2026-06-10";
+const LAST_UPDATED = "2026-06-24";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -37,6 +37,10 @@ export default async function AffiliateDisclosure({ params }) {
       <p>{t("p1", { name: site.name })}</p>
       <p>{t("p2")}</p>
       <p>{t("p3")}</p>
+
+      <h2>{t("osmTitle")}</h2>
+      <p>{t("osmBody")}</p>
+
       <p>
         {t("contactBody")}{" "}
         {site.contactEmail && (

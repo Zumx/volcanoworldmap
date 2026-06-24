@@ -10,7 +10,8 @@
     "stats": "Statistiche",
     "skipToContent": "Vai al contenuto",
     "search": "Cerca",
-    "language": "Lingua"
+    "language": "Lingua",
+    "contact": "Contatti"
   },
   "home": {
     "tagline": "Scopri {total, number} {noun} in tutto il mondo",
@@ -160,7 +161,8 @@
     "privacy": "Informativa sulla privacy",
     "terms": "Termini di utilizzo",
     "affiliateDisclosure": "Informativa sull’affiliazione",
-    "cookiePolicy": "Politica sui cookie"
+    "cookiePolicy": "Politica sui cookie",
+    "byline": "Un sito del portfolio WorldMap · gestito da {author}"
   },
   "notFound": {
     "title": "Pagina non trovata",
@@ -285,7 +287,9 @@
     "p1": "{name} contiene link di affiliazione — ad esempio link a partner di prenotazione ed esperienze mostrati accanto ai luoghi sulla mappa.",
     "p2": "Se prenoti o acquisti tramite uno di questi link, potremmo ricevere una piccola commissione. Per te non cambia nulla — il prezzo è lo stesso che andando direttamente dal partner.",
     "p3": "Le partnership di affiliazione non influenzano quali luoghi compaiono sulla mappa né come vengono presentati. I dati provengono da OpenStreetMap e sono indipendenti da qualsiasi partner.",
-    "contactBody": "Domande su questa informativa? Scrivici a"
+    "contactBody": "Domande su questa informativa? Scrivici a",
+    "osmTitle": "Sui dati della mappa",
+    "osmBody": "I luoghi mostrati su questa mappa provengono da OpenStreetMap, un database aperto gestito dalla comunità. I dati possono essere incompleti, non aggiornati o talvolta errati, e non possiamo garantirne l'accuratezza. Verifica sempre le informazioni essenziali — orari, accesso e sicurezza — presso una fonte ufficiale prima di farvi affidamento."
   },
   "cookiePolicy": {
     "heading": "Politica sui cookie",
@@ -303,5 +307,18 @@
     "title": "Qualcosa è andato storto",
     "body": "Si è verificato un errore imprevisto durante il caricamento della pagina. Riprova oppure torna alla mappa.",
     "retry": "Riprova"
+  },
+  "contact": {
+    "heading": "Contatti",
+    "intro": "Hai una domanda, un suggerimento o un'idea di collaborazione su {name}? Ci fa piacere sentirti — l'e-mail è il modo migliore per raggiungerci.",
+    "emailTitle": "Scrivici",
+    "emailBody": "Per qualsiasi cosa riguardi il sito stesso — un commento, una correzione a una pagina, o una richiesta stampa o di partnership — inviaci un'e-mail e ti risponderemo.",
+    "responseBody": "Il sito è gestito da un piccolo team indipendente, quindi una risposta può richiedere qualche giorno. Grazie per la pazienza.",
+    "dataTitle": "Correggere i dati della mappa",
+    "dataBody": "Hai trovato un {noun} nel posto sbagliato, con dettagli non aggiornati o del tutto mancante? I dati risiedono in OpenStreetMap, non sui nostri server: il modo più rapido è una breve nota lì — un mappatore locale la verifica e la correzione torna su questa mappa al prossimo aggiornamento mensile.",
+    "dataCta": "Lascia una nota su OpenStreetMap →",
+    "faqTitle": "Prima di scrivere",
+    "faqBody": "Molte domande comuni trovano già risposta nella nostra",
+    "faqCta": "pagina FAQ →"
   }
 }

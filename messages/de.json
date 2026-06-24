@@ -10,7 +10,8 @@
     "stats": "Statistik",
     "skipToContent": "Zum Inhalt springen",
     "search": "Suche",
-    "language": "Sprache"
+    "language": "Sprache",
+    "contact": "Kontakt"
   },
   "home": {
     "tagline": "Entdecke {total, number} {noun} weltweit",
@@ -160,7 +161,8 @@
     "privacy": "Datenschutzerklärung",
     "terms": "Nutzungsbedingungen",
     "affiliateDisclosure": "Affiliate-Hinweis",
-    "cookiePolicy": "Cookie-Richtlinie"
+    "cookiePolicy": "Cookie-Richtlinie",
+    "byline": "Eine Website des WorldMap-Portfolios · betreut von {author}"
   },
   "notFound": {
     "title": "Seite nicht gefunden",
@@ -285,7 +287,9 @@
     "p1": "{name} enthält Affiliate-Links — zum Beispiel Links zu Buchungs- und Erlebnispartnern, die neben Orten auf der Karte angezeigt werden.",
     "p2": "Wenn du über einen dieser Links etwas buchst oder kaufst, erhalten wir unter Umständen eine kleine Provision. Für dich entstehen dabei keine Mehrkosten — der Preis ist derselbe wie beim direkten Besuch des Partners.",
     "p3": "Affiliate-Partnerschaften haben keinen Einfluss darauf, welche Orte auf der Karte erscheinen oder wie sie dargestellt werden. Die Kartendaten stammen aus OpenStreetMap und sind von Partnern unabhängig.",
-    "contactBody": "Fragen zu diesem Hinweis? Schreib uns an"
+    "contactBody": "Fragen zu diesem Hinweis? Schreib uns an",
+    "osmTitle": "Über die Kartendaten",
+    "osmBody": "Die auf dieser Karte gezeigten Orte stammen aus OpenStreetMap, einer von der Community gepflegten offenen Datenbank. Die Daten können unvollständig, veraltet oder gelegentlich falsch sein, und wir können ihre Richtigkeit nicht garantieren. Prüfe wichtige Angaben — Öffnungszeiten, Zugang und Sicherheit — immer bei einer offiziellen Quelle, bevor du dich darauf verlässt."
   },
   "cookiePolicy": {
     "heading": "Cookie-Richtlinie",
@@ -303,5 +307,18 @@
     "title": "Etwas ist schiefgelaufen",
     "body": "Beim Laden dieser Seite ist ein unerwarteter Fehler aufgetreten. Versuche es erneut oder kehre zur Karte zurück.",
     "retry": "Erneut versuchen"
+  },
+  "contact": {
+    "heading": "Kontakt",
+    "intro": "Hast du eine Frage, eine Rückmeldung oder eine Idee für eine Zusammenarbeit zu {name}? Wir freuen uns, von dir zu hören — am besten per E-Mail.",
+    "emailTitle": "Schreib uns",
+    "emailBody": "Für alles rund um die Website selbst — Feedback, eine Korrektur auf einer Seite oder eine Presse- oder Partneranfrage — schreib uns eine E-Mail, wir melden uns zurück.",
+    "responseBody": "Die Website wird von einem kleinen, unabhängigen Team betrieben, daher kann eine Antwort ein paar Tage dauern. Danke für deine Geduld.",
+    "dataTitle": "Kartendaten korrigieren",
+    "dataBody": "Ein {noun} am falschen Ort, mit veralteten Angaben oder ganz fehlend? Die Daten liegen in OpenStreetMap, nicht auf unseren Servern — am schnellsten geht es mit einer kurzen Notiz dort: Ein lokaler Mapper prüft sie, und die Korrektur fließt beim nächsten monatlichen Update in diese Karte zurück.",
+    "dataCta": "Hinterlasse eine Notiz auf OpenStreetMap →",
+    "faqTitle": "Bevor du schreibst",
+    "faqBody": "Viele häufige Fragen beantwortet bereits unsere",
+    "faqCta": "FAQ-Seite →"
   }
 }

@@ -37,7 +37,10 @@
       "label": "Type"
     }
   ],
-  "aboutText": null,
+  "aboutText": [
+    "Volcano World Map charts the volcanoes of the world — active cones, dormant giants and long-extinct craters — making one of the planet's most dramatic features browsable in a single layer.",
+    "Each volcano comes from OpenStreetMap's `natural=volcano` tag, mapped from geological and survey data. Active volcanoes can be hazardous and access is often restricted, so always follow official warnings before approaching one."
+  ],
   "locales": [
     "en",
     "de",

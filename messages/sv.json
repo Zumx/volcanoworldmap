@@ -10,7 +10,8 @@
     "stats": "Statistik",
     "skipToContent": "Hoppa till innehåll",
     "search": "Sök",
-    "language": "Språk"
+    "language": "Språk",
+    "contact": "Kontakt"
   },
   "home": {
     "tagline": "Upptäck {total, number} {noun} världen över",
@@ -160,7 +161,8 @@
     "privacy": "Integritetspolicy",
     "terms": "Användarvillkor",
     "affiliateDisclosure": "Affiliate-information",
-    "cookiePolicy": "Cookiepolicy"
+    "cookiePolicy": "Cookiepolicy",
+    "byline": "En sajt i WorldMap-portföljen · underhålls av {author}"
   },
   "notFound": {
     "title": "Sidan hittades inte",
@@ -285,7 +287,9 @@
     "p1": "{name} innehåller affiliatelänkar — till exempel länkar till boknings- och upplevelsepartners som visas intill platser på kartan.",
     "p2": "Om du bokar eller köper något via en sådan länk kan vi få en liten provision. Det kostar aldrig dig något extra — priset är detsamma som om du gått direkt till partnern.",
     "p3": "Affiliate-samarbeten påverkar inte vilka platser som visas på kartan eller hur de presenteras. Kartdatan kommer från OpenStreetMap och är oberoende av alla partners.",
-    "contactBody": "Frågor om detta? Mejla oss på"
+    "contactBody": "Frågor om detta? Mejla oss på",
+    "osmTitle": "Om kartdatan",
+    "osmBody": "Platserna på den här kartan kommer från OpenStreetMap, en öppen databas som underhålls av community. Datan kan vara ofullständig, inaktuell eller ibland felaktig, och vi kan inte garantera att den stämmer. Kontrollera alltid viktiga uppgifter — öppettider, tillgänglighet och säkerhet — hos en officiell källa innan du förlitar dig på dem."
   },
   "cookiePolicy": {
     "heading": "Cookiepolicy",
@@ -303,5 +307,18 @@
     "title": "Något gick fel",
     "body": "Ett oväntat fel inträffade när sidan laddades. Försök igen eller gå tillbaka till kartan.",
     "retry": "Försök igen"
+  },
+  "contact": {
+    "heading": "Kontakt",
+    "intro": "Har du en fråga, feedback eller en idé om samarbete kring {name}? Vi hör gärna från dig — e-post är bästa sättet att nå oss.",
+    "emailTitle": "Mejla oss",
+    "emailBody": "För allt som rör själva sajten — feedback, en rättelse på en sida, eller en press- eller samarbetsförfrågan — skicka ett mejl så återkommer vi.",
+    "responseBody": "Sajten drivs av ett litet, oberoende team, så ett svar kan dröja några dagar. Tack för ditt tålamod.",
+    "dataTitle": "Rätta kartdata",
+    "dataBody": "Hittade du ett {noun} på fel plats, med inaktuella uppgifter, eller som saknas helt? Datan finns i OpenStreetMap, inte på våra servrar — snabbast är en kort notis där: en lokal kartläggare granskar den och rättelsen flödar tillbaka till den här kartan vid nästa månatliga uppdatering.",
+    "dataCta": "Lämna en notis på OpenStreetMap →",
+    "faqTitle": "Innan du skriver",
+    "faqBody": "Många vanliga frågor besvaras redan på vår",
+    "faqCta": "FAQ-sida →"
   }
 }

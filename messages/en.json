@@ -10,7 +10,8 @@
     "stats": "Statistics",
     "skipToContent": "Skip to content",
     "search": "Search",
-    "language": "Language"
+    "language": "Language",
+    "contact": "Contact"
   },
   "home": {
     "tagline": "Discover {total, number} {noun} worldwide",
@@ -160,7 +161,8 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
     "affiliateDisclosure": "Affiliate Disclosure",
-    "cookiePolicy": "Cookie Policy"
+    "cookiePolicy": "Cookie Policy",
+    "byline": "A WorldMap Portfolio site · maintained by {author}"
   },
   "notFound": {
     "title": "Page not found",
@@ -285,7 +287,9 @@
     "p1": "{name} contains affiliate links — for example links to booking and experience partners shown next to places on the map.",
     "p2": "If you book or buy something through one of these links, we may earn a small commission. This never costs you anything extra — the price is the same as if you had gone to the partner directly.",
     "p3": "Affiliate partnerships do not influence which places appear on the map or how they are presented. The map data comes from OpenStreetMap and is independent of any partner.",
-    "contactBody": "Questions about this disclosure? Email us at"
+    "contactBody": "Questions about this disclosure? Email us at",
+    "osmTitle": "About the map data",
+    "osmBody": "The places shown on this map come from OpenStreetMap, a community-maintained open database. The data can be incomplete, out of date or occasionally wrong, and we cannot guarantee its accuracy. Always confirm critical details — opening hours, access and safety — with an official source before relying on them."
   },
   "cookiePolicy": {
     "heading": "Cookie Policy",
@@ -303,5 +307,18 @@
     "title": "Something went wrong",
     "body": "An unexpected error occurred while loading this page. You can try again, or head back to the map.",
     "retry": "Try again"
+  },
+  "contact": {
+    "heading": "Contact",
+    "intro": "Have a question, some feedback, or a partnership idea about {name}? We're glad to hear from you — email is the best way to reach us.",
+    "emailTitle": "Email us",
+    "emailBody": "For anything about the site itself — feedback, a correction to a page, or a press or partnership enquiry — send us an email and we'll get back to you.",
+    "responseBody": "The site is run by a small, independent team, so a reply can take a few days. Thanks for your patience.",
+    "dataTitle": "Fixing map data",
+    "dataBody": "Found a {noun} in the wrong place, with outdated details, or missing entirely? The data lives in OpenStreetMap, not on our servers, so the quickest fix is a short note there — a local mapper reviews it and the correction flows back to this map at the next monthly refresh.",
+    "dataCta": "Leave a note on OpenStreetMap →",
+    "faqTitle": "Before you write",
+    "faqBody": "Many common questions are already answered on our",
+    "faqCta": "FAQ page →"
   }
 }
