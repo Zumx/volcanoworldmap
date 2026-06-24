@@ -2,47 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { site } from "../lib/site.js";
+import { getConsent, isPreviewHost, setConsent } from "../lib/consent.js";
 
-// Only mounted (from layout) when a GA4 id is configured, i.e. the only case
-// where the site sets cookies at all. Choice is persisted in localStorage and
-// reflected into Google Consent Mode via gtag('consent','update', …).
-const KEY = `${site.slug}:consent`;
-
-function updateConsent(granted) {
-  if (typeof window === "undefined") return;
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    window.dataLayer.push(arguments);
-  }
-  gtag("consent", "update", {
-    analytics_storage: granted ? "granted" : "denied",
-  });
-}
-
+// Cookie banner shown only when there is something to consent to: it is mounted
+// (from layout) only when a GA4 id is configured, and self-suppresses on Vercel
+// preview hosts. The choice is persisted + reflected into Consent Mode by
+// setConsent(), which the GA4 loader listens for to inject gtag.js on accept.
 export default function CookieConsent() {
   const t = useTranslations("cookie");
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let v = null;
-    try {
-      v = localStorage.getItem(KEY);
-    } catch {
-      /* storage blocked */
-    }
-    if (v === "granted") updateConsent(true);
+    if (isPreviewHost()) return;
+    const v = getConsent();
+    // Re-affirm a prior "granted" into Consent Mode; prompt only if no choice
+    // has been made yet. A prior "denied" stays denied without re-prompting.
+    if (v === "granted") setConsent(true);
     else if (v == null) setShow(true);
-    // "denied" → leave the default denied, don't re-prompt.
   }, []);
 
   const choose = (granted) => {
-    try {
-      localStorage.setItem(KEY, granted ? "granted" : "denied");
-    } catch {
-      /* storage blocked */
-    }
-    updateConsent(granted);
+    setConsent(granted);
     setShow(false);
   };
 

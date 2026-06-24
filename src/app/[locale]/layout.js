@@ -1,6 +1,5 @@
 import "../globals.css";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -10,6 +9,7 @@ import { listCountries } from "../../lib/data.js";
 import Header from "../../components/Header.js";
 import Footer from "../../components/Footer.js";
 import CookieConsent from "../../components/CookieConsent.js";
+import GoogleAnalytics from "../../components/GoogleAnalytics.js";
 import ServiceWorker from "../../components/ServiceWorker.js";
 
 // next/font self-hosts Inter (no runtime request to Google), preloads it, and
@@ -127,27 +127,19 @@ export default async function LocaleLayout({ children, params }) {
           </div>
           <Footer />
           <ServiceWorker />
+          {/* GA4 + cookie banner — mounted only when a measurement ID is set in
+              site.config.json (ga4Id). Consent Mode v2 + GDPR: gtag.js is loaded
+              only after the visitor accepts, and never on *.vercel.app previews.
+              Kept inside NextIntlClientProvider because CookieConsent uses
+              useTranslations. See GoogleAnalytics.js / CookieConsent.js /
+              lib/consent.js. */}
+          {site.ga4Id && (
+            <>
+              <GoogleAnalytics />
+              <CookieConsent />
+            </>
+          )}
         </NextIntlClientProvider>
-        {/* GA4 — only when a measurement ID is set in site.config.json.
-            Consent Mode v2: analytics_storage defaults to denied (cookieless,
-            IP anonymised) until the visitor accepts in the cookie banner,
-            which calls gtag('consent','update', …). */}
-        {site.googleAnalyticsId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${site.googleAnalyticsId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('consent', 'default', { analytics_storage: 'denied' });
-gtag('js', new Date());
-gtag('config', '${site.googleAnalyticsId}', { anonymize_ip: true });`}
-            </Script>
-            <CookieConsent />
-          </>
-        )}
       </body>
     </html>
   );

@@ -4,6 +4,7 @@
   "emoji": "🌋",
   "domain": "volcanoworldmap.com",
   "contactEmail": "hello@volcanoworldmap.com",
+  "ga4Id": null,
   "colors": {
     "primary": "#1a1a2e",
     "accent": "#e94560"
